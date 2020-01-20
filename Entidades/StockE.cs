@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Entidades
+{
+   public  class StockE
+    {
+        public int CodStock { get; set; }
+        public string Codproducto { get; set; }
+        public string Color { get; set; }
+        public string Talla_alfanum { get; set; }
+        public int Talla_num { get; set; }
+
+        public int Cantidad { get; set; }
+        public int Stock { get; set; }
+
+    }
+}
