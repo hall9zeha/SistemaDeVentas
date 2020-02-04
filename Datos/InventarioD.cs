@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using Entidades;
-using System.Linq;
+
 namespace Datos
 {
     public class InventarioD
@@ -18,6 +18,7 @@ namespace Datos
         }
 
         SqlConnection cn = Conexion.Instancia.Conectar();
+        Querys sql = new Querys();
         //método simple usando datatables para listar el contenido de la tabla inventario y stock
         public DataTable ListarInventario()
         {
@@ -53,57 +54,8 @@ namespace Datos
             List<InventarioE> lista = null;
             try
             {
-                string Query = @"if(@tipoBusqueda=1)
-                begin
-                            select i.Codproducto ,
-                            i.Descripción,
-                            i.Marca,
-                            sum(s.Cantidad) as cantidad_inicial,
-                            sum(s.Stock) as Stock, 
-                            i.Precio as 'precio/unidad',
-                            i.PrecioVenta
-                            from tbinventario  i inner join tbstock s 
-                            on s.Codproducto=i.Codproducto 
-                            where i.Codproducto LIKE '%'+@valorEntrada+'%'
-                            group by 
-                            i.Codproducto ,i.Descripción, i.Marca, i.Precio, i.PrecioVenta order by Codproducto
-                            
-                end
-                            else if(@tipoBusqueda=2)
-                begin
-                            select i.Codproducto ,
-                            i.Descripción,
-                            i.Marca,
-                            sum(s.Cantidad) as cantidad_inicial,
-                            sum(s.Stock) as Stock, 
-                            i.Precio as 'precio/unidad',
-                            i.PrecioVenta
-                            from tbinventario  i inner join tbstock s 
-                            on s.Codproducto=i.Codproducto 
-                            where i.Descripción LIKE '%'+@valorEntrada+'%'
-                            group by 
-                            i.Codproducto ,i.Descripción, i.Marca, i.Precio, i.PrecioVenta order by Codproducto
-                            
-                end
-                            else
-                begin
-                            select i.Codproducto ,
-                            i.Descripción,
-                            i.Marca,
-                            sum(s.Cantidad) as cantidad_inicial,
-                            sum(s.Stock) as Stock, 
-                            i.Precio as 'precio/unidad',
-                            i.PrecioVenta
-                            from tbinventario  i inner join tbstock s 
-                            on s.Codproducto=i.Codproducto 
-                            where i.Marca LIKE '%'+@valorEntrada+'%'
-                            group by 
-                            i.Codproducto ,i.Descripción, i.Marca, i.Precio, i.PrecioVenta order by Codproducto
-                            
-                end
-
-                            ";
-                cmd = new SqlCommand(Query, cn);
+               
+                cmd = new SqlCommand(sql.Query_MostrarInventario(), cn);
                 cmd.Parameters.AddWithValue("@tipoBusqueda", tipoBusqueda);
                 cmd.Parameters.AddWithValue("@valorEntrada", valorEntrada);
                 cn.Open();
@@ -138,19 +90,8 @@ namespace Datos
            
             try
             {
-                string Query = @"select i.Codproducto ,
-                            i.Descripción,
-                            i.Marca,sum(s.Cantidad) as cantidad_inicial,
-                            sum(s.Stock) as Stock, 
-                            i.Precio as 'precio/unidad',
-                            i.PrecioVenta
-                            from tbinventario  i inner join tbstock s 
-                            on s.Codproducto=i.Codproducto 
-                            group by 
-                            i.Codproducto ,i.Descripción, i.Marca, i.Precio, i.PrecioVenta order by Codproducto";
-
-
-                cmd = new SqlCommand(Query, cn);
+               
+                cmd = new SqlCommand(sql.Query_ListarInventarioGeneric(), cn);
                 
             cn.Open();
             dr = cmd.ExecuteReader();
@@ -176,57 +117,7 @@ namespace Datos
             return lista;
         }
 
-        public void AgregarPrenda(InventarioE obj)
-        {
-            try
-            {
-                string Query = @"
-                                
-                                insert into tbinventario
-                                (Codproducto, Descripción, Marca, Precio,PrecioVenta)  
-                                Values
-                                (@Codproducto,@Descripción,@Marca,@Precio, @PrecioVenta)
-                                
-                                   ";
-                SqlCommand cmd = new SqlCommand(Query, cn);
-                cmd.Parameters.AddWithValue("@Codproducto", obj.Codproducto);
-                cmd.Parameters.AddWithValue("@Descripción", obj.Descripción);
-                cmd.Parameters.AddWithValue("@Marca", obj.Marca);
-                cmd.Parameters.AddWithValue("@Precio", obj.Precio);
-                cmd.Parameters.AddWithValue("@PrecioVenta", obj.PrecioVenta);
-                
-                if (cn.State == ConnectionState.Open) cn.Close();
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-            }
-            catch (Exception)
-            { throw; }
-        }
-        public void AgregarDetallePrenda(StockE obj)
-        {
-            //try
-            //{
-                string Query = @" insert into tbstock
-                                (Codproducto, Color, Talla_alfanum, Talla_num, Cantidad, Stock)
-                                Values
-                                (@Codproducto, @Color, @Talla_alfanum, @Talla_num, @Cantidad, @Stock)
-                                ";
-                SqlCommand cmd = new SqlCommand(Query, cn);
-                cmd.Parameters.AddWithValue("@Codproducto", obj.Codproducto);
-                cmd.Parameters.AddWithValue("@Color", obj.Color);
-                cmd.Parameters.AddWithValue("@Talla_alfanum", obj.Talla_alfanum);
-                cmd.Parameters.AddWithValue("@Talla_num", obj.Talla_num);
-                cmd.Parameters.AddWithValue("@Cantidad", obj.Cantidad);
-                cmd.Parameters.AddWithValue("@Stock", obj.Stock);
-                if (cn.State == ConnectionState.Open) cn.Close();
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-            //}
-            //catch (Exception)
-            //{ throw; }
-        }
+      
         public void GenerarCodigoPrenda(string variable)
         {
             try
@@ -276,18 +167,7 @@ namespace Datos
             List<StockE> lista = null;
             try
             {
-                string Query = @"select 
-                                  s.CodEstock,
-                                  s.Codproducto,
-                                i.Descripción,
-                                i.Marca,
-                                s.Color,
-                                s.Talla_alfanum,
-                                s.Talla_num,
-                                s.Cantidad,
-                                i.PrecioVenta,
-                                s.Stock from tbstock s inner join tbinventario i on s.Codproducto= i.Codproducto where s.Codproducto=@Codproducto";
-                cmd = new SqlCommand(Query, cn);
+               cmd = new SqlCommand(sql.Query_TraerDetallePrenda(), cn);
                 cmd.Parameters.AddWithValue("@Codproducto", Id);
                 cn.Open();
                 dr = cmd.ExecuteReader();
@@ -325,19 +205,7 @@ namespace Datos
             StockE objS = null;
             try
             {
-                string Query = @"select 
-                                  s.CodEstock,
-                                  s.Codproducto,
-                                i.Descripción,
-                                i.Marca,
-                                s.Color,
-                                s.Talla_alfanum,
-                                s.Talla_num,
-                                s.Cantidad,
-                                s.Stock,
-                                i.PrecioVenta,
-                                s.Stock from tbstock s inner join tbinventario i on s.Codproducto= i.Codproducto where s.CodEstock=@Codproducto";
-                cmd = new SqlCommand(Query, cn);
+                cmd = new SqlCommand(sql.Query_AgregarProductoBoleta(), cn);
                 cmd.Parameters.AddWithValue("@Codproducto", Id);
                 cn.Open();
                 dr = cmd.ExecuteReader();
@@ -453,7 +321,7 @@ namespace Datos
             SqlCommand cmd = null;
             try
             {
-                cmd = new SqlCommand(sp_GuardarInventario(), cn);
+                cmd = new SqlCommand(sql.Query_GuardarInventario(), cn);
                 cmd.Parameters.AddWithValue("@Cadxml", xml);
                 cn.Open();
                 resultado = cmd.ExecuteNonQuery();
@@ -466,52 +334,7 @@ namespace Datos
 
         }
 
-        private string sp_GuardarInventario()
-        {
-            string Query= @"
-                    begin
-                        declare @h int , @msmError varchar(500)
-                        exec sp_xml_preparedocument @h output, @Cadxml
-                        begin try
-                        begin transaction
-                        insert into  tbinventario(Codproducto, Descripción, Marca, Precio, PrecioVenta)
-                        select i.codproducto, i.descripcion, i.marca, i.precio, i.precioventa
-                        from openxml(@h, 'root/tbinventario', 1)with
-                        (
-                        codproducto nvarchar(20),
-                        descripcion nvarchar(max),
-                        marca nvarchar(max),
-                        precio decimal(5,2),
-                        precioventa decimal(5,2)
-                        )i
-                        insert into  tbstock(Codproducto, Color, Talla_alfanum, Talla_num, Cantidad, Stock )
-                        select s.codproducto, s.color, s.talla_alfanum, s.talla_num, s.cantidad, s.stock
-                        from openxml(@h, 'root/tbinventario/tbstock',1)with
-                        (
-                        codproducto nvarchar(20),
-                        color nvarchar(max),
-                        talla_alfanum nvarchar(max),
-                        talla_num int ,
-                        cantidad int,
-                        stock int
-                        )s
-                        if (@@trancount>0)commit transaction
-                        end try
-                        begin catch
-                        if(@@trancount>0)
-                        begin
-                        rollback transaction
-                        select @msmError=ERROR_MESSAGE()
-                        raiserror(@msmError,16,1)
-                        end 
-                        end catch
-                        end
-    
-                    ";
-            return Query;
-
-        }
-
+       
     }
 
 }

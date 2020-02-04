@@ -75,5 +75,11 @@ namespace Presentacion
                 MessageBox.Show(ex.Message, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void ConsultarVentasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Ventas objVentas = new Ventas();
+            objVentas.Show();
+        }
     }
 }

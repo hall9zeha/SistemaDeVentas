@@ -63,6 +63,10 @@ namespace Negocio
             }
 
         }
+        public DataTable MostrarVentasSimple(string fecha)
+        {
+            return objV.MostrarVentasSimple(fecha);
+        }
 
 
     }

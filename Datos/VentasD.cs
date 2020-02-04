@@ -15,6 +15,7 @@ namespace Datos
         {
             get{ return VentasD._instancia; }
         }
+        Querys sql = new Querys();
 
         SqlConnection cn =  Conexion.Instancia.Conectar();
         //Método para generar un código string funcional desde la capa de negocio, aun sin funcionr desde la capa datos
@@ -83,7 +84,7 @@ namespace Datos
             SqlCommand cmd = null;
             try
             {
-                cmd = new SqlCommand(query_GuardarVenta(), cn);
+                cmd = new SqlCommand(sql.Query_GuardarVenta(), cn);
                 
                 cmd.Parameters.AddWithValue("@Cadxml", xml);
                 cn.Open();
@@ -96,69 +97,40 @@ namespace Datos
             { throw; }
             finally { cmd.Connection.Close(); }
         }
-        
-
-        
-        private string query_GuardarVenta()
+        public DataTable MostrarVentasSimple(string fecha)
         {
-            string Query = @"
-                        
-                        begin 
-                        declare  @h int, @smsError varchar(500)
-                        exec sp_xml_preparedocument @h output , @Cadxml
-                        begin try
-                        begin transaction
-                        IF(SELECT COUNT(*) FROM OpenXML(@h,'root/tbboleta/detalle_tbboleta',1)WITH(
-		                           codproducto_detalle int,
-		                           cantidad int
-		                           )dt INNER JOIN tbstock s on s.CodEstock=dt.codproducto_detalle WHERE s.Stock<dt.cantidad)>0
-		                          BEGIN
-		                           RAISERROR('Uno ó mas productos no cuentan con el stock suficiente',16,1)
-		                          END
-		                          INSERT INTO tbboleta(Codboleta,Fechaboleta,Importe,Importe_rg)
-                                   SELECT b.codboleta,GETDATE(),b.importe, b.importe_rg
-		                           FROM OpenXML(@h,'root/tbboleta',1)WITH(
-		                           codboleta nvarchar(20),
-		                           importe decimal(5,2),
-		                           importe_rg decimal(5,2)
-		                           )b
-		   
-		                           INSERT INTO detalle_tbboleta(Codboleta, Codproducto, CodProducto_detalle, Descripción, Cantidad, Precio_final) 
-		                           SELECT dt.codboleta,dt.codproducto,dt.codproducto_detalle,dt.descripcion,dt.cantidad, dt.precio_final
-		                           FROM OpenXML(@h,'root/tbboleta/detalle_tbboleta',1)WITH(
-		                           codboleta nvarchar(20),
-		                           codproducto nvarchar(20),
-		                           codproducto_detalle int,
-		                           descripcion nvarchar(max),
-		                           cantidad int,
-		                           precio_final decimal(5,2)
-		                           )dt   
-		                            
-                                    update s
-		                               set
-		                               s.Stock=s.Stock - st.cantidad
-		                               from OpenXML(@h, 'root/tbboleta/tbstock',1)with
-		                               (cantidad int,
-		                               codestock int)st inner join tbstock s on s.CodEstock=st.codestock
-
-		                           IF(@@TRANCOUNT>0) COMMIT TRANSACTION
-		                        END TRY
-
-		                        BEGIN CATCH
-		                         IF(@@TRANCOUNT>0)
-		                           BEGIN
-			                         ROLLBACK TRANSACTION
-			                         SELECT @smsError = ERROR_MESSAGE()
-			                         RAISERROR(@smsError,16,1)
-		                           END
-		                        END CATCH
-	                         END
-
+            try
+            {
+                string Query = @"
+                            select 
+                            dt.Codboleta,
+                            sum(dt.Cantidad)as Prendas,
+                            sum(dt.Precio_final)as Total,
+                            b.Fechaboleta
+                            from detalle_tbboleta dt inner join tbboleta b
+                            
+                            on b.Codboleta=dt.Codboleta
+                            where b.Fechaboleta=@Fechaboleta
+                            group by 
+                            dt.Codboleta,
+                            dt.Cantidad,
+                            b.Fechaboleta
                             ";
-            return Query;
+                SqlCommand cmd = new SqlCommand(Query, cn);
+                cmd.Parameters.AddWithValue("@Fechaboleta", fecha);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                return dt;
+            }
+            catch (Exception)
+            { throw; }
+
 
         }
-       
 
+        
+       
     }
 }

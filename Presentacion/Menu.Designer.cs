@@ -34,6 +34,7 @@
             this.movimientosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.boletaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.boletaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultarVentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,7 +68,8 @@
             // movimientosToolStripMenuItem
             // 
             this.movimientosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.boletaToolStripMenuItem});
+            this.boletaToolStripMenuItem,
+            this.consultarVentasToolStripMenuItem});
             this.movimientosToolStripMenuItem.Name = "movimientosToolStripMenuItem";
             this.movimientosToolStripMenuItem.Size = new System.Drawing.Size(89, 54);
             this.movimientosToolStripMenuItem.Text = "Movimientos";
@@ -86,6 +88,13 @@
             this.boletaToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.boletaToolStripMenuItem1.Text = "Boleta";
             this.boletaToolStripMenuItem1.Click += new System.EventHandler(this.BoletaToolStripMenuItem1_Click);
+            // 
+            // consultarVentasToolStripMenuItem
+            // 
+            this.consultarVentasToolStripMenuItem.Name = "consultarVentasToolStripMenuItem";
+            this.consultarVentasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.consultarVentasToolStripMenuItem.Text = "Consultar Ventas";
+            this.consultarVentasToolStripMenuItem.Click += new System.EventHandler(this.ConsultarVentasToolStripMenuItem_Click);
             // 
             // Menu
             // 
@@ -112,5 +121,6 @@
         private System.Windows.Forms.ToolStripMenuItem movimientosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem boletaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem boletaToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem consultarVentasToolStripMenuItem;
     }
 }
