@@ -39,14 +39,94 @@ namespace Negocio
         }
         public List<InventarioE> ListarInventarioGeneric()
         {
-            //try
-            //{
+            try
+            {
                 List<InventarioE> lista = InventarioD.Instancia.ListarInventarioGeneric();
                 return lista;
 
-            //}
-            //catch (Exception)
-            //{ throw; }
+            }
+            catch (Exception)
+            { throw; }
+        }
+      
+        public void GenerarCodigoPrenda(string result)
+        {
+            objD.GenerarCodigoPrenda(result);
+        }
+        public List<StockE> TraerDetallePrenda(string Id)
+        {
+            try
+            {
+                List<StockE> lista = null;
+                lista = InventarioD.Instancia.TraerDetallePrenda(Id);
+                return lista;
+            }
+            catch (Exception)
+            { throw; }
+        }
+
+
+        public StockE AgregarProductoBoleta(int id)
+        {
+            try
+            {
+                StockE objS = InventarioD.Instancia.AgregarProductoBoleta(id);
+                return objS;
+            }
+            catch (Exception)
+            { throw; }
+        }
+        public int RegistrarInventario(InventarioE i)
+        {
+            try
+            {
+                String CadXml = "";
+                CadXml += "<tbinventario ";
+                CadXml += "codproducto='" + i.Codproducto + "' ";
+                CadXml += "descripcion='" + i.Descripción + "' ";
+                CadXml += "marca='" + i.Marca + "' ";
+                CadXml += "precio='" + i.Precio + "' ";
+                CadXml += "precioventa='" + i.PrecioVenta + "'>";
+
+                foreach (StockE s in i.detalleInventario)
+                {
+                    CadXml += "<tbstock ";
+                    CadXml += "codproducto='" + s.Codproducto + "' ";
+                    CadXml += "color='" + s.Color + "' ";
+                    CadXml += "talla_alfanum='" + s.Talla_alfanum + "' ";
+                    CadXml += "talla_num='" + s.Talla_num + "' ";
+                    CadXml += "cantidad='" + s.Cantidad + "' ";
+                    CadXml += "stock='" + s.Stock + "'/>";
+                }
+                CadXml += "</tbinventario>";
+                CadXml = "<root>" + CadXml + "</root>";
+                int result = InventarioD.Instancia.RegistrarInventario(CadXml);
+                if (result <= 0) throw new ApplicationException("Hubo un error en la tansaccion");
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public InventarioE TraerInventario(string Id)
+        {
+            try
+            {
+                InventarioE prenda = null;
+                prenda = InventarioD.Instancia.TraerInventario(Id);
+                return prenda;
+            }
+            catch (Exception)
+            { throw; }
+        }
+        public void EditarPrenda(InventarioE objI)
+        {
+            objD.EditarPrenda(objI);
+        }
+        public void EditarDetallePrenda(StockE objS)
+        {
+            objD.EditarDetallePrenda(objS);
         }
 
     }

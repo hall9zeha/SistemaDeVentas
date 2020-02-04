@@ -12,18 +12,18 @@ using Negocio;
 using System.IO;
 namespace Presentacion
 {
-    public partial class txtbuscar : Form
+    public partial class Inventario : Form
     {
         InventarioE objE = new InventarioE();
         InventarioN objN = new InventarioN();
         DataTable dt = new DataTable();
 
         int tipoBusqueda = 0;
-        public txtbuscar()
+        public Inventario()
         {
             InitializeComponent();
         }
-        private void CrearGrid()
+        public void CrearGrid()
         {
             dgvInventario.Columns.Add("Código", "Codproducto");
             dgvInventario.Columns.Add("Descripción", "Descripción");
@@ -34,11 +34,11 @@ namespace Presentacion
             dgvInventario.Columns.Add("Stock", "Stcok");
 
 
-            dgvInventario.Columns[0].Visible = false;
+            dgvInventario.Columns[0].Visible = true;
             dgvInventario.Columns[1].Width = 170;
             dgvInventario.Columns[2].Width = 150;
             dgvInventario.Columns[3].Width = 70;
-            dgvInventario.Columns[4].Width = 60;
+            dgvInventario.Columns[4].Width = 100;
             dgvInventario.Columns[5].Width = 60;
             dgvInventario.Columns[6].Width = 60;
 
@@ -54,16 +54,17 @@ namespace Presentacion
 
         void listarInventario()
         {
-            dt=objN.ListarInventario();
+            dt = objN.ListarInventario();
             dgvInventario.DataSource = dt;
 
         }
-      
+
         private void Inventario_Load(object sender, EventArgs e)
         {
-
+            this.CenterToScreen();
             CrearGrid();
             CargarInventario();
+
 
         }
 
@@ -88,27 +89,29 @@ namespace Presentacion
                             lista[i].Codproducto,
                             lista[i].Descripción,
                             lista[i].Marca,
-                            lista[i].Precio.ToString(),
-                            lista[i].PrecioVenta.ToString(),
+                            lista[i].Precio.ToString("#.00"),
+                            lista[i].PrecioVenta.ToString("#.00"),
                             lista[i].Cantidad.ToString(),
-                            lista[i].Stock.ToString() 
+                            lista[i].Stock.ToString()
 
                         };
                         dgvInventario.Rows.Add(fila);
                     }
                 }
+                else if (filtro == string.Empty)
+                { CargarInventario(); }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
-            }
-        void CargarInventario()
+        }
+        public void CargarInventario()
         {
             try
             {
-                
+
                 {
                     int num = 0;
                     List<InventarioE> lista = InventarioN.Instancia.ListarInventarioGeneric();
@@ -120,8 +123,8 @@ namespace Presentacion
                             lista[i].Codproducto,
                             lista[i].Descripción,
                             lista[i].Marca,
-                            lista[i].Precio.ToString(),
-                            lista[i].PrecioVenta.ToString(),
+                            lista[i].Precio.ToString("0.00"),
+                            lista[i].PrecioVenta.ToString("0.00"),
                             lista[i].Cantidad.ToString(),
                             lista[i].Stock.ToString()
                         };
@@ -162,6 +165,40 @@ namespace Presentacion
         private void DgvInventario_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            //Agregar_Prenda Det = new Agregar_Prenda();
+            //Det.ShowDialog();
+          
+                Agregar_Prenda Prendas = new Agregar_Prenda();
+
+                //add handler to catch when child form is closed    
+            Prendas.FormClosed += new FormClosedEventHandler(Prendas_Closed);
+            Prendas.ShowDialog();
+            
+
+        }
+
+
+        private void Prendas_Closed(object sender, FormClosedEventArgs e)
+        {
+            CargarInventario();
+
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            string Id = Convert.ToString(dgvInventario.CurrentRow.Cells[0].Value);
+            Editar_Prenda editarPrenda = new Editar_Prenda(Id);
+            editarPrenda.ShowDialog();
+        }
+
+        private void Button5_Click(object sender, EventArgs e)
+        {
+            Buscar_Prenda bprenda = new Buscar_Prenda();
+            bprenda.ShowDialog();
         }
     }
 }

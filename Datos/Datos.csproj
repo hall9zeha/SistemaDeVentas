@@ -44,6 +44,7 @@
     <Compile Include="Conexion.cs" />
     <Compile Include="InventarioD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VentasD.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entidades\Entidades.csproj">

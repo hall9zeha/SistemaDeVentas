@@ -46,16 +46,71 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Agregar_Prenda.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agregar_Prenda.Designer.cs">
+      <DependentUpon>Agregar_Prenda.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Boleta de Venta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Boleta de Venta.Designer.cs">
+      <DependentUpon>Boleta de Venta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Buscar_Prenda.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Buscar_Prenda.Designer.cs">
+      <DependentUpon>Buscar_Prenda.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Detalle_Prenda.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Detalle_Prenda.Designer.cs">
+      <DependentUpon>Detalle_Prenda.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editar_Prenda.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editar_Prenda.Designer.cs">
+      <DependentUpon>Editar_Prenda.cs</DependentUpon>
+    </Compile>
     <Compile Include="Inventario.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Inventario.Designer.cs">
       <DependentUpon>Inventario.cs</DependentUpon>
     </Compile>
+    <Compile Include="LocalBD.cs" />
+    <Compile Include="Menu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menu.Designer.cs">
+      <DependentUpon>Menu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Agregar_Prenda.resx">
+      <DependentUpon>Agregar_Prenda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Boleta de Venta.resx">
+      <DependentUpon>Boleta de Venta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Buscar_Prenda.resx">
+      <DependentUpon>Buscar_Prenda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Detalle_Prenda.resx">
+      <DependentUpon>Detalle_Prenda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editar_Prenda.resx">
+      <DependentUpon>Editar_Prenda.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Inventario.resx">
       <DependentUpon>Inventario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menu.resx">
+      <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -65,6 +120,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -80,6 +136,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Datos\Datos.csproj">
+      <Project>{6b0cbd74-840a-4c86-9b9f-12cc84b4cf30}</Project>
+      <Name>Datos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Entidades\Entidades.csproj">
       <Project>{be7763c8-3e22-4752-94f2-c6a6895c6113}</Project>
       <Name>Entidades</Name>
@@ -88,6 +148,51 @@
       <Project>{1294f9f1-6b46-4bd1-88ac-dc69997c4224}</Project>
       <Name>Negocio</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\circulo_verde24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CirculoNaranja24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\circulorojo_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_24x24-32.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_16x16-32.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delete_16x16-32.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back_24x24-32.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\anular.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\app-edit_32x32-32.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart-accept_32x32-32.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\home_32x32-32.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\guardar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\printer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shopping cart_24x24.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

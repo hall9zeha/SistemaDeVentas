@@ -6,17 +6,14 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-    public class BoletaE
+    public class DetalleBoletaE
     {
+        public int Coddetalle { get; set; }
         public string Codboleta { get; set; }
-        
-        public DateTime Fechaboleta { get; set; }
-        public double Importe_rg { get; set; }
         public string Codproducto { get; set; }
         public int CodProducto_detalle { get; set; }
         public string Descripción { get; set; }
         public int Cantidad { get; set; }
-        public double Precio_final { get; set; }
-        public List<DetalleBoletaE> detalleBoleta { get; set; }
+        public double Precio_final { get; set; } 
     }
 }

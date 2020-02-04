@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="InventarioN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StockN.cs" />
+    <Compile Include="VentasN.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Datos\Datos.csproj">
