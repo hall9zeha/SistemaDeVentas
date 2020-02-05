@@ -198,6 +198,7 @@ namespace Presentacion
         {
             limpiarControles();
             habilitarBotones(true, false, false);
+            GenerarCodigoPrenda();
         }
 
         private void Button4_Click(object sender, EventArgs e)

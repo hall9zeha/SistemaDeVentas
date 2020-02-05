@@ -78,8 +78,26 @@ namespace Presentacion
 
         private void ConsultarVentasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Ventas objVentas = new Ventas();
-            objVentas.Show();
+           
+            try
+            {
+                Ventas objVentas = new Ventas();
+                objVentas.MdiParent = this;
+                foreach (Form frm in Application.OpenForms)
+
+                {
+                    if (frm is Ventas)
+                    {
+                        frm.Show();
+                        frm.Size = MinimumSize;
+                        frm.WindowState = FormWindowState.Normal;
+                            return;
+                    }
+                }
+                objVentas.Show();
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message); }
         }
     }
 }

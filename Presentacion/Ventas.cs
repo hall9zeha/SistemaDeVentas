@@ -18,25 +18,177 @@ namespace Presentacion
     {
 
         VentasN objV = new VentasN();
+        DataTable dt = new DataTable();
         public Ventas()
         {
             InitializeComponent();
+            //contarItems();
         }
+        void crearGrid()
+        {
+            dgvVentas.Columns.Add("Codboleta", "Codboleta");
+            dgvVentas.Columns.Add("Prendas", "Prendas");
+            dgvVentas.Columns.Add("Total", "Total");
+            dgvVentas.Columns.Add("FechaBoleta", "FechaBoleta");
 
+            dgvVentas.Columns[0].Width = 70;
+            dgvVentas.Columns[1].Width = 60;
+            dgvVentas.Columns[2].Width = 100;
+            dgvVentas.Columns[3].Width = 100;
+
+            dgvVentas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvVentas.MultiSelect = false;
+
+        }
+        void removerColumnas()
+        {
+            
+            dgvVentas.Columns.Remove("Codboleta");
+            dgvVentas.Columns.Remove("Prendas");
+            dgvVentas.Columns.Remove("Total");
+            dgvVentas.Columns.Remove("FechaBoleta");
+        }
         private void Ventas_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+            crearGrid();
+
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            cargarVentas();   
+            cargarVentasFechaDoble(pickerFecha1.Text,pickerFecha2.Text);
         }
-        void cargarVentas()
+        void cargarVentasFechaSimple(string fecha)
         {
-            DataTable dt = new DataTable();
-            dt= objV.MostrarVentasSimple(pickerFecha.Text);
-            dgvVentas.DataSource = dt;
+
+            try
+            {
+               
+               
+                    int num = 0;
+                    List<BoletaE> lista = VentasN.Instancia.MostrarVentasSimple(fecha);
+                    dgvVentas.Rows.Clear();
+
+                    for (int i = 0; i < lista.Count; i++)
+                    {
+                        num++;
+                        string[] fila = new string[] {
+                        lista[i].Codboleta,
+                        lista[i].Cantidad.ToString(),
+                        lista[i].Precio_final.ToString("0.00"),
+                        lista[i].Fechaboleta.ToString("dd-MM-yy")};
+                        dgvVentas.Rows.Add(fila);
+
+                    }
+
+                contarItems();
+                montoVentas();
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message); }
+        }
+        void cargarVentasFechaDoble(string fechaIni, string fechaFin)
+        {
+
+            try
+            {
+               
+                int num = 0;
+                List<BoletaE> lista = VentasN.Instancia.MostrarVentasFechaDoble(fechaIni, fechaFin);
+                dgvVentas.Rows.Clear();
+
+                for (int i = 0; i < lista.Count; i++)
+                {
+                    num++;
+                    string[] fila = new string[] {
+                        lista[i].Codboleta,
+                        lista[i].Cantidad.ToString(),
+                        lista[i].Precio_final.ToString("0.00"),
+                        lista[i].Fechaboleta.ToString("dd-MM-yy")};
+                    dgvVentas.Rows.Add(fila);
+                }
+                contarItems();
+                montoVentas();
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message); }
+        }
+        void buscarVentaBoleta(string filtro)
+        {
+            
+            try
+            {
+                if (filtro != string.Empty)
+                {
+                    int num = 0;
+                    List<BoletaE> lista = VentasN.Instancia.BuscarVentaBoleta(filtro);
+                    dgvVentas.Rows.Clear();
+
+                    for (int i = 0; i < lista.Count; i++)
+                    {
+                        //num++;
+                        string[] fila = new string[] {
+                        lista[i].Codboleta,
+                        lista[i].Cantidad.ToString(),
+                        lista[i].Precio_final.ToString("0.00"),
+                        lista[i].Fechaboleta.ToString("dd-MM-yy")};
+                        dgvVentas.Rows.Add(fila);
+
+                    }
+                    contarItems();
+                    montoVentas();
+                }
+                else
+                { dgvVentas.Rows.Clear();
+                    contarItems();
+                    montoVentas();
+                }
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message); }
+        }
+        void contarItems()
+        {
+            int num = 0;
+            foreach (DataGridViewRow row in dgvVentas.Rows)
+            {
+                num++;
+            }
+            lblItems.Text = " " + " " + num; 
+        }
+        void montoVentas()
+        {
+            double total = 0.0;
+            try
+            {
+                foreach (DataGridViewRow row in dgvVentas.Rows)
+                {
+                    total += Convert.ToDouble(row.Cells[2].Value.ToString());
+                }
+                lblMonto.Text = "S/." + total.ToString("0.00");
+
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message); }
+        }
+
+        private void PickerFecha_ValueChanged(object sender, EventArgs e)
+        {
+            cargarVentasFechaSimple(pickerFecha.Text);
+        }
+
+        private void TxtBuscar_TextChanged(object sender, EventArgs e)
+        {
+           
+            buscarVentaBoleta(txtBuscar.Text);
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            string CodBoleta = Convert.ToString(dgvVentas.CurrentRow.Cells[0].Value);
+            Detalle_Venta objDetalle_Venta = new Detalle_Venta(CodBoleta);
+            objDetalle_Venta.ShowDialog();
         }
     }
 }

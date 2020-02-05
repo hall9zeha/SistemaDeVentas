@@ -75,6 +75,7 @@ namespace Datos
             return control;
 
         }
+        
         //fin del método
 
         //Método para guardar venta en la tabla tbboleta y detalle_tbboleta, con validación de stock correctamente funcional      
@@ -97,36 +98,137 @@ namespace Datos
             { throw; }
             finally { cmd.Connection.Close(); }
         }
-        public DataTable MostrarVentasSimple(string fecha)
+        public List<BoletaE> MostrarVentasSimple(string fecha)
         {
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            List<BoletaE> lista = null;
             try
             {
-                string Query = @"
-                            select 
-                            dt.Codboleta,
-                            sum(dt.Cantidad)as Prendas,
-                            sum(dt.Precio_final)as Total,
-                            b.Fechaboleta
-                            from detalle_tbboleta dt inner join tbboleta b
-                            
-                            on b.Codboleta=dt.Codboleta
-                            where b.Fechaboleta=@Fechaboleta
-                            group by 
-                            dt.Codboleta,
-                            dt.Cantidad,
-                            b.Fechaboleta
-                            ";
-                SqlCommand cmd = new SqlCommand(Query, cn);
+               
+                cmd = new SqlCommand(sql.Query_MostrarVentasFecha(), cn);
                 cmd.Parameters.AddWithValue("@Fechaboleta", fecha);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
+                cn.Open();
+                dr = cmd.ExecuteReader();
+                lista = new List<BoletaE>();
+                while (dr.Read())
+                {
+                    BoletaE b = new BoletaE();
 
-                return dt;
+                    b.Codboleta = dr["Codboleta"].ToString();
+                    b.Cantidad = Convert.ToInt32(dr["Prendas"].ToString());
+                    b.Precio_final = Convert.ToDouble(dr["Total"].ToString());
+                    b.Fechaboleta = Convert.ToDateTime(dr["Fechaboleta"].ToString());
+                    lista.Add(b);
+                }
             }
             catch (Exception)
             { throw; }
+            finally { cmd.Connection.Close(); }
+            return lista;
 
+        }
+        public List<BoletaE> MostrarVentasFechaDoble(string fechaIni, string fechaFin)
+        {
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            List<BoletaE> lista = null;
+            try
+            {
+
+                cmd = new SqlCommand(sql.Query_MostrarVentasFechaDoble(), cn);
+                cmd.Parameters.AddWithValue("@FechaBoletaIni", fechaIni);
+                cmd.Parameters.AddWithValue("@FechaBoletaFin", fechaFin);
+                cn.Open();
+                dr = cmd.ExecuteReader();
+                lista = new List<BoletaE>();
+                while (dr.Read())
+                {
+                    BoletaE b = new BoletaE();
+
+                    b.Codboleta = dr["Codboleta"].ToString();
+                    b.Cantidad = Convert.ToInt32(dr["Prendas"].ToString());
+                    b.Precio_final = Convert.ToDouble(dr["Total"].ToString());
+                    b.Fechaboleta = Convert.ToDateTime(dr["Fechaboleta"].ToString());
+                    lista.Add(b);
+                }
+
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+            return lista;
+
+        }
+        public List<BoletaE>BuscarVentaBoleta(string boleta)
+        {
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            List<BoletaE> lista = null;
+            try
+            {
+                cmd = new SqlCommand(sql.Query_BuscarBoletaVenta(), cn);
+                cmd.Parameters.AddWithValue("@Codboleta", boleta);
+                cn.Open();
+                dr = cmd.ExecuteReader();
+                lista = new List<BoletaE>();
+                while(dr.Read())
+                {
+                    BoletaE b = new BoletaE();
+
+                    b.Codboleta = dr["Codboleta"].ToString();
+                    b.Cantidad = Convert.ToInt32(dr["Prendas"].ToString());
+                    b.Precio_final = Convert.ToDouble(dr["Total"].ToString());
+                    b.Fechaboleta = Convert.ToDateTime(dr["Fechaboleta"].ToString());
+                    lista.Add(b);
+                }
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+            return lista;
+        }
+        public List<DetalleBoletaE> ListarDetalleBoleta(string boleta)
+        {
+            SqlCommand cmd = null;
+            SqlDataReader dr=null;
+            List<DetalleBoletaE> lista = null;
+            try
+            {
+                cmd = new SqlCommand(sql.Query_ListarDetalleVenta(), cn);
+                cmd.Parameters.AddWithValue("@Codboleta", boleta);
+                cn.Open();
+                dr = cmd.ExecuteReader();
+                lista = new List<DetalleBoletaE>();
+                while (dr.Read())
+                {
+                    DetalleBoletaE dt = new DetalleBoletaE();
+                    dt.Codproducto = dr["Codproducto"].ToString();
+                    dt.Descripción = dr["Descripción"].ToString();
+                    InventarioE m = new InventarioE();
+                    m.Marca = dr["Marca"].ToString();
+                    dt.Marca = m;
+                    StockE c = new StockE();
+                    c.Color = dr["Color"].ToString();
+                    dt.Color = c;
+                    StockE t = new StockE();
+                    t.Talla_alfanum = dr["Talla_alfanum"].ToString();
+                    dt.Talla_alfanum = t;
+                    StockE tn = new StockE();
+                    tn.Talla_num = Convert.ToInt32(dr["Talla_num"].ToString());
+                    dt.Talla_num = tn;
+                    dt.Cantidad = Convert.ToInt32(dr["Cantidad"]);
+                    dt.Precio_final = Convert.ToDouble(dr["Precio_final"].ToString());
+                    lista.Add(dt);
+
+
+                }
+
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+            return lista;
 
         }
 

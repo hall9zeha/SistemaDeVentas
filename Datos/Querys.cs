@@ -221,5 +221,94 @@ namespace Datos
                     ";
             return Query;
         }
+        public string Query_MostrarVentasFecha()
+        {
+            string Query = @"
+                            select 
+                            dt.Codboleta,
+                            sum(dt.Cantidad)as Prendas,
+                            sum(dt.Precio_final)as Total,
+                            b.Fechaboleta
+                            from detalle_tbboleta dt inner join tbboleta b
+                            
+                            on b.Codboleta=dt.Codboleta
+                            where b.Fechaboleta=@Fechaboleta
+                            group by 
+                            dt.Codboleta,
+                            dt.Cantidad,
+                            b.Fechaboleta
+                            order by Fechaboleta
+                            ";
+
+            return Query;
+        }
+        public string Query_MostrarVentasFechaDoble()
+        {
+            string Query = @"
+                            select 
+                            dt.Codboleta,
+                            sum(dt.Cantidad)as Prendas,
+                            sum(dt.Precio_final)as Total,
+                            b.Fechaboleta
+                            from detalle_tbboleta dt inner join tbboleta b
+                            
+                            on b.Codboleta=dt.Codboleta
+                            where b.Fechaboleta between @FechaBoletaIni and @FechaBoletaFin
+                            group by 
+                            dt.Codboleta,
+                            dt.Cantidad,
+                            b.Fechaboleta
+                            order by Fechaboleta
+                            ";
+            return Query;
+        }
+        public string Query_BuscarBoletaVenta()
+        {
+            string Query = @"
+                            select 
+                            dt.Codboleta,
+                            sum(dt.Cantidad)as Prendas,
+                            sum(dt.Precio_final)as Total,
+                            b.Fechaboleta
+                            from tbboleta b inner join detalle_tbboleta dt
+                            
+                            on b.Codboleta=dt.Codboleta
+                            where b.Codboleta like '%'+ @Codboleta +'%'
+                            group by 
+                            dt.Codboleta,
+                            dt.Cantidad,
+                            dt.Precio_final,
+                            b.Fechaboleta
+                            order by Fechaboleta
+                            ";
+            return Query;
+        }
+        public string Query_ListarDetalleVenta()
+        {
+            string Query = @"
+                                select
+                                detalle_tbboleta.Codproducto, 
+                                tbinventario.Descripción, 
+                                tbinventario.Marca, 
+                                tbstock.Color, 
+                                tbstock.Talla_alfanum, 
+                                tbstock.Talla_num,
+                                detalle_tbboleta.Cantidad,  
+                                detalle_tbboleta.Precio_final
+
+                                from tbinventario inner join detalle_tbboleta   
+
+                                on  tbinventario.Codproducto=detalle_tbboleta.Codproducto 
+                                inner join tbstock on tbstock.Codproducto =tbinventario.Codproducto  
+                                inner join tbboleta on tbboleta.Codboleta=detalle_tbboleta.Codboleta   
+                                
+                                where 
+                                detalle_tbboleta.Codboleta=@Codboleta and 
+                                tbstock.CodEstock =detalle_tbboleta.Codproducto_detalle and 
+                                detalle_tbboleta.Coddetalle =detalle_tbboleta.Coddetalle  
+                            ";
+
+            return Query;
+        }
     }
 }

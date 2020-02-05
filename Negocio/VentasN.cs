@@ -54,7 +54,7 @@ namespace Negocio
                 Cadxml += "</tbboleta>";
                 Cadxml = "<root>" + Cadxml + "</root>";
                 int i = VentasD.Instancia.GuardarVenta(Cadxml);
-                if (i <= 0) throw new ApplicationException("Ocurrio un erro al guardar venta actual");
+                if (i <= 0) throw new ApplicationException("Ocurrio un error al guardar venta actual");
                 return i;
             }
             catch (Exception)
@@ -63,11 +63,26 @@ namespace Negocio
             }
 
         }
-        public DataTable MostrarVentasSimple(string fecha)
+        public List<BoletaE> MostrarVentasSimple(string fecha)
         {
-            return objV.MostrarVentasSimple(fecha);
+            List<BoletaE> lista = VentasD.Instancia.MostrarVentasSimple(fecha);
+            return lista;
         }
 
-
+        public List<BoletaE> MostrarVentasFechaDoble(string fechaIni, string fechaFin)
+        {
+            List<BoletaE> lista = VentasD.Instancia.MostrarVentasFechaDoble(fechaIni,fechaFin);
+            return lista;
+        }
+        public List<BoletaE> BuscarVentaBoleta(string boleta)
+        {
+            List<BoletaE> lista = VentasD.Instancia.BuscarVentaBoleta(boleta);
+            return lista;
+        }
+        public List<DetalleBoletaE> ListarDetalleBoleta(string boleta)
+        {
+            List<DetalleBoletaE> lista = objV.ListarDetalleBoleta(boleta);
+            return lista;
+        }
     }
 }
