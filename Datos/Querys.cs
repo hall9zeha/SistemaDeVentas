@@ -266,18 +266,20 @@ namespace Datos
         {
             string Query = @"
                             select 
-                            dt.Codboleta,
+                            b.Codboleta,
                             sum(dt.Cantidad)as Prendas,
-                            sum(dt.Precio_final)as Total,
+                            --sum(dt.Precio_final)as Total,
+                            b.Importe_rg as Total, 
                             b.Fechaboleta
                             from tbboleta b inner join detalle_tbboleta dt
                             
                             on b.Codboleta=dt.Codboleta
                             where b.Codboleta like '%'+ @Codboleta +'%'
                             group by 
-                            dt.Codboleta,
+                            b.Codboleta,
                             dt.Cantidad,
-                            dt.Precio_final,
+                            --dt.Precio_final,
+                            b.Importe_rg,
                             b.Fechaboleta
                             order by Fechaboleta
                             ";
