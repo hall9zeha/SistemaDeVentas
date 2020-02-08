@@ -127,7 +127,7 @@ namespace Presentacion
 
                     for (int i = 0; i < lista.Count; i++)
                     {
-                        //num++;
+                        num++;
                         string[] fila = new string[] {
                         lista[i].Codboleta,
                         lista[i].Cantidad.ToString(),

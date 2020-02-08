@@ -21,25 +21,22 @@ namespace Presentacion
         {
             try
             {
-                Inventario objInvent = new Inventario();
-                objInvent.MdiParent = this;
+                Inventario_Prendas objInventario_Prendas = new Inventario_Prendas();
+                objInventario_Prendas.MdiParent = this;
                 foreach (Form frm in Application.OpenForms)
                 {
-                    if (frm is Inventario)
+                    if (frm is Inventario_Prendas)
                     {
                         frm.Show();
                         frm.Size = MinimumSize;
                         frm.WindowState = FormWindowState.Normal;
                         return;
                     }
-
                 }
-                objInvent.Show();
+                objInventario_Prendas.Show();
             }
             catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            { MessageBox.Show(ex.Message); }
         }
 
         private void Menu_Load(object sender, EventArgs e)
@@ -49,6 +46,7 @@ namespace Presentacion
 
         private void MantenimientoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+          
 
         }
 
@@ -95,6 +93,28 @@ namespace Presentacion
                     }
                 }
                 objVentas.Show();
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message); }
+        }
+
+        private void InventarioToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Inventario objInventario = new Inventario();
+                objInventario.MdiParent = this;
+                foreach (Form frm in Application.OpenForms)
+                {
+                    if (frm is Inventario)
+                    {
+                        frm.Show();
+                        frm.Size = MinimumSize;
+                        frm.WindowState = FormWindowState.Normal;
+                        return;
+                    }
+                }
+                objInventario.Show();
             }
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }

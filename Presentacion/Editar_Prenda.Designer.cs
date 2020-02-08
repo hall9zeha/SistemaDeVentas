@@ -48,12 +48,12 @@
             this.txtmarca = new System.Windows.Forms.TextBox();
             this.txtprecio = new System.Windows.Forms.TextBox();
             this.txtprecioventa = new System.Windows.Forms.TextBox();
-            this.txtcolor = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.txtcolor = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -79,6 +79,7 @@
             this.button3.TabIndex = 11;
             this.button3.Text = "Eliminar_Detalle";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // button2
             // 
@@ -121,6 +122,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.txtcolor);
+            this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.cmbtallaalfa);
             this.groupBox3.Controls.Add(this.txttallanum);
             this.groupBox3.Controls.Add(this.txtcantidad);
@@ -145,21 +148,21 @@
             "M",
             "S",
             "SM"});
-            this.cmbtallaalfa.Location = new System.Drawing.Point(175, 43);
+            this.cmbtallaalfa.Location = new System.Drawing.Point(175, 64);
             this.cmbtallaalfa.Name = "cmbtallaalfa";
             this.cmbtallaalfa.Size = new System.Drawing.Size(121, 21);
             this.cmbtallaalfa.TabIndex = 3;
             // 
             // txttallanum
             // 
-            this.txttallanum.Location = new System.Drawing.Point(175, 82);
+            this.txttallanum.Location = new System.Drawing.Point(175, 103);
             this.txttallanum.Name = "txttallanum";
             this.txttallanum.Size = new System.Drawing.Size(100, 20);
             this.txttallanum.TabIndex = 0;
             // 
             // txtcantidad
             // 
-            this.txtcantidad.Location = new System.Drawing.Point(175, 120);
+            this.txtcantidad.Location = new System.Drawing.Point(175, 141);
             this.txtcantidad.Name = "txtcantidad";
             this.txtcantidad.Size = new System.Drawing.Size(100, 20);
             this.txtcantidad.TabIndex = 0;
@@ -167,7 +170,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(64, 50);
+            this.label5.Location = new System.Drawing.Point(64, 71);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(94, 13);
             this.label5.TabIndex = 1;
@@ -176,7 +179,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(80, 89);
+            this.label6.Location = new System.Drawing.Point(80, 110);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(78, 13);
             this.label6.TabIndex = 1;
@@ -185,7 +188,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(109, 127);
+            this.label7.Location = new System.Drawing.Point(109, 148);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(49, 13);
             this.label7.TabIndex = 1;
@@ -218,10 +221,8 @@
             this.groupBox1.Controls.Add(this.txtmarca);
             this.groupBox1.Controls.Add(this.txtprecio);
             this.groupBox1.Controls.Add(this.txtprecioventa);
-            this.groupBox1.Controls.Add(this.txtcolor);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Location = new System.Drawing.Point(40, 100);
@@ -247,24 +248,17 @@
             // 
             // txtprecio
             // 
-            this.txtprecio.Location = new System.Drawing.Point(170, 111);
+            this.txtprecio.Location = new System.Drawing.Point(170, 87);
             this.txtprecio.Name = "txtprecio";
             this.txtprecio.Size = new System.Drawing.Size(100, 20);
             this.txtprecio.TabIndex = 0;
             // 
             // txtprecioventa
             // 
-            this.txtprecioventa.Location = new System.Drawing.Point(170, 144);
+            this.txtprecioventa.Location = new System.Drawing.Point(170, 120);
             this.txtprecioventa.Name = "txtprecioventa";
             this.txtprecioventa.Size = new System.Drawing.Size(100, 20);
             this.txtprecioventa.TabIndex = 0;
-            // 
-            // txtcolor
-            // 
-            this.txtcolor.Location = new System.Drawing.Point(170, 82);
-            this.txtcolor.Name = "txtcolor";
-            this.txtcolor.Size = new System.Drawing.Size(100, 20);
-            this.txtcolor.TabIndex = 0;
             // 
             // label1
             // 
@@ -284,19 +278,10 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Marca";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(112, 89);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(31, 13);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Color";
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(75, 151);
+            this.label10.Location = new System.Drawing.Point(75, 127);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(68, 13);
             this.label10.TabIndex = 1;
@@ -305,11 +290,27 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(106, 118);
+            this.label4.Location = new System.Drawing.Point(67, 94);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 13);
+            this.label4.Size = new System.Drawing.Size(76, 13);
             this.label4.TabIndex = 1;
-            this.label4.Text = "Precio";
+            this.label4.Text = "Precio Compra";
+            // 
+            // txtcolor
+            // 
+            this.txtcolor.Location = new System.Drawing.Point(175, 29);
+            this.txtcolor.Name = "txtcolor";
+            this.txtcolor.Size = new System.Drawing.Size(100, 20);
+            this.txtcolor.TabIndex = 4;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(128, 36);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(31, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Color";
             // 
             // Editar_Prenda
             // 
@@ -360,11 +361,11 @@
         private System.Windows.Forms.TextBox txtmarca;
         private System.Windows.Forms.TextBox txtprecio;
         private System.Windows.Forms.TextBox txtprecioventa;
-        private System.Windows.Forms.TextBox txtcolor;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtcolor;
+        private System.Windows.Forms.Label label3;
     }
 }

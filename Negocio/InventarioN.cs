@@ -109,6 +109,31 @@ namespace Negocio
                 throw;
             }
         }
+        public int MantenimientoDetalleInventario(StockE s, int tipoaccion)
+        {
+            try
+            {
+                string Cadxml = "";
+
+                Cadxml += "<tbstock ";
+                Cadxml += "codestock='" + s.CodStock + "' ";
+                Cadxml += "codproducto='" + s.Codproducto + "' ";
+                Cadxml += "color='" + s.Color + "' ";
+                Cadxml += "talla_alfanum='" + s.Talla_alfanum + "' ";
+                Cadxml += "talla_num='" + s.Talla_num + "' ";
+                Cadxml += "cantidad='" + s.Cantidad + "' ";
+                Cadxml += "stock='" + s.Stock + "' ";
+                Cadxml += "tipoaccion='" + tipoaccion + "'/>";
+                Cadxml = "<root>" + Cadxml + "</root>";
+                int result = objD.MantenimientoDetalleInventario(Cadxml);
+                if (result <= 0) throw new ApplicationException("Hubo un error en la transacción");
+                return result;
+
+            }
+            
+            catch (Exception)
+            { throw; }
+        }
         public InventarioE TraerInventario(string Id)
         {
             try

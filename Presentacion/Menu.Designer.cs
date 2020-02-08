@@ -35,6 +35,7 @@
             this.boletaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.boletaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.consultarVentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.inventarioToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,6 +61,8 @@
             // 
             // mantenimientoToolStripMenuItem
             // 
+            this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.inventarioToolStripMenuItem1});
             this.mantenimientoToolStripMenuItem.Name = "mantenimientoToolStripMenuItem";
             this.mantenimientoToolStripMenuItem.Size = new System.Drawing.Size(101, 54);
             this.mantenimientoToolStripMenuItem.Text = "Mantenimiento";
@@ -79,22 +82,29 @@
             this.boletaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.boletaToolStripMenuItem1});
             this.boletaToolStripMenuItem.Name = "boletaToolStripMenuItem";
-            this.boletaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.boletaToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.boletaToolStripMenuItem.Text = "Ventas";
             // 
             // boletaToolStripMenuItem1
             // 
             this.boletaToolStripMenuItem1.Name = "boletaToolStripMenuItem1";
-            this.boletaToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.boletaToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
             this.boletaToolStripMenuItem1.Text = "Boleta";
             this.boletaToolStripMenuItem1.Click += new System.EventHandler(this.BoletaToolStripMenuItem1_Click);
             // 
             // consultarVentasToolStripMenuItem
             // 
             this.consultarVentasToolStripMenuItem.Name = "consultarVentasToolStripMenuItem";
-            this.consultarVentasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.consultarVentasToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.consultarVentasToolStripMenuItem.Text = "Consultar Ventas";
             this.consultarVentasToolStripMenuItem.Click += new System.EventHandler(this.ConsultarVentasToolStripMenuItem_Click);
+            // 
+            // inventarioToolStripMenuItem1
+            // 
+            this.inventarioToolStripMenuItem1.Name = "inventarioToolStripMenuItem1";
+            this.inventarioToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.inventarioToolStripMenuItem1.Text = "Inventario";
+            this.inventarioToolStripMenuItem1.Click += new System.EventHandler(this.InventarioToolStripMenuItem1_Click);
             // 
             // Menu
             // 
@@ -122,5 +132,6 @@
         private System.Windows.Forms.ToolStripMenuItem boletaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem boletaToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem consultarVentasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem inventarioToolStripMenuItem1;
     }
 }

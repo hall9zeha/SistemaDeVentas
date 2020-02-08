@@ -312,5 +312,67 @@ namespace Datos
 
             return Query;
         }
+        public string Query_MantenimientoDetalleInventario()
+        {
+            string Query = @"
+                                begin
+                                declare @h int, @error nvarchar(500)
+                                exec sp_xml_preparedocument @h output, @Cadxml 
+                                begin try
+                                begin transaction
+
+                                insert into tbstock(Codproducto, Color, Talla_alfanum, Talla_num, Cantidad, Stock)
+                                select s.codproducto, s.color, s.talla_alfanum, s.talla_num, s.cantidad, s.stock
+                                from openxml(@h,'root/tbstock', 1)with
+                                (
+                                codproducto nvarchar(20),
+                                color nvarchar(max),
+                                talla_alfanum nvarchar(max),
+                                talla_num int,
+                                cantidad int,
+                                stock int,
+                                tipoaccion int
+                                )s where tipoaccion=1
+
+                                update st 
+                                set
+                                st.Color=s.color,
+                                st.Talla_alfanum=s.talla_alfanum,
+                                st.Talla_num=s.talla_num,
+                                st.Cantidad=s.cantidad,
+                                st.Stock=s.stock
+
+                                from openxml (@h,'root/tbstock',1)with
+                                (
+                                codestock int,
+                                color nvarchar(max),
+                                talla_alfanum nvarchar(max),
+                                talla_num int, 
+                                cantidad int ,
+                                stock int ,
+                                tipoaccion int
+
+                                )s inner join tbstock st on s.codestock=st.CodEstock where tipoaccion=2
+
+                                delete from tbstock
+                                from openxml(@h, 'root/tbstock', 1)with
+                                (
+                                codestock int,
+                                tipoaccion int
+                                ) s inner join tbstock st on s.codestock=st.CodEstock where tipoaccion=3
+                                if(@@trancount>0) commit transaction
+                                end try
+                                begin catch
+                                if(@@trancount>0) rollback transaction
+                                select @error=error_message()
+                                raiserror(@error,16,1)
+                                end catch
+                                end
+
+                            ";
+
+
+            return Query;
+        }
     }
 }

@@ -315,6 +315,22 @@ namespace Datos
             catch (Exception)
             { throw; }
         }
+        public int MantenimientoDetalleInventario(string xml)
+        {
+            SqlCommand cmd = null;
+            var resultado = 0;
+            try
+            {
+                cmd = new SqlCommand(sql.Query_MantenimientoDetalleInventario(), cn);
+                cmd.Parameters.AddWithValue("@Cadxml", xml);
+                cn.Open();
+                resultado = cmd.ExecuteNonQuery();
+                return resultado;
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+        }
         public int RegistrarInventario(string xml)
         {
             var resultado = 0;

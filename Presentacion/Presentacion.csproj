@@ -64,6 +64,12 @@
     <Compile Include="Buscar_Prenda.Designer.cs">
       <DependentUpon>Buscar_Prenda.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cambio_de_Prenda.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cambio_de_Prenda.Designer.cs">
+      <DependentUpon>Cambio_de_Prenda.cs</DependentUpon>
+    </Compile>
     <Compile Include="Detalle_Prenda.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +93,12 @@
     </Compile>
     <Compile Include="Inventario.Designer.cs">
       <DependentUpon>Inventario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventario_Prendas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventario_Prendas.Designer.cs">
+      <DependentUpon>Inventario_Prendas.cs</DependentUpon>
     </Compile>
     <Compile Include="LocalBD.cs" />
     <Compile Include="Menu.cs">
@@ -112,6 +124,9 @@
     <EmbeddedResource Include="Buscar_Prenda.resx">
       <DependentUpon>Buscar_Prenda.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Cambio_de_Prenda.resx">
+      <DependentUpon>Cambio_de_Prenda.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Detalle_Prenda.resx">
       <DependentUpon>Detalle_Prenda.cs</DependentUpon>
     </EmbeddedResource>
@@ -123,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Inventario.resx">
       <DependentUpon>Inventario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventario_Prendas.resx">
+      <DependentUpon>Inventario_Prendas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>

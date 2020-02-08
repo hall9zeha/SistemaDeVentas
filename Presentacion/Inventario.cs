@@ -200,5 +200,18 @@ namespace Presentacion
             Buscar_Prenda bprenda = new Buscar_Prenda();
             bprenda.ShowDialog();
         }
+
+        private void DgvInventario_SelectionChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                var row = (sender as DataGridView).CurrentRow;
+                lblcod.Text = row.Cells[0].Value.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

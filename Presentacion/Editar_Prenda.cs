@@ -13,11 +13,13 @@ namespace Presentacion
 {
     public partial class Editar_Prenda : Form
     {
-        string Id_Prod="";
+        
         InventarioN objN = new InventarioN();
         InventarioE objE = new InventarioE();
         StockE objS = new StockE();
+        string Id_Prod = "";
         int idStock = 0;
+        int tipoAccion = 0;
         public Editar_Prenda(string Id)
         {
             InitializeComponent();
@@ -77,6 +79,23 @@ namespace Presentacion
                 MessageBox.Show(ex.Message);
             }
         }
+        void agregarDetallePrenda()
+        {
+            try
+            {
+                objS.Codproducto = lblcode.Text;
+                if (txtcolor.Text == "") objS.Color= "vacio"; else objS.Color = txtcolor.Text;
+                if (cmbtallaalfa.Text == "") objS.Talla_alfanum = "vacio"; else objS.Talla_alfanum = cmbtallaalfa.Text;
+                if (txttallanum.Text == "")objS.Talla_num = 0; else objS.Talla_num =Convert.ToInt32(txttallanum.Text);
+                if (txtcantidad.Text == "") objS.Cantidad = 0; else objS.Cantidad = Convert.ToInt32(txtcantidad.Text);
+                if (txtcantidad.Text == "") objS.Stock = 0; else objS.Stock = Convert.ToInt32(txtcantidad.Text);
+                objN.MantenimientoDetalleInventario(objS, tipoAccion);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         void editarDetallePrenda()
         {
             try
@@ -86,8 +105,10 @@ namespace Presentacion
                 if (txttallanum.Text == "") objS.Talla_num = 0; else objS.Talla_num = Convert.ToInt32(txttallanum.Text);
                 if (txtcantidad.Text == "") objS.Cantidad = 0; else objS.Cantidad = Convert.ToInt32(txtcantidad.Text);
                 if (txtcantidad.Text == "") objS.Stock = 0; else objS.Stock = Convert.ToInt32(txtcantidad.Text);
+                idStock = Convert.ToInt32(dgvprenda.CurrentRow.Cells[0].Value);
+                
                 objS.CodStock = idStock;
-                objN.EditarDetallePrenda(objS);
+                objN.MantenimientoDetalleInventario(objS, tipoAccion);
                 MessageBox.Show("Detalles Editados Correctamente");
 
             }
@@ -96,9 +117,23 @@ namespace Presentacion
                 MessageBox.Show(ex.Message);
             }
         }
+        void eliminarDetallePrenda()
+        {
+            try
+            {
+                idStock = Convert.ToInt32(dgvprenda.CurrentRow.Cells[0].Value);
+                objS.CodStock = idStock;
+                objN.MantenimientoDetalleInventario(objS, tipoAccion);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }   
+        }
 
         private void Editar_Prenda_Load(object sender, EventArgs e)
         {
+            this.CenterToScreen();
             crearGrid();
             listarDetallePrenda();
             traerInventario();
@@ -107,7 +142,9 @@ namespace Presentacion
 
         private void Button4_Click(object sender, EventArgs e)
         {
-           
+            tipoAccion = 1;
+            agregarDetallePrenda();
+            listarDetallePrenda();
         }
 
         private void Dgvprenda_SelectionChanged(object sender, EventArgs e)
@@ -128,7 +165,8 @@ namespace Presentacion
 
         private void Button2_Click(object sender, EventArgs e)
         {
-             idStock = Convert.ToInt32(dgvprenda.CurrentRow.Cells[0].Value);
+           
+            tipoAccion = 2;
             editarDetallePrenda();
             listarDetallePrenda();
 
@@ -159,6 +197,13 @@ namespace Presentacion
                 MessageBox.Show(ex.Message);
             }
 
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            tipoAccion = 3;
+            eliminarDetallePrenda();
+            listarDetallePrenda();
         }
     }
 }
