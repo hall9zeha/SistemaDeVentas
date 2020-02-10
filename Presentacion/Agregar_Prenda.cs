@@ -17,7 +17,7 @@ namespace Presentacion
     public partial class Agregar_Prenda : Form
     {
         InventarioE objE = new InventarioE();
-        StockE objS = new StockE();
+        DetalleInventarioE objS = new DetalleInventarioE();
         InventarioN objN = new InventarioN();
         SqlConnection cn =  Conexion.Instancia.Conectar();
 
@@ -75,12 +75,12 @@ namespace Presentacion
                 if (txtprecio.Text == "") objE.Precio = 0; else objE.Precio = Convert.ToDouble(txtprecio.Text);
                 if (txtprecioventa.Text == "") objE.PrecioVenta = 0; else objE.PrecioVenta = Convert.ToDouble(txtprecioventa.Text);
 
-                List<StockE> Detalle = new List<StockE>();
+                List<DetalleInventarioE> Detalle = new List<DetalleInventarioE>();
                 foreach (DataGridViewRow row in dgvprenda.Rows)
                 {
                     //la razón de utilizar una nueva instancia dentro del bucle es para que agregue todos los elementos
                     //si tomamos la variable global solo agregara un elemento
-                    StockE s = new StockE();
+                    DetalleInventarioE s = new DetalleInventarioE();
                     s.Codproducto = row.Cells[0].Value.ToString();
                     s.Color = row.Cells[1].Value.ToString();
                     s.Talla_alfanum = row.Cells[2].Value.ToString();

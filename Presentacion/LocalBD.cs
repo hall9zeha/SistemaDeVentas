@@ -13,7 +13,7 @@ namespace Presentacion
    public  class LocalBD
     {
 
-    List<StockE> listaBoleta = new List<StockE>();
+    List<DetalleInventarioE> listaBoleta = new List<DetalleInventarioE>();
    
     private static readonly LocalBD _instancia = new LocalBD();
 
@@ -23,7 +23,7 @@ namespace Presentacion
             }
    
 
-    public List<StockE> ReturnListaBoleta(int getset, int idstock, int cantidad, double precio)
+    public List<DetalleInventarioE> ReturnListaBoleta(int getset, int idstock, int cantidad, double precio)
     {
         try
         {
@@ -52,7 +52,7 @@ namespace Presentacion
                             throw new ApplicationException("El producto ya está en la lista");
                         }
                     }
-                    StockE detBoleta = InventarioN.Instancia.AgregarProductoBoleta(idstock);
+                    DetalleInventarioE detBoleta = InventarioN.Instancia.AgregarProductoBoleta(idstock);
                     detBoleta.Cantidad = cantidad;
                     detBoleta.Precio = precio;
                     listaBoleta.Add(detBoleta);
@@ -67,7 +67,7 @@ namespace Presentacion
     {
         try
         {
-            foreach (StockE p in listaBoleta)
+            foreach (DetalleInventarioE p in listaBoleta)
             {
                 if (p.CodStock == idstock)
                 {

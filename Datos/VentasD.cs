@@ -208,13 +208,13 @@ namespace Datos
                     InventarioE m = new InventarioE();
                     m.Marca = dr["Marca"].ToString();
                     dt.Marca = m;
-                    StockE c = new StockE();
+                    DetalleInventarioE c = new DetalleInventarioE();
                     c.Color = dr["Color"].ToString();
                     dt.Color = c;
-                    StockE t = new StockE();
+                    DetalleInventarioE t = new DetalleInventarioE();
                     t.Talla_alfanum = dr["Talla_alfanum"].ToString();
                     dt.Talla_alfanum = t;
-                    StockE tn = new StockE();
+                    DetalleInventarioE tn = new DetalleInventarioE();
                     tn.Talla_num = Convert.ToInt32(dr["Talla_num"].ToString());
                     dt.Talla_num = tn;
                     dt.Cantidad = Convert.ToInt32(dr["Cantidad"]);
@@ -232,7 +232,82 @@ namespace Datos
 
         }
 
-        
-       
+        public List<DetalleBoletaE> ListarDetalleBoletaCambio(string boleta)
+        {
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            List<DetalleBoletaE> lista = null;
+            try
+            {
+                cmd = new SqlCommand(sql.Query_ListarDetalleVentaCambio(), cn);
+                cmd.Parameters.AddWithValue("@Codboleta", boleta);
+                cn.Open();
+                dr = cmd.ExecuteReader();
+                lista = new List<DetalleBoletaE>();
+                while (dr.Read())
+                {
+                    DetalleBoletaE dt = new DetalleBoletaE();
+                    dt.Codproducto = dr["Codproducto"].ToString();
+                    dt.Descripción = dr["Descripción"].ToString();
+                    InventarioE m = new InventarioE();
+                    m.Marca = dr["Marca"].ToString();
+                    dt.Marca = m;
+                    DetalleInventarioE c = new DetalleInventarioE();
+                    c.Color = dr["Color"].ToString();
+                    dt.Color = c;
+                    DetalleInventarioE t = new DetalleInventarioE();
+                    t.Talla_alfanum = dr["Talla_alfanum"].ToString();
+                    dt.Talla_alfanum = t;
+                    DetalleInventarioE tn = new DetalleInventarioE();
+                    tn.Talla_num = Convert.ToInt32(dr["Talla_num"].ToString());
+                    dt.Talla_num = tn;
+                    dt.Cantidad = Convert.ToInt32(dr["Cantidad"]);
+                    dt.Precio_final = Convert.ToDouble(dr["Precio_final"].ToString());
+                    dt.Coddetalle = Convert.ToInt32(dr["Coddetalle"].ToString());
+                    lista.Add(dt);
+                }
+
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+            return lista;
+        }
+        public List<DetalleInventarioE> BuscarPrendaCambio(string cadenaEntrada)
+        {
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            List<DetalleInventarioE> lista = null;
+
+            try
+            {
+                cmd = new SqlCommand(sql.Query_BuscarPrendaCambio(), cn);
+                cmd.Parameters.AddWithValue("@tipobusqueda", cadenaEntrada);
+                cn.Open();
+                dr = cmd.ExecuteReader();
+                lista = new List<DetalleInventarioE>();
+                while (dr.Read())
+                {
+                    DetalleInventarioE dt = new DetalleInventarioE();
+                    dt.Codproducto = dr["Codproducto"].ToString();
+                    dt.CodStock = Convert.ToInt32(dr["CodEstock"].ToString());
+                    InventarioE d = new InventarioE();
+                    d.Descripción = dr["Descripción"].ToString();
+                    dt.inventario = d;
+                    dt.Marca = dr["Marca"].ToString();
+                    dt.Color = dr["Color"].ToString();
+                    dt.Talla_alfanum = dr["Talla_alfanum"].ToString();
+                    dt.Talla_num = Convert.ToInt32(dr["Talla_num"].ToString());
+                    dt.Stock = Convert.ToInt32(dr["Stock"].ToString());
+                    dt.Precio = Convert.ToDouble(dr["PrecioVenta"].ToString());
+                    lista.Add(dt);
+
+                }
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+            return lista;
+        }
     }
 }

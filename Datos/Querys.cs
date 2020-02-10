@@ -285,31 +285,84 @@ namespace Datos
                             ";
             return Query;
         }
+
         public string Query_ListarDetalleVenta()
         {
             string Query = @"
                                 select
-                                detalle_tbboleta.Codproducto, 
-                                tbinventario.Descripción, 
-                                tbinventario.Marca, 
-                                tbstock.Color, 
-                                tbstock.Talla_alfanum, 
-                                tbstock.Talla_num,
-                                detalle_tbboleta.Cantidad,  
-                                detalle_tbboleta.Precio_final
+                                dtb.Codproducto, 
+                                i.Descripción, 
+                                i.Marca, 
+                                s.Color, 
+                                s.Talla_alfanum, 
+                                s.Talla_num,
+                                dtb.Cantidad,  
+                                dtb.Precio_final
 
-                                from tbinventario inner join detalle_tbboleta   
+                                from tbinventario i inner join detalle_tbboleta  dtb 
 
-                                on  tbinventario.Codproducto=detalle_tbboleta.Codproducto 
-                                inner join tbstock on tbstock.Codproducto =tbinventario.Codproducto  
-                                inner join tbboleta on tbboleta.Codboleta=detalle_tbboleta.Codboleta   
+                                on  i.Codproducto=dtb.Codproducto 
+                                inner join tbstock s on s.Codproducto =i.Codproducto  
+                                inner join tbboleta b on b.Codboleta=dtb.Codboleta   
                                 
                                 where 
-                                detalle_tbboleta.Codboleta=@Codboleta and 
-                                tbstock.CodEstock =detalle_tbboleta.Codproducto_detalle and 
-                                detalle_tbboleta.Coddetalle =detalle_tbboleta.Coddetalle  
+                                dtb.Codboleta=@Codboleta and 
+                                s.CodEstock =dtb.Codproducto_detalle and 
+                                dtb.Coddetalle =dtb.Coddetalle  
                             ";
 
+            return Query;
+        }
+        public string Query_ListarDetalleVentaCambio()
+        {
+            string Query = @"
+                                select
+                                dtb.Codproducto, 
+                                i.Descripción, 
+                                i.Marca, 
+                                s.Color, 
+                                s.Talla_alfanum, 
+                                s.Talla_num,
+                                dtb.Cantidad,  
+                                dtb.Precio_final,
+                                dtb.Coddetalle
+
+                                from tbinventario i inner join detalle_tbboleta  dtb 
+
+                                on  i.Codproducto=dtb.Codproducto 
+                                inner join tbstock s on s.Codproducto =i.Codproducto  
+                                inner join tbboleta b on b.Codboleta=dtb.Codboleta   
+                                
+                                where 
+                                dtb.Codboleta=@Codboleta and 
+                                s.CodEstock =dtb.Codproducto_detalle and 
+                                dtb.Coddetalle =dtb.Coddetalle  
+                            ";
+
+            return Query;
+        }
+        public string Query_BuscarPrendaCambio()
+        {
+            string Query = @"
+                            begin
+                            select 
+                            s.CodProducto,
+                            s.CodEstock,
+                            i.Descripción,
+                            i.Marca,
+                            s.Color,
+                            s.Talla_alfanum,
+                            s.Talla_num,
+                            s.Stock,
+                            i.PrecioVenta
+
+                            from tbstock s inner join tbinventario i
+                            on s.Codproducto=i.Codproducto 
+                            --where i.Descripción + s.Color LIKE '%'+ rtrim(ltrim('poleraverde ')) +'%'
+                            where replace(i.Descripción,' ' ,'') + i.Marca + s.Color LIKE '%'+ replace(@tipobusqueda,' ','') +'%'
+                            order by s.CodProducto
+                            end
+                            ";
             return Query;
         }
         public string Query_MantenimientoDetalleInventario()

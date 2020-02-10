@@ -146,13 +146,13 @@ namespace Presentacion
             Buscar_Prenda objBuscar_Prenda = new Buscar_Prenda();
             objBuscar_Prenda.ShowDialog();
            
-            List<StockE> lista = LocalBD.Instancia.ReturnListaBoleta(0, 0, 0, 0);
+            List<DetalleInventarioE> lista = LocalBD.Instancia.ReturnListaBoleta(0, 0, 0, 0);
             llenarGridBoleta(lista);
             montoTotal();
             contarItems();
         }
 
-        void  llenarGridBoleta(List<StockE> lista)
+        void  llenarGridBoleta(List<DetalleInventarioE> lista)
         {
 
             try
@@ -200,7 +200,7 @@ namespace Presentacion
                     int idStock = Convert.ToInt32(dgvDetalleBoleta.CurrentRow.Cells[0].Value);
                     LocalBD.Instancia.RemovePrendaLista(idStock);
 
-                    List<StockE> lista = LocalBD.Instancia.ReturnListaBoleta(0, 0, 0, 0);
+                    List<DetalleInventarioE> lista = LocalBD.Instancia.ReturnListaBoleta(0, 0, 0, 0);
                     llenarGridBoleta(lista);
                     montoTotal();
                     contarItems();

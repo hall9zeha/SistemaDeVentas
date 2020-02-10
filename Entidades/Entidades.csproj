@@ -45,7 +45,7 @@
     <Compile Include="DetalleBoletaE.cs" />
     <Compile Include="InventarioE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StockE.cs" />
+    <Compile Include="DetalleInventarioE.cs" />
     <Compile Include="UsuarioE.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,7 +15,7 @@ namespace Entidades
         public double PrecioVenta { get; set; }
         public int Cantidad { get; set; }
         public int Stock { get;set; }
-        public List<StockE> detalleInventario { get; set; }
+        public List<DetalleInventarioE> detalleInventario { get; set; }
 
     }
 }

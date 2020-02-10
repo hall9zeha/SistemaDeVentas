@@ -16,9 +16,9 @@ namespace Entidades
         public int Cantidad { get; set; }
         public double Precio_final { get; set; } 
         public InventarioE Marca { get; set; }
-        public StockE Color { get; set; }
-        public StockE Talla_alfanum { get; set; }
-        public StockE Talla_num { get; set; }
+        public DetalleInventarioE Color { get; set; }
+        public DetalleInventarioE Talla_alfanum { get; set; }
+        public DetalleInventarioE Talla_num { get; set; }
         
 
     }

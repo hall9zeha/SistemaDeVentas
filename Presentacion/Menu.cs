@@ -119,5 +119,29 @@ namespace Presentacion
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }
         }
+
+        private void CambioDePrendaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Cambio_de_Prenda objCambios = new Cambio_de_Prenda();
+                objCambios.MdiParent = this;
+                foreach (Form frm in Application.OpenForms)
+                {
+                    if (frm is Cambio_de_Prenda)
+                    {
+                        frm.Show();
+                        frm.Size = MinimumSize;
+                        frm.WindowState = FormWindowState.Normal;
+                        return;
+                    }
+                }
+                objCambios.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

@@ -58,6 +58,12 @@
     <Compile Include="Boleta de Venta.Designer.cs">
       <DependentUpon>Boleta de Venta.cs</DependentUpon>
     </Compile>
+    <Compile Include="Buscar_Cambio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Buscar_Cambio.Designer.cs">
+      <DependentUpon>Buscar_Cambio.cs</DependentUpon>
+    </Compile>
     <Compile Include="Buscar_Prenda.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +75,12 @@
     </Compile>
     <Compile Include="Cambio_de_Prenda.Designer.cs">
       <DependentUpon>Cambio_de_Prenda.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Detalle_Cambios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Detalle_Cambios.Designer.cs">
+      <DependentUpon>Detalle_Cambios.cs</DependentUpon>
     </Compile>
     <Compile Include="Detalle_Prenda.cs">
       <SubType>Form</SubType>
@@ -121,11 +133,17 @@
     <EmbeddedResource Include="Boleta de Venta.resx">
       <DependentUpon>Boleta de Venta.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Buscar_Cambio.resx">
+      <DependentUpon>Buscar_Cambio.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Buscar_Prenda.resx">
       <DependentUpon>Buscar_Prenda.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Cambio_de_Prenda.resx">
       <DependentUpon>Cambio_de_Prenda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Detalle_Cambios.resx">
+      <DependentUpon>Detalle_Cambios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Detalle_Prenda.resx">
       <DependentUpon>Detalle_Prenda.cs</DependentUpon>

@@ -84,5 +84,15 @@ namespace Negocio
             List<DetalleBoletaE> lista = objV.ListarDetalleBoleta(boleta);
             return lista;
         }
+        public List<DetalleBoletaE> ListarDetalleBoletaCambio(string boleta)
+        {
+            List<DetalleBoletaE> lista = objV.ListarDetalleBoletaCambio(boleta);
+            return lista;
+        }
+        public List<DetalleInventarioE> BuscarPrendaCambio(string cadenaEntrada)
+        {
+            List<DetalleInventarioE> lista = objV.BuscarPrendaCambio(cadenaEntrada);
+            return lista;
+        }
     }
 }

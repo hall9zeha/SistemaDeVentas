@@ -160,21 +160,21 @@ namespace Datos
             { throw; }
             
         }
-        public List<StockE> TraerDetallePrenda(string Id)
+        public List<DetalleInventarioE> TraerDetallePrenda(string Id)
         {
             SqlCommand cmd = null;
             SqlDataReader dr = null;
-            List<StockE> lista = null;
+            List<DetalleInventarioE> lista = null;
             try
             {
                cmd = new SqlCommand(sql.Query_TraerDetallePrenda(), cn);
                 cmd.Parameters.AddWithValue("@Codproducto", Id);
                 cn.Open();
                 dr = cmd.ExecuteReader();
-                lista = new List<StockE>();
+                lista = new List<DetalleInventarioE>();
                 while (dr.Read())
                 {
-                    StockE objS = new StockE();
+                    DetalleInventarioE objS = new DetalleInventarioE();
                     objS.CodStock = Convert.ToInt32(dr["CodEstock"].ToString());
                     objS.Codproducto = dr["Codproducto"].ToString();
                     InventarioE i = new InventarioE();
@@ -198,11 +198,11 @@ namespace Datos
 
         }
 
-        public StockE AgregarProductoBoleta(int Id)
+        public DetalleInventarioE AgregarProductoBoleta(int Id)
         {
             SqlCommand cmd = null;
             SqlDataReader dr = null;
-            StockE objS = null;
+            DetalleInventarioE objS = null;
             try
             {
                 cmd = new SqlCommand(sql.Query_AgregarProductoBoleta(), cn);
@@ -212,7 +212,7 @@ namespace Datos
 
                 if (dr.Read())
                 {
-                    objS = new StockE();
+                    objS = new DetalleInventarioE();
                     objS.CodStock = Convert.ToInt32(dr["CodEstock"].ToString());
                     objS.Codproducto = dr["Codproducto"].ToString();
                     InventarioE i = new InventarioE();
@@ -289,7 +289,7 @@ namespace Datos
             catch (Exception)
             { throw; }
         }
-        public void EditarDetallePrenda(StockE objS)
+        public void EditarDetallePrenda(DetalleInventarioE objS)
         {
             try
             {

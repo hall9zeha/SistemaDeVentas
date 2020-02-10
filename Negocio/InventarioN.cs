@@ -53,11 +53,11 @@ namespace Negocio
         {
             objD.GenerarCodigoPrenda(result);
         }
-        public List<StockE> TraerDetallePrenda(string Id)
+        public List<DetalleInventarioE> TraerDetallePrenda(string Id)
         {
             try
             {
-                List<StockE> lista = null;
+                List<DetalleInventarioE> lista = null;
                 lista = InventarioD.Instancia.TraerDetallePrenda(Id);
                 return lista;
             }
@@ -66,11 +66,11 @@ namespace Negocio
         }
 
 
-        public StockE AgregarProductoBoleta(int id)
+        public DetalleInventarioE AgregarProductoBoleta(int id)
         {
             try
             {
-                StockE objS = InventarioD.Instancia.AgregarProductoBoleta(id);
+                DetalleInventarioE objS = InventarioD.Instancia.AgregarProductoBoleta(id);
                 return objS;
             }
             catch (Exception)
@@ -88,7 +88,7 @@ namespace Negocio
                 CadXml += "precio='" + i.Precio + "' ";
                 CadXml += "precioventa='" + i.PrecioVenta + "'>";
 
-                foreach (StockE s in i.detalleInventario)
+                foreach (DetalleInventarioE s in i.detalleInventario)
                 {
                     CadXml += "<tbstock ";
                     CadXml += "codproducto='" + s.Codproducto + "' ";
@@ -109,7 +109,7 @@ namespace Negocio
                 throw;
             }
         }
-        public int MantenimientoDetalleInventario(StockE s, int tipoaccion)
+        public int MantenimientoDetalleInventario(DetalleInventarioE s, int tipoaccion)
         {
             try
             {
@@ -149,7 +149,7 @@ namespace Negocio
         {
             objD.EditarPrenda(objI);
         }
-        public void EditarDetallePrenda(StockE objS)
+        public void EditarDetallePrenda(DetalleInventarioE objS)
         {
             objD.EditarDetallePrenda(objS);
         }

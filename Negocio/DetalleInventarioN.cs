@@ -7,19 +7,19 @@ using Datos;
 using Entidades;
 namespace Negocio
 {
-   public  class StockN
+   public  class DetalleInventarioN
     {
-        private static readonly StockN _instancia = new StockN();
-        public static StockN Instancia
+        private static readonly DetalleInventarioN _instancia = new DetalleInventarioN();
+        public static DetalleInventarioN Instancia
         {
-            get { return StockN._instancia; }
+            get { return DetalleInventarioN._instancia; }
         }
 
-        public List<StockE> TraerDetallePrenda(string Id)
+        public List<DetalleInventarioE> TraerDetallePrenda(string Id)
         {
             try
             {
-                List<StockE> lista = null;
+                List<DetalleInventarioE> lista = null;
                 lista = InventarioD.Instancia.TraerDetallePrenda(Id);
                 return lista;
             }

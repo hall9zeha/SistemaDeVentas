@@ -62,7 +62,7 @@ namespace Presentacion
             {
 
                 int num = 0;
-                List<StockE> lista = InventarioN.Instancia.TraerDetallePrenda(Id);
+                List<DetalleInventarioE> lista = InventarioN.Instancia.TraerDetallePrenda(Id);
                 dgvdetalle.Rows.Clear();
                 for (int i = 0; i < lista.Count; i++)
                 {

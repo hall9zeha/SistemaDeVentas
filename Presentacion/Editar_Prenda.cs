@@ -16,7 +16,7 @@ namespace Presentacion
         
         InventarioN objN = new InventarioN();
         InventarioE objE = new InventarioE();
-        StockE objS = new StockE();
+        DetalleInventarioE objS = new DetalleInventarioE();
         string Id_Prod = "";
         int idStock = 0;
         int tipoAccion = 0;
@@ -177,7 +177,7 @@ namespace Presentacion
             try
             {
                 int num = 0;
-                List<StockE> lista = objN.TraerDetallePrenda(Id_Prod);
+                List<DetalleInventarioE> lista = objN.TraerDetallePrenda(Id_Prod);
                 dgvprenda.Rows.Clear();
                 for (int i = 0; i < lista.Count; i++)
                 {

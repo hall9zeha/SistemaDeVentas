@@ -1,6 +1,6 @@
 ﻿namespace Presentacion
 {
-    partial class txtBuscar
+    partial class Cambio_de_Prenda
     {
         /// <summary>
         /// Required designer variable.
@@ -28,32 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dgvBoleta = new System.Windows.Forms.DataGridView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.dgvCambioPrenda = new System.Windows.Forms.DataGridView();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBoleta)).BeginInit();
+            this.button1 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCambioPrenda)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dgvBoleta
+            // dgvCambioPrenda
             // 
-            this.dgvBoleta.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBoleta.Location = new System.Drawing.Point(102, 130);
-            this.dgvBoleta.Name = "dgvBoleta";
-            this.dgvBoleta.Size = new System.Drawing.Size(449, 231);
-            this.dgvBoleta.TabIndex = 0;
-            this.dgvBoleta.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
+            this.dgvCambioPrenda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCambioPrenda.Location = new System.Drawing.Point(102, 130);
+            this.dgvCambioPrenda.Name = "dgvCambioPrenda";
+            this.dgvCambioPrenda.Size = new System.Drawing.Size(449, 231);
+            this.dgvCambioPrenda.TabIndex = 0;
+            this.dgvCambioPrenda.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
             // 
-            // textBox1
+            // txtBuscar
             // 
-            this.textBox1.Location = new System.Drawing.Point(6, 19);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(175, 20);
-            this.textBox1.TabIndex = 1;
+            this.txtBuscar.Location = new System.Drawing.Point(6, 19);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(175, 20);
+            this.txtBuscar.TabIndex = 1;
+            this.txtBuscar.TextChanged += new System.EventHandler(this.TxtBuscar_TextChanged);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.txtBuscar);
             this.groupBox1.Location = new System.Drawing.Point(102, 67);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(200, 47);
@@ -61,17 +63,28 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Buscar boleta";
             // 
-            // txtBuscar
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(476, 392);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Detalle";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // Cambio_de_Prenda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.dgvBoleta);
-            this.Name = "txtBuscar";
+            this.Controls.Add(this.dgvCambioPrenda);
+            this.Name = "Cambio_de_Prenda";
             this.Text = "Cambio_de_Prenda";
-            this.Load += new System.EventHandler(this.TxtBuscar_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBoleta)).EndInit();
+            this.Load += new System.EventHandler(this.Cambio_de_Prenda_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCambioPrenda)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -80,8 +93,9 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dgvBoleta;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.DataGridView dgvCambioPrenda;
+        private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button button1;
     }
 }
