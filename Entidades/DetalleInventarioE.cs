@@ -21,6 +21,7 @@ namespace Entidades
         public int Cantidad { get; set; }
         public int Stock { get; set; }
         
-
+        public string EstadoCambio { get; set; }
+        public double MontoCambio { get; set; }
     }
 }

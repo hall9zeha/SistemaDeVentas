@@ -19,33 +19,13 @@ namespace Datos
 
         SqlConnection cn =  Conexion.Instancia.Conectar();
         //Método para generar un código string funcional desde la capa de negocio, aun sin funcionr desde la capa datos
-        public string GenerarCodigoBoleta(string control)
+        public string GenerarCodigoBoleta()
         {
             try
             {
                 string Abc = "BO";
-                string Query = @"Declare @Id Int
-                                select top 1 @Id = Left(Codboleta,4) FROM tbboleta  order by Codboleta desc
-                                if LEN(@Id) is null
-                                begin
-                                set @id = 1
-                                end
-                                print @id
-                                Declare @Val int
-                                select @Val=COUNT(*) from tbboleta where LEFT(Codboleta,4)=@id
-                                if @val = 1
-                                 begin
-                                 set @Id = @Id+1
-                                 set @Val = 1
-                                 end
-                                else
-                                 begin
-                                 set @Id = @Id
-                                 set @Val = @Val +1
-                                 end
- 
-                                select @Id As Numero,@Val As Abc";
-                SqlCommand cmd = new SqlCommand(Query, cn);
+               
+                SqlCommand cmd = new SqlCommand(sql.Query_GenerarCodigoCadena(), cn);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -62,17 +42,17 @@ namespace Datos
 
                 }
                 drCeros += numeracion;
-                control = drCeros + "-" + Abc;
+                string cadena = drCeros + "-" + Abc;
 
                 if (cn.State == ConnectionState.Open) cn.Close();
                 cn.Open();
                 cmd.ExecuteNonQuery();
                 cn.Close();
-                
+                return cadena;
             }
             catch (Exception )
             { throw; }
-            return control;
+            
 
         }
         
@@ -244,10 +224,11 @@ namespace Datos
                 cn.Open();
                 dr = cmd.ExecuteReader();
                 lista = new List<DetalleBoletaE>();
-                while (dr.Read())
+                while(dr.Read())
                 {
                     DetalleBoletaE dt = new DetalleBoletaE();
                     dt.Codproducto = dr["Codproducto"].ToString();
+                    dt.CodProducto_detalle = Convert.ToInt32(dr["CodProducto_detalle"].ToString());
                     dt.Descripción = dr["Descripción"].ToString();
                     InventarioE m = new InventarioE();
                     m.Marca = dr["Marca"].ToString();
@@ -272,6 +253,44 @@ namespace Datos
             { throw; }
             finally { cmd.Connection.Close(); }
             return lista;
+        }
+        //Métodos de prueba para el modulo de devolucion 
+        public DetalleInventarioE TraerPrendaCambio(int codProd)
+        {
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            DetalleInventarioE dt = null;
+            try
+            {
+                cmd = new SqlCommand(sql.Query_TraerPrendaCambio(), cn);
+                cmd.Parameters.AddWithValue("@CodProd",codProd);
+                cn.Open();
+                dr = cmd.ExecuteReader();
+               
+                if (dr.Read())
+                {
+                    dt = new DetalleInventarioE();
+                    dt.Codproducto = dr["Codproducto"].ToString();
+                    dt.CodStock = Convert.ToInt32(dr["CodEstock"].ToString());
+                    InventarioE d = new InventarioE();
+                    d.Descripción = dr["Descripción"].ToString();
+                    dt.inventario = d;
+                    dt.Marca = dr["Marca"].ToString();
+                    dt.Color = dr["Color"].ToString();
+                    dt.Talla_alfanum = dr["Talla_alfanum"].ToString();
+                    dt.Talla_num = Convert.ToInt32(dr["Talla_num"].ToString());
+                    dt.Stock = Convert.ToInt32(dr["Stock"].ToString());
+                    dt.Precio = Convert.ToDouble(dr["PrecioVenta"].ToString());
+                    
+
+
+                }
+
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+            return dt;
         }
         public List<DetalleInventarioE> BuscarPrendaCambio(string cadenaEntrada)
         {
@@ -309,5 +328,40 @@ namespace Datos
             finally { cmd.Connection.Close(); }
             return lista;
         }
+        public void RegistrarEntradaPrendaCambio(DetalleBoletaE obj)
+        {
+            //try
+            //{
+                SqlCommand cmd = new SqlCommand(sql.Query_EntradaPrendasCambio(), cn);
+                cmd.Parameters.AddWithValue("@estadocambio", obj.EstadoCambio);
+                cmd.Parameters.AddWithValue("@Cantidad", obj.Cantidad);
+                cmd.Parameters.AddWithValue("@Coddetalle", obj.Coddetalle);
+                cmd.Parameters.AddWithValue("@CodProducto_detalle", obj.CodProducto_detalle);
+                if (cn.State == ConnectionState.Open) cn.Close();
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+            //}
+            //catch (Exception)
+            //{ throw; }
+        }
+        public void RegistrarSalidaPrendaCambio(DetalleBoletaE obj)
+        {
+            SqlCommand cmd = new SqlCommand(sql.Query_SalidaPrendasCambio(), cn);
+            cmd.Parameters.AddWithValue("@estadocambio", obj.EstadoCambio);
+            cmd.Parameters.AddWithValue("@Codboleta", obj.Codboleta);
+            cmd.Parameters.AddWithValue("@Codproducto", obj.Codproducto);
+            cmd.Parameters.AddWithValue("@Codproducto_detalle", obj.CodProducto_detalle);
+            cmd.Parameters.AddWithValue("@Descripción", obj.Descripción);
+            cmd.Parameters.AddWithValue("@Cantidad", obj.Cantidad);
+            cmd.Parameters.AddWithValue("@Precio_Final",obj.Precio_final);
+            cmd.Parameters.AddWithValue("@Importe_rg", obj.importe);
+
+            if (cn.State == ConnectionState.Open) cn.Close();
+            cn.Open();
+            cmd.ExecuteNonQuery();
+            cn.Close();
+        }
+        //Métodos de prueba para el modulo de devolucion 
     }
 }

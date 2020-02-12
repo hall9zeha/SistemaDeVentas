@@ -128,6 +128,7 @@
             this.btnSalir.Size = new System.Drawing.Size(51, 40);
             this.btnSalir.TabIndex = 21;
             this.btnSalir.UseVisualStyleBackColor = false;
+            this.btnSalir.Click += new System.EventHandler(this.BtnSalir_Click);
             // 
             // btnQuitarItem
             // 

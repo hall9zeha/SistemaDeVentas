@@ -20,9 +20,9 @@ namespace Negocio
 
         }
 
-        public string GenerarCodigoBoleta(string control)
+        public string GenerarCodigoBoleta()
         {
-            return objV.GenerarCodigoBoleta(control);
+            return objV.GenerarCodigoBoleta();
         }
        
         public int GuardarVenta(BoletaE b)
@@ -86,13 +86,29 @@ namespace Negocio
         }
         public List<DetalleBoletaE> ListarDetalleBoletaCambio(string boleta)
         {
-            List<DetalleBoletaE> lista = objV.ListarDetalleBoletaCambio(boleta);
+          List<DetalleBoletaE> lista = objV.ListarDetalleBoletaCambio(boleta);
             return lista;
+        }
+        //métodos de prueba para el módulo devolucion
+        public DetalleInventarioE TraerPrendaCambio(int codProd)
+        {
+            DetalleInventarioE dt = objV.TraerPrendaCambio(codProd);
+            return dt;
         }
         public List<DetalleInventarioE> BuscarPrendaCambio(string cadenaEntrada)
         {
             List<DetalleInventarioE> lista = objV.BuscarPrendaCambio(cadenaEntrada);
             return lista;
         }
+        public void RegistrarEntradaPrendaCambio(DetalleBoletaE obj)
+        {
+            objV.RegistrarEntradaPrendaCambio(obj);
+
+        }
+        public void RegistrarSalidaPrendaCambio(DetalleBoletaE obj)
+        {
+            objV.RegistrarSalidaPrendaCambio(obj);
+        }
+        //métodos de prueba para el módulo devolucion
     }
 }

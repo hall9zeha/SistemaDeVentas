@@ -14,10 +14,12 @@ namespace Presentacion
     public partial class Buscar_Cambio : Form
     {
         VentasN objVN = new VentasN();
+        double _precioUnidad = 0.0;
 
-        public Buscar_Cambio()
+        public Buscar_Cambio(double precioUnidad)
         {
             InitializeComponent();
+            this._precioUnidad = precioUnidad;
         }
 
         private void Buscar_Cambio_Load(object sender, EventArgs e)
@@ -33,8 +35,8 @@ namespace Presentacion
             dgvBuscarInventario.Columns.Add("Color", "Color");
             dgvBuscarInventario.Columns.Add("TallaA", "TallaA");
             dgvBuscarInventario.Columns.Add("TallaN", "TallaN");
-            dgvBuscarInventario.Columns.Add("Cantidad", "Cantidad");
-            dgvBuscarInventario.Columns.Add("Importe", "Importe");
+            dgvBuscarInventario.Columns.Add("Stock", "Stock");
+            dgvBuscarInventario.Columns.Add("P.Unid", "P.Unid");
             dgvBuscarInventario.Columns.Add("CodDet.", "CodDet.");
             DataGridViewImageColumn Imagen = new DataGridViewImageColumn();
             Imagen.HeaderText = "EstadoStock";
@@ -105,5 +107,29 @@ namespace Presentacion
         {
             buscarPrendaCambio(txtBuscar.Text);
         }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            //prueba
+            try
+            {
+                int stock = Convert.ToInt32(dgvBuscarInventario.CurrentRow.Cells[6].Value);
+                if (stock == 0)
+                { MessageBox.Show("Stock Vacío","Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                else
+                {
+                    int codProd = Convert.ToInt32(dgvBuscarInventario.CurrentRow.Cells[8].Value);
+                    LocalBD.Instancia.ReturnListaCambio(1, codProd, 1, _precioUnidad);
+                    this.Dispose();
+                }
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message); }
+        }
+        //void agregarfila()
+        //{
+        //    Detalle_Cambios obj = new Detalle_Cambios();
+
+        //}
     }
 }

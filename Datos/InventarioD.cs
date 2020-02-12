@@ -117,48 +117,44 @@ namespace Datos
             return lista;
         }
 
-      
-        public void GenerarCodigoPrenda(string variable)
+
+        public string GenerarCodigoPrenda()
         {
+
             try
             {
-                string Query = @"Declare @Id Int
-                                select top 1 @Id = Left(Codproducto,4) FROM tbinventario  order by Codproducto desc
-                                if LEN(@Id) is null
-                                begin
-                                set @id = 1
-                                end
-                                print @id
-                                Declare @Val int
-                                select @Val=COUNT(*) from tbinventario where LEFT(Codproducto,4)=@id
-                                if @val = 1
-                                 begin
-                                 set @Id = @Id+1
-                                 set @Val = 1
-                                 end
-                                else
-                                 begin
-                                 set @Id = @Id
-                                 set @Val = @Val +1
-                                 end
- 
-                                select @Id As Numero,@Val As Abc";
-                SqlCommand cmd = new SqlCommand(Query, cn);
+                string Abc = "PT";
+               
+                SqlCommand cmd = new SqlCommand(sql.Query_GenerarCodigoPrenda(), cn);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
+
                 da.Fill(dt);
                 DataRow dr;
                 dr = dt.Rows[0];
-                variable=string.Concat("000", dr[0].ToString(),"-", "PT" );
-                
+
+                string codigoTabla = dr[0].ToString();
+                int codeTablaConvert = int.Parse(codigoTabla);
+                string drCeros = "";
+                string numeracion = codeTablaConvert.ToString();
+                for (int i = 0; i <= 3 - numeracion.Length; i++)
+                {
+                    drCeros += "0";
+
+                }
+                drCeros += numeracion;
+               string cadena = drCeros + "-" + Abc;
+
                 if (cn.State == ConnectionState.Open) cn.Close();
                 cn.Open();
                 cmd.ExecuteNonQuery();
                 cn.Close();
+                return cadena;
             }
             catch (Exception)
             { throw; }
             
+
         }
         public List<DetalleInventarioE> TraerDetallePrenda(string Id)
         {
@@ -289,32 +285,7 @@ namespace Datos
             catch (Exception)
             { throw; }
         }
-        public void EditarDetallePrenda(DetalleInventarioE objS)
-        {
-            try
-            {
-                string Query = @"update tbstock set
-                               Color=@Color,
-                               Talla_alfanum=@Talla_alfanum,
-                                Talla_num=@Talla_num,
-                                Cantidad=@Cantidad,
-                                Stock=@Stock
-                                where CodEstock=@CodEstock";
-                SqlCommand cmd = new SqlCommand(Query, cn);
-                cmd.Parameters.AddWithValue("@Color", objS.Color);
-                cmd.Parameters.AddWithValue("@Talla_alfanum", objS.Talla_alfanum);
-                cmd.Parameters.AddWithValue("@Talla_num", objS.Talla_num);
-                cmd.Parameters.AddWithValue("@Cantidad", objS.Cantidad);
-                cmd.Parameters.AddWithValue("@Stock", objS.Cantidad);
-                cmd.Parameters.AddWithValue("@CodEstock", objS.CodStock);
-                if (cn.State == ConnectionState.Open) cn.Close();
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-            }
-            catch (Exception)
-            { throw; }
-        }
+       
         public int MantenimientoDetalleInventario(string xml)
         {
             SqlCommand cmd = null;

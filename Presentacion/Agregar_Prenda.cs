@@ -48,7 +48,7 @@ namespace Presentacion
         {
             crearGrid();
             this.CenterToScreen();
-            GenerarCodigoPrenda();
+            generarCodigoPrenda();
             habilitarBotones(false, false, false);
         }
         void limpiarControles()
@@ -62,6 +62,10 @@ namespace Presentacion
             cmbtallaalfa.Text = "";
             txttallanum.Clear();
             txtcantidad.Clear();
+        }
+        void generarCodigoPrenda()
+        {
+            lblcode.Text =objN.GenerarCodigoPrenda();
         }
     
        
@@ -100,74 +104,9 @@ namespace Presentacion
         }
         private void Button5_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-
-
-            //objN.GenerarCodigoPrenda(lblcode.Text);
-            //MessageBox.Show("ejecutado correctamente","Prueba", MessageBoxButtons.OK);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "Error");
-            //}
-            }
-        public void GenerarCodigoPrenda()
-        {
-            
-            try
-            {
-                string Abc = "PT";
-                string Query = @"Declare @Id Int
-                                select top 1 @Id = Left(Codproducto,4) FROM tbinventario  order by Codproducto desc
-                                if LEN(@Id) is null
-                                begin
-                                set @id = 1
-                                end
-                                print @id
-                                Declare @Val int
-                                select @Val=COUNT(*) from tbinventario where LEFT(Codproducto,4)=@id
-                                if @val = 1
-                                 begin
-                                 set @Id = @Id+1
-                                 set @Val = 1
-                                 end
-                                else
-                                 begin
-                                 set @Id = @Id
-                                 set @Val = @Val +1
-                                 end
- 
-                                select @Id As Numero,@Val As Abc";
-                SqlCommand cmd = new SqlCommand(Query, cn);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                
-                da.Fill(dt);
-                DataRow dr;
-                dr = dt.Rows[0];
-              
-                string codigoTabla = dr[0].ToString();
-                int codeTablaConvert = int.Parse(codigoTabla);
-                string drCeros = "";        
-                string numeracion = codeTablaConvert.ToString();
-                for (int i = 0; i <= 3 - numeracion.Length; i++)
-                {
-                    drCeros += "0";
-                    
-                }
-                drCeros+=numeracion;
-                lblcode.Text = drCeros + "-" + Abc;
-               
-                if (cn.State == ConnectionState.Open) cn.Close();
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-            }
-            catch (Exception)
-            { throw; }
-
+          
         }
+       
         void agregarPrendaGrid()
 
         {
@@ -198,7 +137,7 @@ namespace Presentacion
         {
             limpiarControles();
             habilitarBotones(true, false, false);
-            GenerarCodigoPrenda();
+            generarCodigoPrenda();
         }
 
         private void Button4_Click(object sender, EventArgs e)
@@ -210,7 +149,7 @@ namespace Presentacion
                 {
                     guardarInventario();
                     limpiarControles();
-                    GenerarCodigoPrenda();
+                    generarCodigoPrenda();
                 }
                 else
                 {
@@ -238,6 +177,11 @@ namespace Presentacion
             }
             if (num == 0)
             { habilitarBotones(true, false, false); }
+        }
+
+        private void Lblcode_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -13,7 +13,57 @@ namespace Datos
         {
             get { return Querys._instancia; }
         }
+        public string Query_GenerarCodigoPrenda()
+        {
+            string Query = @"Declare @Id Int
+                                select top 1 @Id = Left(Codproducto,4) FROM tbinventario  order by Codproducto desc
+                                if LEN(@Id) is null
+                                begin
+                                set @id = 1
+                                end
+                                print @id
+                                Declare @Val int
+                                select @Val=COUNT(*) from tbinventario where LEFT(Codproducto,4)=@id
+                                if @val = 1
+                                 begin
+                                 set @Id = @Id+1
+                                 set @Val = 1
+                                 end
+                                else
+                                 begin
+                                 set @Id = @Id
+                                 set @Val = @Val +1
+                                 end
+ 
+                                select @Id As Numero,@Val As Abc";
+            return Query;
+        }
 
+        public string Query_GenerarCodigoCadena()
+        {
+            string Query = @"Declare @Id Int
+                                select top 1 @Id = Left(Codboleta,4) FROM tbboleta  order by Codboleta desc
+                                if LEN(@Id) is null
+                                begin
+                                set @id = 1
+                                end
+                                print @id
+                                Declare @Val int
+                                select @Val=COUNT(*) from tbboleta where LEFT(Codboleta,4)=@id
+                                if @val = 1
+                                 begin
+                                 set @Id = @Id+1
+                                 set @Val = 1
+                                 end
+                                else
+                                 begin
+                                 set @Id = @Id
+                                 set @Val = @Val +1
+                                 end
+ 
+                                select @Id As Numero,@Val As Abc";
+            return Query;
+        }
         public string Query_GuardarVenta()
         {
             string Query = @"
@@ -277,7 +327,7 @@ namespace Datos
                             where b.Codboleta like '%'+ @Codboleta +'%'
                             group by 
                             b.Codboleta,
-                            dt.Cantidad,
+                            --dt.Cantidad,
                             --dt.Precio_final,
                             b.Importe_rg,
                             b.Fechaboleta
@@ -318,6 +368,7 @@ namespace Datos
             string Query = @"
                                 select
                                 dtb.Codproducto, 
+                                dtb.CodProducto_detalle,
                                 i.Descripción, 
                                 i.Marca, 
                                 s.Color, 
@@ -365,6 +416,80 @@ namespace Datos
                             ";
             return Query;
         }
+        //métodos sql de prueba para el módulo devolucion  
+        public string Query_TraerPrendaCambio()
+        {
+            string Query = @"
+                            begin
+                            select 
+                            s.CodProducto,
+                            s.CodEstock,
+                            i.Descripción,
+                            i.Marca,
+                            s.Color,
+                            s.Talla_alfanum,
+                            s.Talla_num,
+                            s.Stock,
+                            i.PrecioVenta
+
+                            from tbstock s inner join tbinventario i
+                            on s.Codproducto=i.Codproducto 
+                            where s.CodEstock=@CodProd
+                           
+                            order by s.CodProducto
+                            end
+                            ";
+            return Query;
+        }
+        public string Query_EntradaPrendasCambio()
+        {
+            string Query = @"if(@estadocambio='C')
+                            begin
+                            update detalle_tbboleta
+                            set
+                            Cantidad = Cantidad - @Cantidad,
+                            Precio_final = 0.00
+                            where Coddetalle = @Coddetalle
+                            update tbstock set
+                            Stock = Stock + @Cantidad
+                            where CodEstock = @CodProducto_detalle
+                            end
+                            ";
+            return Query;
+        }
+        public string Query_SalidaPrendasCambio()
+        {
+            string Query = @"if(@estadocambio='E')
+                                begin
+                                insert into detalle_tbboleta
+                                (
+                                Codboleta,
+                                Codproducto,
+                                CodProducto_detalle,
+                                Descripción,
+                                Cantidad,
+                                Precio_final
+                                )
+                                values
+                                (@Codboleta,
+                                @Codproducto,
+                                @CodProducto_detalle,
+                                @Descripción,
+                                @Cantidad,
+                                @Precio_final)
+                                update tbstock set
+                                Stock = Stock - @Cantidad
+                                where CodEstock = @CodProducto_detalle
+                                update tbboleta set
+                                Importe_rg=@Importe_rg
+                                Where Codboleta=@Codboleta
+                                end
+                            ";
+            return Query;
+        }
+
+
+        //métodos sql de prueba para el módulo devolucion  
         public string Query_MantenimientoDetalleInventario()
         {
             string Query = @"

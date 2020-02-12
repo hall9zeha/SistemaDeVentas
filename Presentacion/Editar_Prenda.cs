@@ -188,7 +188,7 @@ namespace Presentacion
                         lista[i].Color,
                         lista[i].Talla_alfanum,
                     lista[i].Talla_num.ToString(),
-                    lista[i].Cantidad.ToString()};
+                    lista[i].Stock.ToString()};
                     dgvprenda.Rows.Add(fila);
                 }
             }

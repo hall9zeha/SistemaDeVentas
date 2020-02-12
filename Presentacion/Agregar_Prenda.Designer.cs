@@ -183,6 +183,7 @@
             this.lblcode.Size = new System.Drawing.Size(35, 13);
             this.lblcode.TabIndex = 1;
             this.lblcode.Text = "label1";
+            this.lblcode.Click += new System.EventHandler(this.Lblcode_Click);
             // 
             // groupBox1
             // 

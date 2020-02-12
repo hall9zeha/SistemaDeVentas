@@ -19,7 +19,10 @@ namespace Entidades
         public DetalleInventarioE Color { get; set; }
         public DetalleInventarioE Talla_alfanum { get; set; }
         public DetalleInventarioE Talla_num { get; set; }
-        
+        public BoletaE _Importe { get; set; }
+        public double importe { get; set; }
+        public string EstadoCambio { get; set; }
+
 
     }
 }

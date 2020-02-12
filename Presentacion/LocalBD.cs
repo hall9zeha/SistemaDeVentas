@@ -14,6 +14,7 @@ namespace Presentacion
     {
 
     List<DetalleInventarioE> listaBoleta = new List<DetalleInventarioE>();
+    List<DetalleInventarioE> listaBoletaCambio = new List<DetalleInventarioE>();
    
     private static readonly LocalBD _instancia = new LocalBD();
 
@@ -63,6 +64,47 @@ namespace Presentacion
         catch (Exception)
         { throw; }
     }
+    public List<DetalleInventarioE> ReturnListaCambio(int getset, int codProd, int cantidad ,double precioUnidad)
+    {
+        try
+        {
+            if (getset == 1)
+            {
+                if (cantidad > 1)
+                {
+                    for (int i = 0; i < listaBoletaCambio.Count; i++)
+                    {
+                        if (listaBoletaCambio[i].CodStock == codProd)
+                        {
+                            listaBoletaCambio[i].Stock = cantidad;
+                            listaBoletaCambio[i].MontoCambio = precioUnidad;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < listaBoletaCambio.Count; i++)
+                    {
+                        if (listaBoletaCambio[i].CodStock == codProd)
+                        {
+                            throw new ApplicationException("El producto ya esta en la lista");
+
+                        }
+                    }
+                    DetalleInventarioE objInventario = VentasN.Instancia.TraerPrendaCambio(codProd);
+                    objInventario.Cantidad = cantidad;
+                    objInventario.MontoCambio = precioUnidad;
+                    listaBoletaCambio.Add(objInventario);
+                }
+
+            }
+            return listaBoletaCambio;
+        }
+        catch (Exception)
+        { throw; }
+
+    }
     public void RemovePrendaLista(int idstock)
     {
         try
@@ -80,6 +122,25 @@ namespace Presentacion
         {
             throw;
         }
+    }
+    public void LimpiarListaCambio()
+    {
+        try
+        {
+            listaBoletaCambio.RemoveRange(0, listaBoletaCambio.Count);
+
+        }
+        catch (Exception)
+        { throw; }
+    }
+    public void LimpiarListaBoleta()
+    {
+        try
+        {
+            listaBoleta.RemoveRange(0, listaBoleta.Count);
+        }
+        catch (Exception)
+        { throw; }
     }
 
 }

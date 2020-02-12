@@ -17,7 +17,7 @@ namespace Presentacion
     {
         BoletaE objB = new BoletaE();
         VentasN objVN = new VentasN();
-        SqlConnection cn = Conexion.Instancia.Conectar();
+        
         public Boleta_de_Venta()
         {
             InitializeComponent();
@@ -86,58 +86,7 @@ namespace Presentacion
         }
         void generarCodigoBoleta()
         {
-            try
-            {
-                string Abc = "BO";
-                string Query = @"Declare @Id Int
-                                select top 1 @Id = Left(Codboleta,4) FROM tbboleta  order by Codboleta desc
-                                if LEN(@Id) is null
-                                begin
-                                set @id = 1
-                                end
-                                print @id
-                                Declare @Val int
-                                select @Val=COUNT(*) from tbboleta where LEFT(Codboleta,4)=@id
-                                if @val = 1
-                                 begin
-                                 set @Id = @Id+1
-                                 set @Val = 1
-                                 end
-                                else
-                                 begin
-                                 set @Id = @Id
-                                 set @Val = @Val +1
-                                 end
- 
-                                select @Id As Numero,@Val As Abc";
-                SqlCommand cmd = new SqlCommand(Query, cn);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                DataRow dr;
-                dr = dt.Rows[0];
-
-                string codigoTabla = dr[0].ToString();
-                int codeTablaConvert = int.Parse(codigoTabla);
-                string drCeros = "";
-                string numeracion = codeTablaConvert.ToString();
-                for (int i = 0; i <= 3 - numeracion.Length; i++)
-                {
-                    drCeros += "0";
-
-                }
-                drCeros += numeracion;
-               lblBoleta.Text = drCeros + "-" + Abc;
-
-                if (cn.State == ConnectionState.Open) cn.Close();
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-
-            }
-            catch (Exception)
-            { throw; }
-            
+            lblBoleta.Text = objVN.GenerarCodigoBoleta();           
 
         }
 
@@ -273,9 +222,11 @@ namespace Presentacion
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }
         }
-       
-       
-       
 
+        private void BtnSalir_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+            LocalBD.Instancia.LimpiarListaBoleta();
+        }
     }
 }

@@ -48,10 +48,10 @@ namespace Negocio
             catch (Exception)
             { throw; }
         }
-      
-        public void GenerarCodigoPrenda(string result)
+
+        public string GenerarCodigoPrenda()
         {
-            objD.GenerarCodigoPrenda(result);
+           return  objD.GenerarCodigoPrenda();
         }
         public List<DetalleInventarioE> TraerDetallePrenda(string Id)
         {
@@ -149,10 +149,7 @@ namespace Negocio
         {
             objD.EditarPrenda(objI);
         }
-        public void EditarDetallePrenda(DetalleInventarioE objS)
-        {
-            objD.EditarDetallePrenda(objS);
-        }
+      
 
     }
 }
