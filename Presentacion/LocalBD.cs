@@ -123,6 +123,23 @@ namespace Presentacion
             throw;
         }
     }
+    public void RemovePrendaListaCambio(int codProd)
+    {
+        try
+        {
+            foreach (DetalleInventarioE p in listaBoletaCambio)
+            {
+                if (p.CodStock == codProd)
+                {
+                    listaBoletaCambio.Remove(p);
+                    return;
+                }
+            }
+
+        }
+        catch (Exception)
+        { throw; }
+    }
     public void LimpiarListaCambio()
     {
         try

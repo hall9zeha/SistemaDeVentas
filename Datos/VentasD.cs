@@ -254,7 +254,7 @@ namespace Datos
             finally { cmd.Connection.Close(); }
             return lista;
         }
-        //Métodos de prueba para el modulo de devolucion 
+        //INICIO Métodos de prueba para el modulo de devolucion 
         public DetalleInventarioE TraerPrendaCambio(int codProd)
         {
             SqlCommand cmd = null;
@@ -362,6 +362,24 @@ namespace Datos
             cmd.ExecuteNonQuery();
             cn.Close();
         }
-        //Métodos de prueba para el modulo de devolucion 
+        //FIN Métodos de prueba para el modulo de devolucion 
+
+        public int GuardarCambioDePrenda(string xml)
+        {
+            var resultado = 0;
+            SqlCommand cmd = null;
+            try
+            {
+                cmd = new SqlCommand(sql.Query_GuardarCambioDePrenda(), cn);
+                cmd.Parameters.AddWithValue("@Cadxml", xml);
+                cn.Open();
+                resultado = cmd.ExecuteNonQuery();
+                return resultado;
+
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+        }
     }
 }

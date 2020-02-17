@@ -37,7 +37,11 @@
             this.btnImprimir = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.lblNumItems = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.nuevoTotal = new System.Windows.Forms.TextBox();
+            this.txtDiferencia = new System.Windows.Forms.TextBox();
             this.txtTotal = new System.Windows.Forms.TextBox();
             this.btnNuevo = new System.Windows.Forms.Button();
             this.dgvDetalleCambio = new System.Windows.Forms.DataGridView();
@@ -75,10 +79,7 @@
             this.txtTotalDif = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.txtDiferencia = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.nuevoTotal = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleCambio)).BeginInit();
             this.gbCliente.SuspendLayout();
@@ -204,6 +205,26 @@
             this.lblNumItems.TabIndex = 15;
             this.lblNumItems.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(375, 291);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(91, 15);
+            this.label11.TabIndex = 10;
+            this.label11.Text = "Nuevo Total S/ :";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(375, 264);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(105, 15);
+            this.label9.TabIndex = 10;
+            this.label9.Text = "Total Adicional S/ :";
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -213,6 +234,30 @@
             this.label10.Size = new System.Drawing.Size(53, 15);
             this.label10.TabIndex = 10;
             this.label10.Text = "Total S/ :";
+            // 
+            // nuevoTotal
+            // 
+            this.nuevoTotal.BackColor = System.Drawing.Color.Ivory;
+            this.nuevoTotal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.nuevoTotal.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nuevoTotal.Location = new System.Drawing.Point(486, 287);
+            this.nuevoTotal.Name = "nuevoTotal";
+            this.nuevoTotal.ReadOnly = true;
+            this.nuevoTotal.Size = new System.Drawing.Size(100, 25);
+            this.nuevoTotal.TabIndex = 8;
+            this.nuevoTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtDiferencia
+            // 
+            this.txtDiferencia.BackColor = System.Drawing.Color.Ivory;
+            this.txtDiferencia.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDiferencia.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDiferencia.Location = new System.Drawing.Point(486, 256);
+            this.txtDiferencia.Name = "txtDiferencia";
+            this.txtDiferencia.ReadOnly = true;
+            this.txtDiferencia.Size = new System.Drawing.Size(100, 25);
+            this.txtDiferencia.TabIndex = 8;
+            this.txtDiferencia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtTotal
             // 
@@ -542,6 +587,7 @@
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.button2);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.txtTotalCambio);
             this.panel2.Controls.Add(this.dgvPrendaCambio);
@@ -614,49 +660,15 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // txtDiferencia
+            // button2
             // 
-            this.txtDiferencia.BackColor = System.Drawing.Color.Ivory;
-            this.txtDiferencia.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDiferencia.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDiferencia.Location = new System.Drawing.Point(486, 256);
-            this.txtDiferencia.Name = "txtDiferencia";
-            this.txtDiferencia.ReadOnly = true;
-            this.txtDiferencia.Size = new System.Drawing.Size(100, 25);
-            this.txtDiferencia.TabIndex = 8;
-            this.txtDiferencia.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(375, 264);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(105, 15);
-            this.label9.TabIndex = 10;
-            this.label9.Text = "Total Adicional S/ :";
-            // 
-            // nuevoTotal
-            // 
-            this.nuevoTotal.BackColor = System.Drawing.Color.Ivory;
-            this.nuevoTotal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.nuevoTotal.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nuevoTotal.Location = new System.Drawing.Point(486, 287);
-            this.nuevoTotal.Name = "nuevoTotal";
-            this.nuevoTotal.ReadOnly = true;
-            this.nuevoTotal.Size = new System.Drawing.Size(100, 25);
-            this.nuevoTotal.TabIndex = 8;
-            this.nuevoTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(375, 291);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(91, 15);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "Nuevo Total S/ :";
+            this.button2.Location = new System.Drawing.Point(452, 1);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 13;
+            this.button2.Text = "Quitar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // Detalle_Cambios
             // 
@@ -741,5 +753,6 @@
         private System.Windows.Forms.TextBox txtDiferencia;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox nuevoTotal;
+        private System.Windows.Forms.Button button2;
     }
 }

@@ -40,6 +40,50 @@ namespace Presentacion
             
 
         }
+        //*Inicio de prueba guardarcambio en un solo procedimiento con xml
+        void guardarCambioDePrenda()
+        {
+            try
+            {
+                BoletaE b = new BoletaE();
+                List<DetalleBoletaE> Detalle = new List<DetalleBoletaE>();
+                foreach (DataGridViewRow row in dgvDetalleCambio.Rows)
+                            {
+                                DetalleBoletaE dt = new DetalleBoletaE();
+                                dt.Codboleta = lblBoleta.Text;
+
+                                dt.Codproducto = row.Cells[0].Value.ToString();
+                                dt.CodProducto_detalle = Convert.ToInt32(row.Cells[9].Value.ToString());
+                                dt.Descripción = row.Cells[1].Value.ToString();
+                                dt.Cantidad = Convert.ToInt32(row.Cells[6].Value.ToString());
+                   dt.Coddetalle = Convert.ToInt32(row.Cells[8].Value.ToString());
+                    dt.Precio_final = Convert.ToDouble(row.Cells[7].Value.ToString());
+                    dt.EstadoCambio= row.Cells[10].Value.ToString();
+
+                    //b.EstadoCambio = row.Cells[10].Value.ToString();
+                    //b.Cantidad = Convert.ToInt32(row.Cells[6].Value.ToString());
+                    //b.CodDetalle = Convert.ToInt32(row.Cells[8].Value.ToString());
+                    //b.CodProducto_detalle = Convert.ToInt32(row.Cells[9].Value.ToString());
+
+                    Detalle.Add(dt);
+                            }
+
+                b.detalleBoleta = Detalle;
+                b.Importe_rg = Convert.ToDouble(nuevoTotal.Text);
+                b.Codboleta = lblBoleta.Text;
+                
+                int resultado = VentasN.Instancia.GuardarCambioDePrenda(b);
+                
+                MessageBox.Show("Correcto revisa");
+
+        }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message,"Algo paso revisa"); }
+
+
+}
+
+        //*Fin de prueba guardarcambio en un solo procedimiento xml 
         void crearGrid(DataGridView dgv)
         {
             dgv.Columns.Add("Codproducto", "Codproducto");
@@ -228,9 +272,11 @@ namespace Presentacion
 
         private void BtnQuitarItem_Click(object sender, EventArgs e)
         {
-
+           
             dgvDetalleCambio.CurrentRow.Cells[10].Value = null;
             marcarPrendaACambiar();
+
+           
         }
         void marcarPrendaACambiar()
         {
@@ -298,9 +344,13 @@ namespace Presentacion
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
             //prueba de guardado de datos
-            
-            registrarEntradaPrendaCambio();
-            registrarSalidaPrendaCambio();
+
+            //registrarEntradaPrendaCambio();
+            //registrarSalidaPrendaCambio();
+
+            //rueba con xml
+
+            guardarCambioDePrenda();
         }
 
         void registrarEntradaPrendaCambio()
@@ -360,6 +410,16 @@ namespace Presentacion
             listarDetalleBoletaCambio();
             dgvPrendaCambio.Rows.Clear();
             LocalBD.Instancia.LimpiarListaCambio();
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            int codProd = Convert.ToInt32(dgvPrendaCambio.CurrentRow.Cells[8].Value);
+            LocalBD.Instancia.RemovePrendaListaCambio(codProd);
+            List<DetalleInventarioE> lista = LocalBD.Instancia.ReturnListaCambio(0, 0, 0, 0);
+            listarProductoCambio(lista);
+            montoTotalCambio();
+            montoCambioPagar();
         }
     }
 }

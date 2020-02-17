@@ -89,7 +89,7 @@ namespace Negocio
           List<DetalleBoletaE> lista = objV.ListarDetalleBoletaCambio(boleta);
             return lista;
         }
-        //métodos de prueba para el módulo devolucion
+        //INICIO métodos de prueba para el módulo devolucion
         public DetalleInventarioE TraerPrendaCambio(int codProd)
         {
             DetalleInventarioE dt = objV.TraerPrendaCambio(codProd);
@@ -109,6 +109,69 @@ namespace Negocio
         {
             objV.RegistrarSalidaPrendaCambio(obj);
         }
-        //métodos de prueba para el módulo devolucion
+
+        public int GuardarCambioDePrenda(BoletaE b)
+        {
+            try
+            {
+                string Cadxml = "";
+                //Cadxml += "<detalle_tbboleta ";
+                //Cadxml += "cantidad='" + b.Cantidad + "' ";
+                //Cadxml += "coddetalle='" + b.CodDetalle + "' ";
+                //Cadxml += "estadocambio='" + b.EstadoCambio + "'/>";
+
+                //Cadxml += "<tbstock ";
+                //Cadxml += "cantidad='" + b.Cantidad + "' ";
+                //Cadxml += "codstock='" + b.CodProducto_detalle + "' ";
+                //Cadxml += "estadocambio='" + b.EstadoCambio + "'/>";
+
+                Cadxml += "<tbboleta ";
+                Cadxml += "codboleta='" + b.Codboleta + "' ";
+                Cadxml += "importe_rg='" + b.Importe_rg + "' ";
+                Cadxml += "estadocambio='" + b.EstadoCambio + "'>";
+
+
+                foreach (DetalleBoletaE dt in b.detalleBoleta)
+                {
+                    Cadxml += "<detalle_tbboleta ";
+                    Cadxml += "codboleta='" + dt.Codboleta + "' ";
+                    Cadxml += "codproducto='" + dt.Codproducto + "' ";
+                    Cadxml += "codproducto_detalle='" + dt.CodProducto_detalle + "' ";
+                    Cadxml += "descripcion='" + dt.Descripción + "' ";
+                    Cadxml += "cantidad='" + dt.Cantidad + "' ";
+                    
+
+                    Cadxml += "precio_final='" + dt.Precio_final.ToString().Replace(",", ".") + "' ";
+                    Cadxml += "estadocambio='" + dt.EstadoCambio + "'/>";
+
+                    Cadxml += "<detalle_tbboleta2 ";
+                    Cadxml += "Dcantidad='" + dt.Cantidad + "' ";
+                    Cadxml += "Dcoddetalle='" + dt.Coddetalle + "' ";
+                    Cadxml += "Destadocambio='" + dt.EstadoCambio + "'/>";
+
+                    Cadxml += "<tbstock ";
+                    Cadxml += "cantidad='" + dt.Cantidad + "' ";
+                    Cadxml += "codestock='" + dt.CodProducto_detalle + "' ";
+                    Cadxml += "estadocambio='" + dt.EstadoCambio + "'/>";
+
+                    Cadxml += "<tbstock2 ";
+                    Cadxml += "Scantidad='" + dt.Cantidad + "' ";
+                    Cadxml += "Scodstock='" + dt.CodProducto_detalle + "' ";
+                    Cadxml += "Sestadocambio='" + dt.EstadoCambio + "'/>";
+                }
+
+
+
+                Cadxml += "</tbboleta>";
+                Cadxml = "<root>" + Cadxml + "</root>";
+                int resultado = objV.GuardarCambioDePrenda(Cadxml);
+                if (resultado <= 0) throw new ApplicationException("Haocurrido un error revisa el código porfavor");
+                return resultado;
+
+        }
+            catch (Exception)
+            { throw; }
+}
+        //FIN métodos de prueba para el módulo devolucion
     }
 }

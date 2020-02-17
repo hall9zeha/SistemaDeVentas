@@ -19,5 +19,7 @@ namespace Entidades
         public double Precio_final { get; set; }
         public DetalleBoletaE DetalleBoleta { get; set; }
         public List<DetalleBoletaE> detalleBoleta { get; set; }
+       /*agregado para prueba*/ public int CodDetalle { get; set; }
+        /*agregado para prueba */ public string EstadoCambio { get; set; }
     }
 }
