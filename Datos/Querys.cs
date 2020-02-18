@@ -416,7 +416,7 @@ namespace Datos
                             ";
             return Query;
         }
-        //INICIO DE métodos sql de prueba para el módulo devolucion  
+       
         public string Query_TraerPrendaCambio()
         {
             string Query = @"
@@ -441,82 +441,31 @@ namespace Datos
                             ";
             return Query;
         }
-        public string Query_EntradaPrendasCambio()
-        {
-            string Query = @"if(@estadocambio='C')
-                            begin
-                            update detalle_tbboleta
-                            set
-                            Cantidad = Cantidad - @Cantidad,
-                            Precio_final = 0.00
-                            where Coddetalle = @Coddetalle
-                            update tbstock set
-                            Stock = Stock + @Cantidad
-                            where CodEstock = @CodProducto_detalle
-                            end
-                            ";
-            return Query;
-        }
-        public string Query_SalidaPrendasCambio()
-        {
-            string Query = @"if(@estadocambio='E')
-                                begin
-                                insert into detalle_tbboleta
-                                (
-                                Codboleta,
-                                Codproducto,
-                                CodProducto_detalle,
-                                Descripción,
-                                Cantidad,
-                                Precio_final
-                                )
-                                values
-                                (@Codboleta,
-                                @Codproducto,
-                                @CodProducto_detalle,
-                                @Descripción,
-                                @Cantidad,
-                                @Precio_final)
-                                update tbstock set
-                                Stock = Stock - @Cantidad
-                                where CodEstock = @CodProducto_detalle
-                                update tbboleta set
-                                Importe_rg=@Importe_rg
-                                Where Codboleta=@Codboleta
-                                end
-                            ";
-            return Query;
-        }
-
+      
+       
         public string Query_GuardarCambioDePrenda()
         {
             string Query = @"begin
-                             declare @h int, @smsError varchar(500)
-                        exec sp_xml_preparedocument @h output , @Cadxml
-                        begin try
-                        begin transaction
-                       IF(SELECT COUNT(*) FROM OpenXML(@h,'root/tbboleta/detalle_tbboleta',1)WITH(
-		                          codproducto_detalle int,
-		                           cantidad int
-		                           )dt INNER JOIN tbstock s on s.CodEstock=dt.codproducto_detalle WHERE s.Stock<dt.cantidad)>0
-		                         BEGIN
-		                           RAISERROR('Uno ó mas productos no cuentan con el stock suficiente',16,1)
-		                          END
-		                         
-								  
-
-								
+                                declare @h int, @smsError varchar(500)
+                                exec sp_xml_preparedocument @h output , @Cadxml
+                                begin try
+                                begin transaction
+                                IF(SELECT COUNT(*) FROM OpenXML(@h,'root/tbboleta/detalle_tbboleta',1)WITH(
+		                        codproducto_detalle int,
+		                        cantidad int,
+                                estadocambio nvarchar(2)
+		                        )dt INNER JOIN tbstock s on s.CodEstock=dt.codproducto_detalle WHERE estadocambio ='E' and s.Stock<dt.cantidad)>0   
+		                        BEGIN
+		                        RAISERROR('Uno ó mas productos no cuentan con el stock suficiente',16,1)
+		                        END
 								update tb
 									   set
 									   tb.Importe_rg=b.importe_rg
 									   from openxml(@h,'root/tbboleta',1)with
 									   (
 									   importe_rg decimal(5,2),
-									   codboleta nvarchar(20),
-									   estadocambio nvarchar(2)
-									   )b inner join tbboleta tb on b.codboleta=tb.Codboleta where estadocambio='E'
-									  
-
+									   codboleta nvarchar(20)
+									   )b inner join tbboleta tb on b.codboleta=tb.Codboleta 
 		                           insert into detalle_tbboleta(Codboleta, Codproducto, CodProducto_detalle, Descripción, Cantidad, Precio_final) 
 		                           SELECT dt.codboleta,dt.codproducto,dt.codproducto_detalle,dt.descripcion,dt.cantidad, dt.precio_final
 		                           FROM OpenXML(@h,'root/tbboleta/detalle_tbboleta',1)WITH(
@@ -529,11 +478,11 @@ namespace Datos
 								   estadocambio nvarchar(2)
 		                           )dt   where estadocambio='E'
 
-		                            update dt
+		                        update dt
 								  set
 								  dt.Cantidad=dt.Cantidad - d.Dcantidad,
 								  dt.Precio_final=0
-								  from openxml(@h, 'root/tbboleta/detalle_tbboleta2')with
+								  from openxml(@h, 'root/tbboleta/detalle_tbboleta')with
 								  (
 								  Dcantidad int,
 								  Dcoddetalle int,
@@ -541,27 +490,27 @@ namespace Datos
 								  )d inner join detalle_tbboleta dt on d.Dcoddetalle=dt.Coddetalle where Destadocambio='C'
                                    
 
-                                        update s
-		                               set
-		                               s.Stock=s.Stock - st.cantidad
-		                               from OpenXML(@h, 'root/tbboleta/tbstock',1)with
-		                               (cantidad int,
-		                               codestock int,
-									   estadocambio nvarchar(2)
-									   )st inner join tbstock s on s.CodEstock=st.codestock where estadocambio='E'
+                                update s
+		                          set
+		                          s.Stock=s.Stock - st.cantidad
+		                          from OpenXML(@h, 'root/tbboleta/tbstock',1)with
+		                          (cantidad int,
+		                          codestock int,
+								  estadocambio nvarchar(2)
+								  )st inner join tbstock s on s.CodEstock=st.codestock where estadocambio='E'
 									
 
-								  update st
+								update st
 								  set
 								  st.Stock=st.Stock + s.Scantidad
-								  from openxml(@h,'root/tbboleta/tbstock2',1)with
+								  from openxml(@h,'root/tbboleta/tbstock',1)with
 								  (
 								  Scantidad int,
 								  Scodstock int,
 								  Sestadocambio nvarchar(2)
 								  )s inner join tbstock st on s.Scodstock=st.CodEstock where Sestadocambio='C'
 
-		                           IF(@@TRANCOUNT>0) COMMIT TRANSACTION
+		                        IF(@@TRANCOUNT>0) COMMIT TRANSACTION
 		                        END TRY
 
 		                        BEGIN CATCH
@@ -579,7 +528,7 @@ namespace Datos
 
         }
 
-        // FIN de métodos sql de prueba para el módulo devolucion  
+      
         public string Query_MantenimientoDetalleInventario()
         {
             string Query = @"
