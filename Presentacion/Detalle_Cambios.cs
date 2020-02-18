@@ -40,7 +40,7 @@ namespace Presentacion
             
 
         }
-        //*Inicio de prueba guardarcambio en un solo procedimiento con xml
+        
         void guardarCambioDePrenda()
         {
             try
@@ -57,15 +57,10 @@ namespace Presentacion
                                 dt.Descripción = row.Cells[1].Value.ToString();
                                 dt.Cantidad = Convert.ToInt32(row.Cells[6].Value.ToString());
                    dt.Coddetalle = Convert.ToInt32(row.Cells[8].Value.ToString());
-                    dt.Precio_final = Convert.ToDouble(row.Cells[7].Value.ToString());
-                    dt.EstadoCambio= row.Cells[10].Value.ToString();
+                   dt.Precio_final = Convert.ToDouble(row.Cells[7].Value.ToString());
+                   dt.EstadoCambio= row.Cells[10].Value.ToString();
 
-                    //b.EstadoCambio = row.Cells[10].Value.ToString();
-                    //b.Cantidad = Convert.ToInt32(row.Cells[6].Value.ToString());
-                    //b.CodDetalle = Convert.ToInt32(row.Cells[8].Value.ToString());
-                    //b.CodProducto_detalle = Convert.ToInt32(row.Cells[9].Value.ToString());
-
-                    Detalle.Add(dt);
+                   Detalle.Add(dt);
                             }
 
                 b.detalleBoleta = Detalle;
@@ -74,16 +69,16 @@ namespace Presentacion
                 
                 int resultado = VentasN.Instancia.GuardarCambioDePrenda(b);
                 
-                MessageBox.Show("Correcto revisa");
+                MessageBox.Show("Cambio registrado ");
 
         }
             catch (Exception ex)
             { MessageBox.Show(ex.Message,"Algo paso revisa"); }
 
 
-}
+        }
 
-        //*Fin de prueba guardarcambio en un solo procedimiento xml 
+        
         void crearGrid(DataGridView dgv)
         {
             dgv.Columns.Add("Codproducto", "Codproducto");
@@ -139,7 +134,7 @@ namespace Presentacion
                         lista[i].Cantidad.ToString(),
                         lista[i].Precio_final.ToString("0.00"),
                         lista[i].Coddetalle.ToString(),
-                         lista[i].CodProducto_detalle.ToString()
+                        lista[i].CodProducto_detalle.ToString()
 
 
                     };
@@ -225,6 +220,8 @@ namespace Presentacion
                     total += Convert.ToDouble(row.Cells[7].Value.ToString());
                 }
                 diferencia = total - Convert.ToDouble(txtTotal.Text);
+                if (diferencia > 0)
+                { txtDiferencia.BackColor = Color.GreenYellow; }
                 txtDiferencia.Text =diferencia.ToString("0.00");
                 montActualizado = Convert.ToDouble(txtDiferencia.Text) + Convert.ToDouble(txtTotal.Text);
                 nuevoTotal.Text = montActualizado.ToString("0.00");
@@ -246,8 +243,17 @@ namespace Presentacion
                 }
 
                 total = montoDif - precioUnid;
-                txtTotalDif.Text = total.ToString("0.00");
+                
 
+                if (total < 0)
+                {
+                    txtTotalDif.BackColor = Color.Red;
+                }
+                else
+                {
+                    txtTotalDif.BackColor = Color.LightGreen;
+                }
+                txtTotalDif.Text = total.ToString("0.00");
             }
             catch (Exception ex)
             {
@@ -282,7 +288,7 @@ namespace Presentacion
         {
             foreach (DataGridViewRow row in dgvDetalleCambio.Rows)
             {
-                if (row.Cells[10].Value!=null)
+                if (row.Cells[10].Value == "C")
                 {
                     row.DefaultCellStyle.BackColor = Color.Orange;
                 }
@@ -291,7 +297,7 @@ namespace Presentacion
                     row.DefaultCellStyle.BackColor = Color.White;
                     row.Cells[10].Value = "N";
                 }
-                if(row.Cells[11].Value!=null)
+                if(row.Cells[11].Value == "E")
                 {
                     row.DefaultCellStyle.BackColor = Color.LightGreen;
                 }
@@ -308,7 +314,21 @@ namespace Presentacion
 
         private void Button1_Click(object sender, EventArgs e)
         {
-           for(int i=0; i<dgvPrendaCambio.RowCount; i++)
+            double totalDif = Convert.ToDouble(txtTotalDif.Text);
+            if (totalDif < 0)
+            {
+                MessageBox.Show("El monto es inferior que la prenda a cambiar  ", "Mensaje" , MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else {
+                agregarPrendaACambiar();
+
+            }
+            
+
+        }
+        void agregarPrendaACambiar()
+        {
+            for (int i = 0; i < dgvPrendaCambio.RowCount; i++)
             {
 
                 dgvDetalleCambio.Rows.Add(
@@ -343,68 +363,10 @@ namespace Presentacion
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-            //prueba de guardado de datos
-
-            //registrarEntradaPrendaCambio();
-            //registrarSalidaPrendaCambio();
-
-            //rueba con xml
-
             guardarCambioDePrenda();
         }
 
-        void registrarEntradaPrendaCambio()
-        {
-            try
-            {
-                for (int i = 0; i < dgvDetalleCambio.RowCount; i++)
-                {
-                    objDTE.EstadoCambio = dgvDetalleCambio.Rows[i].Cells[10].Value.ToString();
-                    objDTE.Cantidad= Convert.ToInt32(dgvDetalleCambio.Rows[i].Cells[6].Value.ToString());
-                    objDTE.Coddetalle = Convert.ToInt32(dgvDetalleCambio.Rows[i].Cells[8].Value.ToString());
-                    objDTE.CodProducto_detalle= Convert.ToInt32(dgvDetalleCambio.Rows[i].Cells[9].Value.ToString());
-                    objVN.RegistrarEntradaPrendaCambio(objDTE);
-               
-                }
-            MessageBox.Show("Transaccion1 correcta, revisa porfa ");
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-        void registrarSalidaPrendaCambio()
-        {
-            //try
-            //{
-                
-                for (int i = 0; i < dgvDetalleCambio.RowCount; i++)
-                {
-                    objDTE.EstadoCambio = dgvDetalleCambio.Rows[i].Cells[10].Value.ToString();
-                    objDTE.Codboleta = lblBoleta.Text;
-                    objDTE.Codproducto = dgvDetalleCambio.Rows[i].Cells[0].Value.ToString();
-                    objDTE.CodProducto_detalle = Convert.ToInt32(dgvDetalleCambio.Rows[i].Cells[9].Value.ToString());
-                    objDTE.Descripción = dgvDetalleCambio.Rows[i].Cells[1].Value.ToString();
-                    objDTE.Cantidad = Convert.ToInt32(dgvDetalleCambio.Rows[i].Cells[6].Value.ToString());
-                    objDTE.Precio_final = Convert.ToDouble(dgvDetalleCambio.Rows[i].Cells[7].Value.ToString());
-                    objDTE.CodProducto_detalle = Convert.ToInt32(dgvDetalleCambio.Rows[i].Cells[9].Value.ToString());
-                    objDTE.importe = Convert.ToDouble(nuevoTotal.Text);
-
-                objVN.RegistrarSalidaPrendaCambio(objDTE);
-
-                }
-            
-            MessageBox.Show("Transaccion2 correcta, revisa porfa ");
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
-
-        }
-
+             
         private void BtnAnular_Click(object sender, EventArgs e)
         {
             listarDetalleBoletaCambio();

@@ -50,9 +50,9 @@
             // dgvInventario
             // 
             this.dgvInventario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvInventario.Location = new System.Drawing.Point(105, 95);
+            this.dgvInventario.Location = new System.Drawing.Point(12, 95);
             this.dgvInventario.Name = "dgvInventario";
-            this.dgvInventario.Size = new System.Drawing.Size(652, 314);
+            this.dgvInventario.Size = new System.Drawing.Size(869, 314);
             this.dgvInventario.TabIndex = 0;
             this.dgvInventario.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvInventario_CellContentClick);
             this.dgvInventario.SelectionChanged += new System.EventHandler(this.DgvInventario_SelectionChanged);
@@ -109,7 +109,7 @@
             this.groupBox2.Controls.Add(this.checkBox3);
             this.groupBox2.Controls.Add(this.checkBox2);
             this.groupBox2.Controls.Add(this.checkBox1);
-            this.groupBox2.Location = new System.Drawing.Point(218, 26);
+            this.groupBox2.Location = new System.Drawing.Point(292, 26);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(261, 48);
             this.groupBox2.TabIndex = 4;
@@ -152,7 +152,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.txtfiltro);
-            this.groupBox3.Location = new System.Drawing.Point(498, 26);
+            this.groupBox3.Location = new System.Drawing.Point(572, 26);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(309, 48);
             this.groupBox3.TabIndex = 4;
@@ -180,7 +180,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(847, 492);
+            this.ClientSize = new System.Drawing.Size(929, 492);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);

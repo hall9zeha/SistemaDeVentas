@@ -254,7 +254,7 @@ namespace Datos
             finally { cmd.Connection.Close(); }
             return lista;
         }
-        //INICIO Métodos de prueba para el modulo de devolucion 
+        
         public DetalleInventarioE TraerPrendaCambio(int codProd)
         {
             SqlCommand cmd = null;
@@ -328,43 +328,8 @@ namespace Datos
             finally { cmd.Connection.Close(); }
             return lista;
         }
-        public void RegistrarEntradaPrendaCambio(DetalleBoletaE obj)
-        {
-            //try
-            //{
-                SqlCommand cmd = new SqlCommand(sql.Query_EntradaPrendasCambio(), cn);
-                cmd.Parameters.AddWithValue("@estadocambio", obj.EstadoCambio);
-                cmd.Parameters.AddWithValue("@Cantidad", obj.Cantidad);
-                cmd.Parameters.AddWithValue("@Coddetalle", obj.Coddetalle);
-                cmd.Parameters.AddWithValue("@CodProducto_detalle", obj.CodProducto_detalle);
-                if (cn.State == ConnectionState.Open) cn.Close();
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-            //}
-            //catch (Exception)
-            //{ throw; }
-        }
-        public void RegistrarSalidaPrendaCambio(DetalleBoletaE obj)
-        {
-            SqlCommand cmd = new SqlCommand(sql.Query_SalidaPrendasCambio(), cn);
-            cmd.Parameters.AddWithValue("@estadocambio", obj.EstadoCambio);
-            cmd.Parameters.AddWithValue("@Codboleta", obj.Codboleta);
-            cmd.Parameters.AddWithValue("@Codproducto", obj.Codproducto);
-            cmd.Parameters.AddWithValue("@Codproducto_detalle", obj.CodProducto_detalle);
-            cmd.Parameters.AddWithValue("@Descripción", obj.Descripción);
-            cmd.Parameters.AddWithValue("@Cantidad", obj.Cantidad);
-            cmd.Parameters.AddWithValue("@Precio_Final",obj.Precio_final);
-            cmd.Parameters.AddWithValue("@Importe_rg", obj.importe);
-
-            if (cn.State == ConnectionState.Open) cn.Close();
-            cn.Open();
-            cmd.ExecuteNonQuery();
-            cn.Close();
-        }
-        //FIN Métodos de prueba para el modulo de devolucion 
-
-        public int GuardarCambioDePrenda(string xml)
+     
+        public int GuardarCambioDePrenda(string xml )
         {
             var resultado = 0;
             SqlCommand cmd = null;
@@ -372,6 +337,7 @@ namespace Datos
             {
                 cmd = new SqlCommand(sql.Query_GuardarCambioDePrenda(), cn);
                 cmd.Parameters.AddWithValue("@Cadxml", xml);
+               
                 cn.Open();
                 resultado = cmd.ExecuteNonQuery();
                 return resultado;
