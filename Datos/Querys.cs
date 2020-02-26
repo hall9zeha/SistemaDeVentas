@@ -79,12 +79,13 @@ namespace Datos
 		                          BEGIN
 		                           RAISERROR('Uno ó mas productos no cuentan con el stock suficiente',16,1)
 		                          END
-		                          INSERT INTO tbboleta(Codboleta,Fechaboleta,Importe,Importe_rg)
-                                   SELECT b.codboleta,GETDATE(),b.importe, b.importe_rg
+		                          INSERT INTO tbboleta(Codboleta,Fechaboleta,Importe,Importe_rg,estadoVenta)
+                                   SELECT b.codboleta,GETDATE(),b.importe, b.importe_rg, 1
 		                           FROM OpenXML(@h,'root/tbboleta',1)WITH(
 		                           codboleta nvarchar(20),
 		                           importe decimal(5,2),
-		                           importe_rg decimal(5,2)
+		                           importe_rg decimal(5,2),
+                                   estadoventa int
 		                           )b
 		   
 		                           INSERT INTO detalle_tbboleta(Codboleta, Codproducto, CodProducto_detalle, Descripción, Cantidad, Precio_final) 
@@ -121,6 +122,44 @@ namespace Datos
                             ";
             return Query;
          }
+        public string Query_AnularVenta()
+        {
+            string Query = @"
+                            begin 
+                            declare @h int , @mensaje nvarchar(500)
+                            exec sp_xml_preparedocument @h output, @CadXml
+                            begin try
+                            begin transaction 
+                            update tb set
+                            tb.estadoVenta=0,
+                            tb.Importe_rg=0
+                            from openxml(@h, 'root/tbboleta', 1)with
+                            (
+                            codboleta nvarchar(20)
+                            )b inner join tbboleta tb on tb.Codboleta=b.codboleta
+                            update st set
+                            st.Stock=st.Stock + s.stock
+                            from openxml(@h, 'root/tbboleta/tbstock')with
+                            (
+                            codestock int,
+                            stock int
+                            )s inner join tbstock st on st.CodEstock=s.codestock
+                            delete from detalle_tbboleta
+                            from openxml(@h, 'root/tbboleta/detalle_tbboleta',1)with
+                            (
+                            codboleta nvarchar(20)
+                            )d inner join detalle_tbboleta dt on dt.Codboleta=d.codboleta
+                            if(@@TRANCOUNT>0)commit transaction
+                            end try
+                            begin catch
+                            if(@@trancount>0)rollback transaction
+                            select @mensaje=error_message();
+                            raiserror(@mensaje,16,1)
+                            end catch
+                            end
+                            ";
+            return Query;
+        }
         public string Query_MostrarInventario()
         {
 
@@ -347,7 +386,8 @@ namespace Datos
                                 s.Talla_alfanum, 
                                 s.Talla_num,
                                 dtb.Cantidad,  
-                                dtb.Precio_final
+                                dtb.Precio_final,
+                                dtb.CodProducto_detalle
 
                                 from tbinventario i inner join detalle_tbboleta  dtb 
 

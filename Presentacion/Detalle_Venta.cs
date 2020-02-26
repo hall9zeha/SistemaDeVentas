@@ -27,6 +27,7 @@ namespace Presentacion
             listarDetalleVenta();
             contarItems();
             montoTotal();
+            lblBoleta.Text = codBoleta;
         }
         void contarItems()
         {
@@ -56,6 +57,7 @@ namespace Presentacion
             dgvDetalleVenta.Columns.Add("TallaN", "TallaN");
             dgvDetalleVenta.Columns.Add("Cantidad", "Cantidad");
             dgvDetalleVenta.Columns.Add("Importe", "Importe");
+            dgvDetalleVenta.Columns.Add("Cod/D", "Cod/D");
 
             dgvDetalleVenta.Columns[0].Width = 70;
             dgvDetalleVenta.Columns[1].Width = 120;
@@ -65,6 +67,7 @@ namespace Presentacion
             dgvDetalleVenta.Columns[5].Width = 60;
             dgvDetalleVenta.Columns[6].Width = 50;
             dgvDetalleVenta.Columns[7].Width = 70;
+            dgvDetalleVenta.Columns[8].Width = 50;
 
             dgvDetalleVenta.AllowUserToAddRows = false;
             dgvDetalleVenta.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -88,7 +91,8 @@ namespace Presentacion
                         lista[i].Talla_alfanum.Talla_alfanum,
                         lista[i].Talla_num.Talla_num.ToString(),
                         lista[i].Cantidad.ToString(),
-                        lista[i].Precio_final.ToString("0.00")
+                        lista[i].Precio_final.ToString("0.00"),
+                        lista[i].CodProducto_detalle.ToString()
 
 
                     };
@@ -98,5 +102,33 @@ namespace Presentacion
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }
         }
+        void anularVenta()
+        {
+            BoletaE b = new BoletaE();
+            b.Codboleta = lblBoleta.Text;
+            List<DetalleBoletaE> detalle = new List<DetalleBoletaE>();
+            foreach (DataGridViewRow row in dgvDetalleVenta.Rows)
+            {
+                DetalleBoletaE dt = new DetalleBoletaE();
+                dt.CodProducto_detalle = Convert.ToInt32(row.Cells[8].Value.ToString());
+                dt.Cantidad = Convert.ToInt32(row.Cells[6].Value.ToString());
+                detalle.Add(dt);
+            }
+            b.detalleBoleta = detalle;
+            int resultado = VentasN.Instancia.AnularVenta(b);
+            MessageBox.Show("Venta Anulada");
+        }
+
+
+        private void BtnAnular_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("Advertencia", "Realmente Quieres anular esta venta", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dr == DialogResult.Yes)
+            {
+                anularVenta();
+            }
+            
+        }
+            
     }
 }

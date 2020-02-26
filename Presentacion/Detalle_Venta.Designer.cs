@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblMontoEnletras = new System.Windows.Forms.Label();
             this.btnAnular = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.btnImprimir = new System.Windows.Forms.Button();
@@ -63,7 +64,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.lblMontoEnletras = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleVenta)).BeginInit();
             this.gbCliente.SuspendLayout();
@@ -87,6 +87,17 @@
             this.panel1.Size = new System.Drawing.Size(603, 292);
             this.panel1.TabIndex = 18;
             // 
+            // lblMontoEnletras
+            // 
+            this.lblMontoEnletras.BackColor = System.Drawing.SystemColors.Control;
+            this.lblMontoEnletras.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMontoEnletras.ForeColor = System.Drawing.Color.Black;
+            this.lblMontoEnletras.Location = new System.Drawing.Point(93, 215);
+            this.lblMontoEnletras.Name = "lblMontoEnletras";
+            this.lblMontoEnletras.Size = new System.Drawing.Size(297, 23);
+            this.lblMontoEnletras.TabIndex = 23;
+            this.lblMontoEnletras.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // btnAnular
             // 
             this.btnAnular.BackgroundImage = global::Presentacion.Properties.Resources.anular;
@@ -96,6 +107,7 @@
             this.btnAnular.Size = new System.Drawing.Size(50, 40);
             this.btnAnular.TabIndex = 22;
             this.btnAnular.UseVisualStyleBackColor = true;
+            this.btnAnular.Click += new System.EventHandler(this.BtnAnular_Click);
             // 
             // btnSalir
             // 
@@ -451,17 +463,6 @@
             this.label4.Size = new System.Drawing.Size(52, 16);
             this.label4.TabIndex = 0;
             this.label4.Text = "R.U.C.";
-            // 
-            // lblMontoEnletras
-            // 
-            this.lblMontoEnletras.BackColor = System.Drawing.SystemColors.Control;
-            this.lblMontoEnletras.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMontoEnletras.ForeColor = System.Drawing.Color.Black;
-            this.lblMontoEnletras.Location = new System.Drawing.Point(93, 215);
-            this.lblMontoEnletras.Name = "lblMontoEnletras";
-            this.lblMontoEnletras.Size = new System.Drawing.Size(297, 23);
-            this.lblMontoEnletras.TabIndex = 23;
-            this.lblMontoEnletras.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Detalle_Venta
             // 

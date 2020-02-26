@@ -76,6 +76,7 @@
     <Compile Include="Cambio_de_Prenda.Designer.cs">
       <DependentUpon>Cambio_de_Prenda.cs</DependentUpon>
     </Compile>
+    <Compile Include="CrearTicket.cs" />
     <Compile Include="Detalle_Cambios.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -78,6 +78,23 @@ namespace Datos
             { throw; }
             finally { cmd.Connection.Close(); }
         }
+
+        public int AnularVenta(string xml)
+        {
+            var resultado = 0;
+            SqlCommand cmd = null;
+            try
+            {
+                cmd = new SqlCommand(sql.Query_AnularVenta(), cn);
+                cmd.Parameters.AddWithValue("@CadXml", xml);
+                cn.Open();
+                resultado = cmd.ExecuteNonQuery();
+                return resultado;
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+        }
         public List<BoletaE> MostrarVentasSimple(string fecha)
         {
             SqlCommand cmd = null;
@@ -199,6 +216,7 @@ namespace Datos
                     dt.Talla_num = tn;
                     dt.Cantidad = Convert.ToInt32(dr["Cantidad"]);
                     dt.Precio_final = Convert.ToDouble(dr["Precio_final"].ToString());
+                    dt.CodProducto_detalle = Convert.ToInt32(dr["CodProducto_detalle"].ToString());
                     lista.Add(dt);
 
 

@@ -68,16 +68,23 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtCambio = new System.Windows.Forms.TextBox();
+            this.txtEfectivo = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleBoleta)).BeginInit();
             this.gbCliente.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.lblMontoEnletras);
             this.panel1.Controls.Add(this.btnAnular);
             this.panel1.Controls.Add(this.btnSalir);
@@ -92,7 +99,7 @@
             this.panel1.Controls.Add(this.dgvDetalleBoleta);
             this.panel1.Location = new System.Drawing.Point(5, 273);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(603, 292);
+            this.panel1.Size = new System.Drawing.Size(656, 333);
             this.panel1.TabIndex = 13;
             // 
             // lblMontoEnletras
@@ -115,6 +122,7 @@
             this.btnAnular.Size = new System.Drawing.Size(50, 40);
             this.btnAnular.TabIndex = 22;
             this.btnAnular.UseVisualStyleBackColor = true;
+            this.btnAnular.Click += new System.EventHandler(this.BtnAnular_Click);
             // 
             // btnSalir
             // 
@@ -135,7 +143,7 @@
             this.btnQuitarItem.BackColor = System.Drawing.Color.Azure;
             this.btnQuitarItem.BackgroundImage = global::Presentacion.Properties.Resources.Delete_16x16_32;
             this.btnQuitarItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnQuitarItem.Location = new System.Drawing.Point(542, 1);
+            this.btnQuitarItem.Location = new System.Drawing.Point(591, 1);
             this.btnQuitarItem.Name = "btnQuitarItem";
             this.btnQuitarItem.Size = new System.Drawing.Size(45, 25);
             this.btnQuitarItem.TabIndex = 20;
@@ -190,7 +198,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(428, 231);
+            this.label10.Location = new System.Drawing.Point(477, 226);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(53, 15);
             this.label10.TabIndex = 10;
@@ -201,7 +209,7 @@
             this.txtTotal.BackColor = System.Drawing.Color.Ivory;
             this.txtTotal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTotal.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTotal.Location = new System.Drawing.Point(487, 224);
+            this.txtTotal.Location = new System.Drawing.Point(536, 219);
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.ReadOnly = true;
             this.txtTotal.Size = new System.Drawing.Size(100, 25);
@@ -219,6 +227,7 @@
             this.btnNuevo.Size = new System.Drawing.Size(51, 40);
             this.btnNuevo.TabIndex = 3;
             this.btnNuevo.UseVisualStyleBackColor = false;
+            this.btnNuevo.Click += new System.EventHandler(this.BtnNuevo_Click);
             // 
             // dgvDetalleBoleta
             // 
@@ -226,7 +235,7 @@
             this.dgvDetalleBoleta.Location = new System.Drawing.Point(15, 27);
             this.dgvDetalleBoleta.Name = "dgvDetalleBoleta";
             this.dgvDetalleBoleta.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDetalleBoleta.Size = new System.Drawing.Size(572, 182);
+            this.dgvDetalleBoleta.Size = new System.Drawing.Size(621, 182);
             this.dgvDetalleBoleta.TabIndex = 4;
             this.dgvDetalleBoleta.KeyUp += new System.Windows.Forms.KeyEventHandler(this.DgvDetalleBoleta_KeyUp);
             // 
@@ -367,7 +376,7 @@
             this.cboTipDoc.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboTipDoc.ForeColor = System.Drawing.Color.DarkSlateGray;
             this.cboTipDoc.FormattingEnabled = true;
-            this.cboTipDoc.Location = new System.Drawing.Point(239, 71);
+            this.cboTipDoc.Location = new System.Drawing.Point(239, 72);
             this.cboTipDoc.Name = "cboTipDoc";
             this.cboTipDoc.Size = new System.Drawing.Size(109, 23);
             this.cboTipDoc.TabIndex = 11;
@@ -520,11 +529,60 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "R.U.C.";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.txtCambio);
+            this.groupBox2.Controls.Add(this.txtEfectivo);
+            this.groupBox2.Location = new System.Drawing.Point(449, 250);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 81);
+            this.groupBox2.TabIndex = 27;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Calcular Vuelto";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(19, 57);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(60, 13);
+            this.label8.TabIndex = 29;
+            this.label8.Text = "Cambio S/:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 31);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(64, 13);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "Efectivo S/:";
+            // 
+            // txtCambio
+            // 
+            this.txtCambio.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCambio.Location = new System.Drawing.Point(85, 51);
+            this.txtCambio.Name = "txtCambio";
+            this.txtCambio.Size = new System.Drawing.Size(100, 25);
+            this.txtCambio.TabIndex = 28;
+            this.txtCambio.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtEfectivo
+            // 
+            this.txtEfectivo.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEfectivo.Location = new System.Drawing.Point(85, 25);
+            this.txtEfectivo.Name = "txtEfectivo";
+            this.txtEfectivo.Size = new System.Drawing.Size(100, 25);
+            this.txtEfectivo.TabIndex = 27;
+            this.txtEfectivo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // Boleta_de_Venta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(645, 573);
+            this.ClientSize = new System.Drawing.Size(692, 618);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.gbCliente);
             this.Controls.Add(this.label3);
@@ -540,6 +598,8 @@
             this.gbCliente.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -587,5 +647,10 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtCambio;
+        private System.Windows.Forms.TextBox txtEfectivo;
     }
 }

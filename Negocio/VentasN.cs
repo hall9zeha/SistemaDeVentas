@@ -63,6 +63,32 @@ namespace Negocio
             }
 
         }
+        public int AnularVenta(BoletaE b)
+        {
+            try
+            {
+                String CadXml = "";
+                CadXml += "<tbboleta ";
+                CadXml += "codboleta='" + b.Codboleta + "'>";
+                foreach (DetalleBoletaE dt in b.detalleBoleta)
+                {
+                    CadXml += "<tbstock ";
+                    CadXml += "codestock='" + dt.CodProducto_detalle + "' ";
+                    CadXml += "stock='" + dt.Cantidad + "'/>";
+
+                    CadXml += "<detalle_tbboleta ";
+                    CadXml += "codboleta='" + b.Codboleta + "'/>";
+                }
+                CadXml += "</tbboleta>";
+                CadXml = "<root>" + CadXml + "</root>";
+                int i = VentasD.Instancia.AnularVenta(CadXml);
+                if (i <= 0) throw new ApplicationException("Ocurrió un error en la transacción");
+                return i;
+            }
+            catch (Exception)
+            { throw; }
+
+        }
         public List<BoletaE> MostrarVentasSimple(string fecha)
         {
             List<BoletaE> lista = VentasD.Instancia.MostrarVentasSimple(fecha);

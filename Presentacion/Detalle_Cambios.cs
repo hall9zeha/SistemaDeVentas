@@ -314,18 +314,33 @@ namespace Presentacion
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            double totalDif = Convert.ToDouble(txtTotalDif.Text);
-            if (totalDif < 0)
+            foreach (DataGridViewRow row in dgvPrendaCambio.Rows)
             {
-                MessageBox.Show("El monto es inferior que la prenda a cambiar  ", "Mensaje" , MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else {
-                agregarPrendaACambiar();
+                if (row.Cells.Count > 0)
+                {
 
+                    double totalDif = Convert.ToDouble(txtTotalDif.Text);
+                    if (totalDif < 0)
+                    {
+                        MessageBox.Show("El monto es inferior que la prenda a cambiar  ", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else 
+                    {
+                        agregarPrendaACambiar();
+
+                    }
+                }
+                else if (row.Cells.Count == 0)
+                {
+                    MessageBox.Show("Advertencia", "No hay ninguna prenda para cambiar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                }
             }
+           
             
 
         }
+
         void agregarPrendaACambiar()
         {
             for (int i = 0; i < dgvPrendaCambio.RowCount; i++)
