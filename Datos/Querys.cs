@@ -39,7 +39,7 @@ namespace Datos
             return Query;
         }
 
-        public string Query_GenerarCodigoCadena()
+        public string Query_GenerarCodigoBoleta()
         {
             string Query = @"Declare @Id Int
                                 select top 1 @Id = Left(Codboleta,4) FROM tbboleta  order by Codboleta desc
@@ -308,6 +308,40 @@ namespace Datos
                         end
     
                     ";
+            return Query;
+        }
+
+        public string Query_EliminarProducto()
+        {
+            string Query = @" 
+                            begin
+                            declare @h int , @mensaje nvarchar(500)
+                            exec sp_xml_preparedocument @h output, @CadXml
+                            begin try
+                            begin transaction
+                            if(select count(*) from openxml(@h,'root/tbinventario', 1)with
+                            (
+                            codproducto nvarchar(20)
+                            )p inner join detalle_tbboleta dt on p.codproducto=dt.Codproducto
+                            )>0
+                            begin 
+                            raiserror('No puedes eliminar el producto porque tiene ventas realizadas',16,1)
+                            end
+                            delete from tbinventario 
+                            from openxml(@h,'root/tbinventario', 1)with
+                            (
+                            codproducto nvarchar(20)
+                            )pd  inner join tbinventario tbi on pd.codproducto=tbi.Codproducto
+
+                            if(@@TRANCOUNT>0)commit transaction
+                            end try
+                            begin catch
+                            if (@@trancount>0)rollback transaction
+                            select @mensaje = error_message();
+                            raiserror(@mensaje, 16 ,1)
+                            end catch
+                            end
+                            ";
             return Query;
         }
         public string Query_MostrarVentasFecha()

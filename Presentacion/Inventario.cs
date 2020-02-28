@@ -63,7 +63,7 @@ namespace Presentacion
         {
             this.CenterToScreen();
             CrearGrid();
-            CargarInventario();
+            cargarInventario();
 
 
         }
@@ -71,7 +71,7 @@ namespace Presentacion
         private void Button4_Click(object sender, EventArgs e)
         {
             //dgvInventario.Rows.Clear();
-            CargarInventario();
+            cargarInventario();
         }
         void buscarProducto(string filtro)
         {
@@ -99,7 +99,7 @@ namespace Presentacion
                     }
                 }
                 else if (filtro == string.Empty)
-                { CargarInventario(); }
+                { cargarInventario(); }
             }
             catch (Exception ex)
             {
@@ -107,7 +107,7 @@ namespace Presentacion
             }
 
         }
-        public void CargarInventario()
+        void cargarInventario()
         {
             try
             {
@@ -137,6 +137,20 @@ namespace Presentacion
                 MessageBox.Show(ex.Message);
             }
 
+        }
+        void eliminarPrenda()
+        {
+            try
+            {
+                string codProd = Convert.ToString(dgvInventario.CurrentRow.Cells[0].Value);
+                objE.Codproducto = codProd;
+                objN.EliminarPrenda(objE);
+                MessageBox.Show("Prenda eliminada");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void CheckBox1_CheckedChanged(object sender, EventArgs e)
@@ -184,7 +198,7 @@ namespace Presentacion
 
         private void Prendas_Closed(object sender, FormClosedEventArgs e)
         {
-            CargarInventario();
+            cargarInventario();
 
         }
 
@@ -212,6 +226,13 @@ namespace Presentacion
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Button5_Click_1(object sender, EventArgs e)
+        {
+
+            eliminarPrenda();
+            cargarInventario();
         }
     }
 }

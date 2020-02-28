@@ -20,6 +20,105 @@ namespace Datos
         SqlConnection cn = Conexion.Instancia.Conectar();
         Querys sql = new Querys();
         //método simple usando datatables para listar el contenido de la tabla inventario y stock
+
+        public string GenerarCodigoPrenda()
+        {
+
+            try
+            {
+                string Abc = "PT";
+
+                SqlCommand cmd = new SqlCommand(sql.Query_GenerarCodigoPrenda(), cn);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+
+                da.Fill(dt);
+                DataRow dr;
+                dr = dt.Rows[0];
+
+                string codigoTabla = dr[0].ToString();
+                int codeTablaConvert = int.Parse(codigoTabla);
+                string drCeros = "";
+                string numeracion = codeTablaConvert.ToString();
+                for (int i = 0; i <= 3 - numeracion.Length; i++)
+                {
+                    drCeros += "0";
+
+                }
+                drCeros += numeracion;
+                string cadena = drCeros + "-" + Abc;
+
+                if (cn.State == ConnectionState.Open) cn.Close();
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+                return cadena;
+            }
+            catch (Exception)
+            { throw; }
+
+
+        }
+        public int GuardarPrendaInventario(string xml)
+        {
+            var resultado = 0;
+            SqlCommand cmd = null;
+            try
+            {
+                cmd = new SqlCommand(sql.Query_GuardarInventario(), cn);
+                cmd.Parameters.AddWithValue("@Cadxml", xml);
+                cn.Open();
+                resultado = cmd.ExecuteNonQuery();
+                return resultado;
+
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+
+        }
+        public void EditarPrenda(InventarioE objI)
+        {
+            try
+            {
+                string Query = @"update tbinventario set
+                                Descripción=@Descripción,
+                                Marca=@Marca,
+                                Precio=@Precio,
+                                PrecioVenta=@PrecioVenta
+                                where Codproducto=@Codproducto";
+                SqlCommand cmd = new SqlCommand(Query, cn);
+                cmd.Parameters.AddWithValue("@Descripción", objI.Descripción);
+                cmd.Parameters.AddWithValue("@Marca", objI.Marca);
+                cmd.Parameters.AddWithValue("@Precio", objI.Precio);
+                cmd.Parameters.AddWithValue("@PrecioVenta", objI.PrecioVenta);
+                cmd.Parameters.AddWithValue("@Codproducto", objI.Codproducto);
+                if (cn.State == ConnectionState.Open) cn.Close();
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+            catch (Exception)
+            { throw; }
+        }
+        public int EliminarPrenda(string xml)
+        {
+            var resultado = 0;
+            SqlCommand cmd = null;
+            try
+            {
+                cmd = new SqlCommand(sql.Query_EliminarProducto(), cn);
+                cmd.Parameters.AddWithValue("@CadXml", xml);
+                cn.Open();
+                resultado = cmd.ExecuteNonQuery();
+                return resultado;
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+
+
+        }
         public DataTable ListarInventario()
         {
             try
@@ -118,44 +217,7 @@ namespace Datos
         }
 
 
-        public string GenerarCodigoPrenda()
-        {
-
-            try
-            {
-                string Abc = "PT";
-               
-                SqlCommand cmd = new SqlCommand(sql.Query_GenerarCodigoPrenda(), cn);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-
-                da.Fill(dt);
-                DataRow dr;
-                dr = dt.Rows[0];
-
-                string codigoTabla = dr[0].ToString();
-                int codeTablaConvert = int.Parse(codigoTabla);
-                string drCeros = "";
-                string numeracion = codeTablaConvert.ToString();
-                for (int i = 0; i <= 3 - numeracion.Length; i++)
-                {
-                    drCeros += "0";
-
-                }
-                drCeros += numeracion;
-               string cadena = drCeros + "-" + Abc;
-
-                if (cn.State == ConnectionState.Open) cn.Close();
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-                return cadena;
-            }
-            catch (Exception)
-            { throw; }
-            
-
-        }
+      
         public List<DetalleInventarioE> TraerDetallePrenda(string Id)
         {
             SqlCommand cmd = null;
@@ -261,30 +323,7 @@ namespace Datos
             finally { cmd.Connection.Close(); }
             return objI;
         }
-        public void EditarPrenda(InventarioE objI)
-        {
-            try
-            {
-                string Query = @"update tbinventario set
-                                Descripción=@Descripción,
-                                Marca=@Marca,
-                                Precio=@Precio,
-                                PrecioVenta=@PrecioVenta
-                                where Codproducto=@Codproducto";
-                SqlCommand cmd = new SqlCommand(Query, cn);
-                cmd.Parameters.AddWithValue("@Descripción", objI.Descripción);
-                cmd.Parameters.AddWithValue("@Marca", objI.Marca);
-                cmd.Parameters.AddWithValue("@Precio", objI.Precio);
-                cmd.Parameters.AddWithValue("@PrecioVenta", objI.PrecioVenta);
-                cmd.Parameters.AddWithValue("@Codproducto", objI.Codproducto);
-                if (cn.State == ConnectionState.Open) cn.Close();
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-            }
-            catch (Exception)
-            { throw; }
-        }
+       
        
         public int MantenimientoDetalleInventario(string xml)
         {
@@ -302,24 +341,7 @@ namespace Datos
             { throw; }
             finally { cmd.Connection.Close(); }
         }
-        public int RegistrarInventario(string xml)
-        {
-            var resultado = 0;
-            SqlCommand cmd = null;
-            try
-            {
-                cmd = new SqlCommand(sql.Query_GuardarInventario(), cn);
-                cmd.Parameters.AddWithValue("@Cadxml", xml);
-                cn.Open();
-                resultado = cmd.ExecuteNonQuery();
-                return resultado;
-
-            }
-            catch (Exception)
-            { throw; }
-            finally{ cmd.Connection.Close(); }
-
-        }
+        
 
        
     }

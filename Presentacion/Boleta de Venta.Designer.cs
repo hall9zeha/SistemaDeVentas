@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtCambio = new System.Windows.Forms.TextBox();
+            this.txtEfectivo = new System.Windows.Forms.TextBox();
             this.lblMontoEnletras = new System.Windows.Forms.Label();
             this.btnAnular = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
@@ -68,16 +73,11 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtCambio = new System.Windows.Forms.TextBox();
-            this.txtEfectivo = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleBoleta)).BeginInit();
             this.gbCliente.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -101,6 +101,55 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(656, 333);
             this.panel1.TabIndex = 13;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.txtCambio);
+            this.groupBox2.Controls.Add(this.txtEfectivo);
+            this.groupBox2.Location = new System.Drawing.Point(449, 250);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 81);
+            this.groupBox2.TabIndex = 27;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Calcular Vuelto";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(19, 57);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(60, 13);
+            this.label8.TabIndex = 29;
+            this.label8.Text = "Cambio S/:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 31);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(64, 13);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "Efectivo S/:";
+            // 
+            // txtCambio
+            // 
+            this.txtCambio.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCambio.Location = new System.Drawing.Point(85, 51);
+            this.txtCambio.Name = "txtCambio";
+            this.txtCambio.Size = new System.Drawing.Size(100, 25);
+            this.txtCambio.TabIndex = 28;
+            this.txtCambio.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtEfectivo
+            // 
+            this.txtEfectivo.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEfectivo.Location = new System.Drawing.Point(85, 25);
+            this.txtEfectivo.Name = "txtEfectivo";
+            this.txtEfectivo.Size = new System.Drawing.Size(100, 25);
+            this.txtEfectivo.TabIndex = 27;
+            this.txtEfectivo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblMontoEnletras
             // 
@@ -484,7 +533,7 @@
             // lblBoleta
             // 
             this.lblBoleta.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBoleta.Location = new System.Drawing.Point(72, 69);
+            this.lblBoleta.Location = new System.Drawing.Point(79, 69);
             this.lblBoleta.Name = "lblBoleta";
             this.lblBoleta.Size = new System.Drawing.Size(85, 19);
             this.lblBoleta.TabIndex = 8;
@@ -529,55 +578,6 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "R.U.C.";
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.txtCambio);
-            this.groupBox2.Controls.Add(this.txtEfectivo);
-            this.groupBox2.Location = new System.Drawing.Point(449, 250);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 81);
-            this.groupBox2.TabIndex = 27;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Calcular Vuelto";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(19, 57);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(60, 13);
-            this.label8.TabIndex = 29;
-            this.label8.Text = "Cambio S/:";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 31);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 13);
-            this.label1.TabIndex = 30;
-            this.label1.Text = "Efectivo S/:";
-            // 
-            // txtCambio
-            // 
-            this.txtCambio.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCambio.Location = new System.Drawing.Point(85, 51);
-            this.txtCambio.Name = "txtCambio";
-            this.txtCambio.Size = new System.Drawing.Size(100, 25);
-            this.txtCambio.TabIndex = 28;
-            this.txtCambio.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txtEfectivo
-            // 
-            this.txtEfectivo.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEfectivo.Location = new System.Drawing.Point(85, 25);
-            this.txtEfectivo.Name = "txtEfectivo";
-            this.txtEfectivo.Size = new System.Drawing.Size(100, 25);
-            this.txtEfectivo.TabIndex = 27;
-            this.txtEfectivo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // Boleta_de_Venta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -593,13 +593,13 @@
             this.Load += new System.EventHandler(this.Boleta_de_Venta_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleBoleta)).EndInit();
             this.gbCliente.ResumeLayout(false);
             this.gbCliente.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

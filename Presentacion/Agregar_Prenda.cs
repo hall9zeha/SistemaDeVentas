@@ -94,7 +94,7 @@ namespace Presentacion
                     Detalle.Add(s);
                 }
                 objE.detalleInventario = Detalle;
-                int resultado = InventarioN.Instancia.RegistrarInventario(objE);
+                int resultado = InventarioN.Instancia.GuardarPrendaInventario(objE);
                 MessageBox.Show("Prendas Resitradas");
                 dgvprenda.Rows.Clear();
             }

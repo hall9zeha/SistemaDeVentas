@@ -25,7 +25,7 @@ namespace Datos
             {
                 string Abc = "BO";
                
-                SqlCommand cmd = new SqlCommand(sql.Query_GenerarCodigoCadena(), cn);
+                SqlCommand cmd = new SqlCommand(sql.Query_GenerarCodigoBoleta(), cn);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -36,13 +36,13 @@ namespace Datos
                 int codeTablaConvert = int.Parse(codigoTabla);
                 string drCeros = "";
                 string numeracion = codeTablaConvert.ToString();
-                for (int i = 0; i <= 3 - numeracion.Length; i++)
+                for (int i = 0; i <=3  - numeracion.Length; i++)
                 {
                     drCeros += "0";
 
                 }
                 drCeros += numeracion;
-                string cadena = drCeros + "-" + Abc;
+                string cadena = Abc + "-" + drCeros;
 
                 if (cn.State == ConnectionState.Open) cn.Close();
                 cn.Open();

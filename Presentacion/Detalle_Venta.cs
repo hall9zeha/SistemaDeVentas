@@ -122,7 +122,7 @@ namespace Presentacion
 
         private void BtnAnular_Click(object sender, EventArgs e)
         {
-            DialogResult dr = MessageBox.Show("Advertencia", "Realmente Quieres anular esta venta", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult dr = MessageBox.Show("Realmente Quieres anular esta venta", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (dr == DialogResult.Yes)
             {
                 anularVenta();

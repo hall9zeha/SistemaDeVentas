@@ -236,7 +236,7 @@ namespace Presentacion
             }
             objB.detalleBoleta = detalle;
             int resultado = VentasN.Instancia.AnularVenta(objB);
-            MessageBox.Show("Venta Anulada revisa");
+            MessageBox.Show("Venta Anulada");
         }
 
         void imprimirTicket()
@@ -374,7 +374,13 @@ namespace Presentacion
 
         private void BtnAnular_Click(object sender, EventArgs e)
         {
-            habilitarBotones(true, false, false, false, false);
+            DialogResult dr = MessageBox.Show("Realmente Quieres anular esta venta", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dr == DialogResult.Yes)
+            {
+                anularVenta();
+                habilitarBotones(true, false, false, false, false);
+            }
+            
         }
     }
 }

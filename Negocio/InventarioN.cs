@@ -76,7 +76,7 @@ namespace Negocio
             catch (Exception)
             { throw; }
         }
-        public int RegistrarInventario(InventarioE i)
+        public int GuardarPrendaInventario(InventarioE i)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace Negocio
                 }
                 CadXml += "</tbinventario>";
                 CadXml = "<root>" + CadXml + "</root>";
-                int result = InventarioD.Instancia.RegistrarInventario(CadXml);
+                int result = InventarioD.Instancia.GuardarPrendaInventario(CadXml);
                 if (result <= 0) throw new ApplicationException("Hubo un error en la tansaccion");
                 return result;
             }
@@ -148,6 +148,16 @@ namespace Negocio
         public void EditarPrenda(InventarioE objI)
         {
             objD.EditarPrenda(objI);
+        }
+        public int EliminarPrenda(InventarioE objI)
+        {
+            String CadXml = "";
+            CadXml += "<tbinventario ";
+            CadXml += "codproducto ='" + objI.Codproducto + "'/>";
+            CadXml = "<root>" + CadXml + "</root>";
+            int resultado = InventarioD.Instancia.EliminarPrenda(CadXml);
+            if (resultado <= 0) throw new ApplicationException("Hubo un error en la transacción");
+            return resultado;
         }
       
 
