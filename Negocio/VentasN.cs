@@ -32,7 +32,7 @@ namespace Negocio
                
                 String Cadxml = "";
                 Cadxml += "<tbboleta ";
-                Cadxml += "codboleta='" + b.Codboleta + "' ";
+                Cadxml += "codventa='" + b.CodVenta + "' ";
                 Cadxml += "importe='" + b.Importe_rg + "' ";
                 Cadxml += "importe_rg='" + b.Importe_rg + "'>";
                 
@@ -40,7 +40,7 @@ namespace Negocio
                 foreach (DetalleBoletaE dt in b.detalleBoleta)
                 {
                     Cadxml += "<detalle_tbboleta ";
-                    Cadxml += "codboleta='" + dt.Codboleta + "' ";
+                    //Cadxml += "codboleta='" + dt.Codboleta + "' ";
                     Cadxml += "codproducto='" + dt.Codproducto + "' ";
                     Cadxml += "codproducto_detalle='" + dt.CodProducto_detalle + "' ";
                     Cadxml += "descripcion='" + dt.Descripción + "' ";
@@ -69,7 +69,7 @@ namespace Negocio
             {
                 String CadXml = "";
                 CadXml += "<tbboleta ";
-                CadXml += "codboleta='" + b.Codboleta + "'>";
+                CadXml += "idventa='" + b.idVenta + "'>";
                 foreach (DetalleBoletaE dt in b.detalleBoleta)
                 {
                     CadXml += "<tbstock ";
@@ -77,7 +77,7 @@ namespace Negocio
                     CadXml += "stock='" + dt.Cantidad + "'/>";
 
                     CadXml += "<detalle_tbboleta ";
-                    CadXml += "codboleta='" + b.Codboleta + "'/>";
+                    CadXml += "idventa='" + b.idVenta + "'/>";
                 }
                 CadXml += "</tbboleta>";
                 CadXml = "<root>" + CadXml + "</root>";
@@ -89,7 +89,7 @@ namespace Negocio
             { throw; }
 
         }
-        public List<BoletaE> MostrarVentasSimple(string fecha)
+        public List<BoletaE> MostrarVentasSimple(String fecha)
         {
             List<BoletaE> lista = VentasD.Instancia.MostrarVentasSimple(fecha);
             return lista;
@@ -105,14 +105,14 @@ namespace Negocio
             List<BoletaE> lista = VentasD.Instancia.BuscarVentaBoleta(boleta);
             return lista;
         }
-        public List<DetalleBoletaE> ListarDetalleBoleta(string boleta)
+        public List<DetalleBoletaE> ListarDetalleBoleta(int idVenta)
         {
-            List<DetalleBoletaE> lista = objV.ListarDetalleBoleta(boleta);
+            List<DetalleBoletaE> lista = objV.ListarDetalleBoleta(idVenta);
             return lista;
         }
-        public List<DetalleBoletaE> ListarDetalleBoletaCambio(string boleta)
+        public List<DetalleBoletaE> ListarDetalleBoletaCambio(int idVenta)
         {
-          List<DetalleBoletaE> lista = objV.ListarDetalleBoletaCambio(boleta);
+          List<DetalleBoletaE> lista = objV.ListarDetalleBoletaCambio(idVenta);
             return lista;
         }
         //INICIO métodos de prueba para el módulo devolucion
@@ -133,7 +133,7 @@ namespace Negocio
             {
                 string Cadxml = "";
                 Cadxml += "<tbboleta ";
-                Cadxml += "codboleta='" + b.Codboleta + "' ";
+                Cadxml += "idventa='" + b.idVenta + "' ";
                 Cadxml += "importe_rg='" + b.Importe_rg + "'>";
               //  Cadxml += "estadocambio='" + b.EstadoCambio + "'>";
 
@@ -141,7 +141,7 @@ namespace Negocio
                 foreach (DetalleBoletaE dt in b.detalleBoleta)
                 {
                     Cadxml += "<detalle_tbboleta ";
-                    Cadxml += "codboleta='" + dt.Codboleta + "' ";
+                    Cadxml += "idventa='" + dt.IdVenta + "' ";
                     Cadxml += "codproducto='" + dt.Codproducto + "' ";
                     Cadxml += "codproducto_detalle='" + dt.CodProducto_detalle + "' ";
                     Cadxml += "descripcion='" + dt.Descripción + "' ";

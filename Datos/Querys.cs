@@ -42,14 +42,40 @@ namespace Datos
         public string Query_GenerarCodigoBoleta()
         {
             string Query = @"Declare @Id Int
-                                select top 1 @Id = Left(Codboleta,4) FROM tbboleta  order by Codboleta desc
+                                select top 1 @Id = RIGHT(CodVenta,8) FROM tbboleta  order by CodVenta desc
                                 if LEN(@Id) is null
                                 begin
                                 set @id = 1
                                 end
                                 print @id
                                 Declare @Val int
-                                select @Val=COUNT(*) from tbboleta where LEFT(Codboleta,4)=@id
+                                select @Val=COUNT(*) from tbboleta where RIGHT(CodVenta,8)=@id
+                                if @val = 1
+                                 begin
+                                 set @Id = @Id+1
+                                 set @Val = 1
+                                 end
+                                else
+                                 begin
+                                 set @Id = @Id
+                                 set @Val = @Val +1
+                                 end
+ 
+                                select @Id As Numero,@Val As Abc";
+            return Query;
+        }
+
+        public string Query_GenerarCodigoFactura()
+        {
+            string Query = @"Declare @Id Int
+                                select top 1 @Id = RIGHT(Codboleta,8) FROM tbboleta  order by Codboleta desc
+                                if LEN(@Id) is null
+                                begin
+                                set @id = 1
+                                end
+                                print @id
+                                Declare @Val int
+                                select @Val=COUNT(*) from tbboleta where RIGHT(Codboleta,8)=@id
                                 if @val = 1
                                  begin
                                  set @Id = @Id+1
@@ -68,7 +94,7 @@ namespace Datos
         {
             string Query = @"
                         begin 
-                        declare  @h int, @smsError varchar(500)
+                        declare  @h int, @smsError varchar(500), @idVenta int
                         exec sp_xml_preparedocument @h output , @Cadxml
                         begin try
                         begin transaction
@@ -79,19 +105,19 @@ namespace Datos
 		                          BEGIN
 		                           RAISERROR('Uno ó mas productos no cuentan con el stock suficiente',16,1)
 		                          END
-		                          INSERT INTO tbboleta(Codboleta,Fechaboleta,Importe,Importe_rg,estadoVenta)
-                                   SELECT b.codboleta,GETDATE(),b.importe, b.importe_rg, 1
+		                          INSERT INTO tbboleta(CodVenta,Fechaboleta,Importe,Importe_rg,estadoVenta)
+                                   SELECT b.codventa,GETDATE(),b.importe, b.importe_rg, 1
 		                           FROM OpenXML(@h,'root/tbboleta',1)WITH(
-		                           codboleta nvarchar(20),
+		                           codventa nvarchar(20),
 		                           importe decimal(5,2),
 		                           importe_rg decimal(5,2),
                                    estadoventa int
-		                           )b
+		                           )b 
+                                   set @idVenta=@@identity
 		   
-		                           INSERT INTO detalle_tbboleta(Codboleta, Codproducto, CodProducto_detalle, Descripción, Cantidad, Precio_final) 
-		                           SELECT dt.codboleta,dt.codproducto,dt.codproducto_detalle,dt.descripcion,dt.cantidad, dt.precio_final
+		                           INSERT INTO detalle_tbboleta(IdVenta, Codproducto, CodProducto_detalle, Descripción, Cantidad, Precio_final) 
+		                           SELECT @idVenta,dt.codproducto,dt.codproducto_detalle,dt.descripcion,dt.cantidad, dt.precio_final
 		                           FROM OpenXML(@h,'root/tbboleta/detalle_tbboleta',1)WITH(
-		                           codboleta nvarchar(20),
 		                           codproducto nvarchar(20),
 		                           codproducto_detalle int,
 		                           descripcion nvarchar(max),
@@ -135,8 +161,8 @@ namespace Datos
                             tb.Importe_rg=0
                             from openxml(@h, 'root/tbboleta', 1)with
                             (
-                            codboleta nvarchar(20)
-                            )b inner join tbboleta tb on tb.Codboleta=b.codboleta
+                            idventa int
+                            )b inner join tbboleta tb on tb.idVenta=b.idventa
                             update st set
                             st.Stock=st.Stock + s.stock
                             from openxml(@h, 'root/tbboleta/tbstock')with
@@ -147,8 +173,8 @@ namespace Datos
                             delete from detalle_tbboleta
                             from openxml(@h, 'root/tbboleta/detalle_tbboleta',1)with
                             (
-                            codboleta nvarchar(20)
-                            )d inner join detalle_tbboleta dt on dt.Codboleta=d.codboleta
+                            idventa
+                            )d inner join detalle_tbboleta dt on dt.IdVenta=d.idventa
                             if(@@TRANCOUNT>0)commit transaction
                             end try
                             begin catch
@@ -348,16 +374,18 @@ namespace Datos
         {
             string Query = @"
                             select 
-                            dt.Codboleta,
+                            dt.idVenta,
+                            b.CodVenta,
                             sum(dt.Cantidad)as Prendas,
                             sum(dt.Precio_final)as Total,
                             b.Fechaboleta
                             from detalle_tbboleta dt inner join tbboleta b
                             
-                            on b.Codboleta=dt.Codboleta
-                            where b.Fechaboleta=@Fechaboleta
+                            on b.idVenta=dt.IdVenta
+                            where convert(date,b.Fechaboleta)=@Fechaboleta
                             group by 
-                            dt.Codboleta,
+                            dt.idVenta,
+                            b.CodVenta,
                             dt.Cantidad,
                             b.Fechaboleta
                             order by Fechaboleta
@@ -369,16 +397,18 @@ namespace Datos
         {
             string Query = @"
                             select 
-                            dt.Codboleta,
+                            b.idVenta,
+                            b.CodVenta,
                             sum(dt.Cantidad)as Prendas,
                             sum(dt.Precio_final)as Total,
                             b.Fechaboleta
                             from detalle_tbboleta dt inner join tbboleta b
                             
-                            on b.Codboleta=dt.Codboleta
-                            where b.Fechaboleta between @FechaBoletaIni and @FechaBoletaFin
+                            on b.idVenta=dt.IdVenta
+                            where convert(date,b.Fechaboleta) between @FechaBoletaIni and @FechaBoletaFin
                             group by 
-                            dt.Codboleta,
+                            b.idVenta,
+                            b.CodVenta,
                             dt.Cantidad,
                             b.Fechaboleta
                             order by Fechaboleta
@@ -389,17 +419,19 @@ namespace Datos
         {
             string Query = @"
                             select 
-                            b.Codboleta,
+                            b.idVenta,
+                            b.CodVenta,
                             sum(dt.Cantidad)as Prendas,
                             --sum(dt.Precio_final)as Total,
                             b.Importe_rg as Total, 
                             b.Fechaboleta
                             from tbboleta b inner join detalle_tbboleta dt
                             
-                            on b.Codboleta=dt.Codboleta
-                            where b.Codboleta like '%'+ @Codboleta +'%'
+                            on b.idVenta=dt.IdVenta
+                            where b.CodVenta like '%'+ @CodVenta +'%'
                             group by 
-                            b.Codboleta,
+                            b.idVenta,
+                            b.CodVenta,
                             --dt.Cantidad,
                             --dt.Precio_final,
                             b.Importe_rg,
@@ -427,10 +459,10 @@ namespace Datos
 
                                 on  i.Codproducto=dtb.Codproducto 
                                 inner join tbstock s on s.Codproducto =i.Codproducto  
-                                inner join tbboleta b on b.Codboleta=dtb.Codboleta   
+                                inner join tbboleta b on b.idVenta=dtb.idVenta   
                                 
                                 where 
-                                dtb.Codboleta=@Codboleta and 
+                                dtb.idVenta=@idVenta and 
                                 s.CodEstock =dtb.Codproducto_detalle and 
                                 dtb.Coddetalle =dtb.Coddetalle  
                             ";
@@ -456,10 +488,10 @@ namespace Datos
 
                                 on  i.Codproducto=dtb.Codproducto 
                                 inner join tbstock s on s.Codproducto =i.Codproducto  
-                                inner join tbboleta b on b.Codboleta=dtb.Codboleta   
+                                inner join tbboleta b on b.idVenta=dtb.IdVenta   
                                 
                                 where 
-                                dtb.Codboleta=@Codboleta and 
+                                dtb.IdVenta=@idVenta and 
                                 s.CodEstock =dtb.Codproducto_detalle and 
                                 dtb.Coddetalle =dtb.Coddetalle  
                             ";
@@ -537,13 +569,13 @@ namespace Datos
 									   tb.Importe_rg=b.importe_rg
 									   from openxml(@h,'root/tbboleta',1)with
 									   (
-									   importe_rg decimal(5,2),
-									   codboleta nvarchar(20)
-									   )b inner join tbboleta tb on b.codboleta=tb.Codboleta 
-		                           insert into detalle_tbboleta(Codboleta, Codproducto, CodProducto_detalle, Descripción, Cantidad, Precio_final) 
-		                           SELECT dt.codboleta,dt.codproducto,dt.codproducto_detalle,dt.descripcion,dt.cantidad, dt.precio_final
+									   importe_rg decimal(10,2),
+									   idventa int
+									   )b inner join tbboleta tb on b.idventa=tb.idventa 
+		                           insert into detalle_tbboleta(IdVenta, Codproducto, CodProducto_detalle, Descripción, Cantidad, Precio_final) 
+		                           SELECT dt.idventa,dt.codproducto,dt.codproducto_detalle,dt.descripcion,dt.cantidad, dt.precio_final
 		                           FROM OpenXML(@h,'root/tbboleta/detalle_tbboleta',1)WITH(
-		                           codboleta nvarchar(20),
+		                           idventa int,
 		                           codproducto nvarchar(20),
 		                           codproducto_detalle int,
 		                           descripcion nvarchar(max),

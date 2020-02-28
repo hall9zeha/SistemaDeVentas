@@ -30,15 +30,19 @@ namespace Presentacion
         }
         void crearGrid()
         {
-            dgvCambioPrenda.Columns.Add("Codboleta", "Codboleta");
+            dgvCambioPrenda.Columns.Add("CodVenta", "CodVenta");
+            dgvCambioPrenda.Columns.Add("Boleta/Factura", "Boleta/Factura");
             dgvCambioPrenda.Columns.Add("Prendas", "Prendas");
             dgvCambioPrenda.Columns.Add("Total", "Total");
             dgvCambioPrenda.Columns.Add("FechaBoleta", "FechaBoleta");
+            dgvCambioPrenda.Columns.Add("Hora", "Hora");
 
             dgvCambioPrenda.Columns[0].Width = 70;
-            dgvCambioPrenda.Columns[1].Width = 60;
-            dgvCambioPrenda.Columns[2].Width = 100;
-            dgvCambioPrenda.Columns[3].Width = 100;
+            dgvCambioPrenda.Columns[1].Width = 100;
+            dgvCambioPrenda.Columns[2].Width = 50;
+            dgvCambioPrenda.Columns[3].Width = 60;
+            dgvCambioPrenda.Columns[4].Width = 70;
+            dgvCambioPrenda.Columns[5].Width = 60;
 
             dgvCambioPrenda.AllowUserToAddRows = false;
             dgvCambioPrenda.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -60,10 +64,12 @@ namespace Presentacion
                     {
                         num++;
                         string[] fila = new string[] {
-                        lista[i].Codboleta,
+                        lista[i].idVenta.ToString(),
+                        lista[i].CodVenta,
                         lista[i].Cantidad.ToString(),
                         lista[i].Precio_final.ToString("0.00"),
-                        lista[i].Fechaboleta.ToString("dd-MM-yy")};
+                        lista[i].Fechaboleta.ToString("dd-MM-yy"),
+                        lista[i].Fechaboleta.ToString("HH:mm:ss")};
                         dgvCambioPrenda.Rows.Add(fila);
 
                     }
@@ -88,8 +94,9 @@ namespace Presentacion
         {
             try
             {
-                string codBoleta = Convert.ToString(dgvCambioPrenda.CurrentRow.Cells[0].Value);
-                Detalle_Cambios objDetalleCambios = new Detalle_Cambios(codBoleta);
+                int idVenta = Convert.ToInt32(dgvCambioPrenda.CurrentRow.Cells[0].Value);
+                string codBoleta = Convert.ToString(dgvCambioPrenda.CurrentRow.Cells[1].Value);
+                Detalle_Cambios objDetalleCambios = new Detalle_Cambios(idVenta, codBoleta);
                 objDetalleCambios.ShowDialog();
 
             }

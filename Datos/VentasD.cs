@@ -23,7 +23,7 @@ namespace Datos
         {
             try
             {
-                string Abc = "BO";
+                string Abc = "BT00";
                
                 SqlCommand cmd = new SqlCommand(sql.Query_GenerarCodigoBoleta(), cn);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -36,7 +36,7 @@ namespace Datos
                 int codeTablaConvert = int.Parse(codigoTabla);
                 string drCeros = "";
                 string numeracion = codeTablaConvert.ToString();
-                for (int i = 0; i <=3  - numeracion.Length; i++)
+                for (int i = 0; i <=7  - numeracion.Length; i++)
                 {
                     drCeros += "0";
 
@@ -95,7 +95,7 @@ namespace Datos
             { throw; }
             finally { cmd.Connection.Close(); }
         }
-        public List<BoletaE> MostrarVentasSimple(string fecha)
+        public List<BoletaE> MostrarVentasSimple(String fecha)
         {
             SqlCommand cmd = null;
             SqlDataReader dr = null;
@@ -112,7 +112,8 @@ namespace Datos
                 {
                     BoletaE b = new BoletaE();
 
-                    b.Codboleta = dr["Codboleta"].ToString();
+                    b.idVenta = Convert.ToInt32(dr["idVenta"].ToString());
+                    b.CodVenta = dr["CodVenta"].ToString();
                     b.Cantidad = Convert.ToInt32(dr["Prendas"].ToString());
                     b.Precio_final = Convert.ToDouble(dr["Total"].ToString());
                     b.Fechaboleta = Convert.ToDateTime(dr["Fechaboleta"].ToString());
@@ -143,7 +144,8 @@ namespace Datos
                 {
                     BoletaE b = new BoletaE();
 
-                    b.Codboleta = dr["Codboleta"].ToString();
+                    b.idVenta = Convert.ToInt32(dr["idVenta"].ToString());
+                    b.CodVenta = dr["CodVenta"].ToString();
                     b.Cantidad = Convert.ToInt32(dr["Prendas"].ToString());
                     b.Precio_final = Convert.ToDouble(dr["Total"].ToString());
                     b.Fechaboleta = Convert.ToDateTime(dr["Fechaboleta"].ToString());
@@ -165,7 +167,7 @@ namespace Datos
             try
             {
                 cmd = new SqlCommand(sql.Query_BuscarBoletaVenta(), cn);
-                cmd.Parameters.AddWithValue("@Codboleta", boleta);
+                cmd.Parameters.AddWithValue("@CodVenta", boleta);
                 cn.Open();
                 dr = cmd.ExecuteReader();
                 lista = new List<BoletaE>();
@@ -173,7 +175,8 @@ namespace Datos
                 {
                     BoletaE b = new BoletaE();
 
-                    b.Codboleta = dr["Codboleta"].ToString();
+                    b.idVenta = Convert.ToInt32(dr["idVenta"].ToString());
+                    b.CodVenta = dr["CodVenta"].ToString();
                     b.Cantidad = Convert.ToInt32(dr["Prendas"].ToString());
                     b.Precio_final = Convert.ToDouble(dr["Total"].ToString());
                     b.Fechaboleta = Convert.ToDateTime(dr["Fechaboleta"].ToString());
@@ -185,7 +188,7 @@ namespace Datos
             finally { cmd.Connection.Close(); }
             return lista;
         }
-        public List<DetalleBoletaE> ListarDetalleBoleta(string boleta)
+        public List<DetalleBoletaE> ListarDetalleBoleta(int  idVenta)
         {
             SqlCommand cmd = null;
             SqlDataReader dr=null;
@@ -193,7 +196,7 @@ namespace Datos
             try
             {
                 cmd = new SqlCommand(sql.Query_ListarDetalleVenta(), cn);
-                cmd.Parameters.AddWithValue("@Codboleta", boleta);
+                cmd.Parameters.AddWithValue("@idVenta", idVenta);
                 cn.Open();
                 dr = cmd.ExecuteReader();
                 lista = new List<DetalleBoletaE>();
@@ -230,7 +233,7 @@ namespace Datos
 
         }
 
-        public List<DetalleBoletaE> ListarDetalleBoletaCambio(string boleta)
+        public List<DetalleBoletaE> ListarDetalleBoletaCambio(int idVenta)
         {
             SqlCommand cmd = null;
             SqlDataReader dr = null;
@@ -238,7 +241,7 @@ namespace Datos
             try
             {
                 cmd = new SqlCommand(sql.Query_ListarDetalleVentaCambio(), cn);
-                cmd.Parameters.AddWithValue("@Codboleta", boleta);
+                cmd.Parameters.AddWithValue("@idVenta", idVenta);
                 cn.Open();
                 dr = cmd.ExecuteReader();
                 lista = new List<DetalleBoletaE>();

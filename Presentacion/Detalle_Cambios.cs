@@ -16,12 +16,14 @@ namespace Presentacion
         VentasN objVN = new VentasN();
         DetalleBoletaE objDTE = new DetalleBoletaE();
         string _codBoleta = "";
+        int _idVenta = 0;
         double precioUnid = 0.0;
         double montActualizado = 0.0;
-        public Detalle_Cambios(string codBoleta)
+        public Detalle_Cambios(int idVenta, string codBoleta)
         {
             InitializeComponent();
             this._codBoleta = codBoleta;
+            this._idVenta = idVenta;
         }
 
         private void LblBoleta_Click(object sender, EventArgs e)
@@ -50,7 +52,7 @@ namespace Presentacion
                 foreach (DataGridViewRow row in dgvDetalleCambio.Rows)
                             {
                                 DetalleBoletaE dt = new DetalleBoletaE();
-                                dt.Codboleta = lblBoleta.Text;
+                                dt.IdVenta = _idVenta;
 
                                 dt.Codproducto = row.Cells[0].Value.ToString();
                                 dt.CodProducto_detalle = Convert.ToInt32(row.Cells[9].Value.ToString());
@@ -65,8 +67,8 @@ namespace Presentacion
 
                 b.detalleBoleta = Detalle;
                 b.Importe_rg = Convert.ToDouble(nuevoTotal.Text);
-                b.Codboleta = lblBoleta.Text;
-                
+                b.idVenta = _idVenta;
+
                 int resultado = VentasN.Instancia.GuardarCambioDePrenda(b);
                 
                 MessageBox.Show("Cambio registrado ");
@@ -119,7 +121,7 @@ namespace Presentacion
             try
             {
                 int num = 0;
-                List<DetalleBoletaE> lista = objVN.ListarDetalleBoletaCambio(_codBoleta);
+                List<DetalleBoletaE> lista = objVN.ListarDetalleBoletaCambio(_idVenta);
                 dgvDetalleCambio.Rows.Clear();
                 for (int i = 0; i < lista.Count; i++)
                 {

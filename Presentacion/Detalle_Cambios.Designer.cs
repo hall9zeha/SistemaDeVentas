@@ -73,13 +73,13 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtTotalCambio = new System.Windows.Forms.TextBox();
             this.dgvPrendaCambio = new System.Windows.Forms.DataGridView();
             this.txtTotalDif = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleCambio)).BeginInit();
             this.gbCliente.SuspendLayout();
@@ -537,9 +537,9 @@
             // lblBoleta
             // 
             this.lblBoleta.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBoleta.Location = new System.Drawing.Point(72, 69);
+            this.lblBoleta.Location = new System.Drawing.Point(8, 69);
             this.lblBoleta.Name = "lblBoleta";
-            this.lblBoleta.Size = new System.Drawing.Size(85, 19);
+            this.lblBoleta.Size = new System.Drawing.Size(149, 19);
             this.lblBoleta.TabIndex = 8;
             this.lblBoleta.Click += new System.EventHandler(this.LblBoleta_Click);
             // 
@@ -597,6 +597,16 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(542, 292);
             this.panel2.TabIndex = 19;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(452, 1);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 13;
+            this.button2.Text = "Quitar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // label1
             // 
@@ -659,16 +669,6 @@
             this.button1.Text = "pasar cambio";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(452, 1);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "Quitar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // Detalle_Cambios
             // 

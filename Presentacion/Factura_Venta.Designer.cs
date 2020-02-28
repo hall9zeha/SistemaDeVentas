@@ -1,6 +1,6 @@
 ﻿namespace Presentacion
 {
-    partial class Detalle_Venta
+    partial class Factura_Venta
     {
         /// <summary>
         /// Required designer variable.
@@ -29,14 +29,23 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtCambio = new System.Windows.Forms.TextBox();
+            this.txtEfectivo = new System.Windows.Forms.TextBox();
             this.lblMontoEnletras = new System.Windows.Forms.Label();
             this.btnAnular = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
+            this.btnQuitarItem = new System.Windows.Forms.Button();
+            this.btnAgregarItem = new System.Windows.Forms.Button();
             this.btnImprimir = new System.Windows.Forms.Button();
-            this.lblItems = new System.Windows.Forms.Label();
+            this.btnGuardar = new System.Windows.Forms.Button();
+            this.lblNumItems = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.txtTotal = new System.Windows.Forms.TextBox();
-            this.dgvDetalleVenta = new System.Windows.Forms.DataGridView();
+            this.btnNuevo = new System.Windows.Forms.Button();
+            this.dgvDetalleFactura = new System.Windows.Forms.DataGridView();
             this.gbCliente = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cboTipoPago = new System.Windows.Forms.ComboBox();
@@ -65,7 +74,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleVenta)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleFactura)).BeginInit();
             this.gbCliente.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -74,18 +84,72 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.lblMontoEnletras);
             this.panel1.Controls.Add(this.btnAnular);
             this.panel1.Controls.Add(this.btnSalir);
+            this.panel1.Controls.Add(this.btnQuitarItem);
+            this.panel1.Controls.Add(this.btnAgregarItem);
             this.panel1.Controls.Add(this.btnImprimir);
-            this.panel1.Controls.Add(this.lblItems);
+            this.panel1.Controls.Add(this.btnGuardar);
+            this.panel1.Controls.Add(this.lblNumItems);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.txtTotal);
-            this.panel1.Controls.Add(this.dgvDetalleVenta);
-            this.panel1.Location = new System.Drawing.Point(7, 260);
+            this.panel1.Controls.Add(this.btnNuevo);
+            this.panel1.Controls.Add(this.dgvDetalleFactura);
+            this.panel1.Location = new System.Drawing.Point(44, 267);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(603, 292);
+            this.panel1.Size = new System.Drawing.Size(656, 333);
             this.panel1.TabIndex = 18;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.txtCambio);
+            this.groupBox2.Controls.Add(this.txtEfectivo);
+            this.groupBox2.Location = new System.Drawing.Point(449, 250);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 81);
+            this.groupBox2.TabIndex = 27;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Calcular Vuelto";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(19, 57);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(60, 13);
+            this.label8.TabIndex = 29;
+            this.label8.Text = "Cambio S/:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 31);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(64, 13);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "Efectivo S/:";
+            // 
+            // txtCambio
+            // 
+            this.txtCambio.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCambio.Location = new System.Drawing.Point(85, 51);
+            this.txtCambio.Name = "txtCambio";
+            this.txtCambio.Size = new System.Drawing.Size(100, 25);
+            this.txtCambio.TabIndex = 28;
+            this.txtCambio.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // txtEfectivo
+            // 
+            this.txtEfectivo.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEfectivo.Location = new System.Drawing.Point(85, 25);
+            this.txtEfectivo.Name = "txtEfectivo";
+            this.txtEfectivo.Size = new System.Drawing.Size(100, 25);
+            this.txtEfectivo.TabIndex = 27;
+            this.txtEfectivo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblMontoEnletras
             // 
@@ -107,7 +171,6 @@
             this.btnAnular.Size = new System.Drawing.Size(50, 40);
             this.btnAnular.TabIndex = 22;
             this.btnAnular.UseVisualStyleBackColor = true;
-            this.btnAnular.Click += new System.EventHandler(this.BtnAnular_Click);
             // 
             // btnSalir
             // 
@@ -122,6 +185,28 @@
             this.btnSalir.TabIndex = 21;
             this.btnSalir.UseVisualStyleBackColor = false;
             // 
+            // btnQuitarItem
+            // 
+            this.btnQuitarItem.BackColor = System.Drawing.Color.Azure;
+            this.btnQuitarItem.BackgroundImage = global::Presentacion.Properties.Resources.Delete_16x16_32;
+            this.btnQuitarItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnQuitarItem.Location = new System.Drawing.Point(591, 1);
+            this.btnQuitarItem.Name = "btnQuitarItem";
+            this.btnQuitarItem.Size = new System.Drawing.Size(45, 25);
+            this.btnQuitarItem.TabIndex = 20;
+            this.btnQuitarItem.UseVisualStyleBackColor = false;
+            // 
+            // btnAgregarItem
+            // 
+            this.btnAgregarItem.BackColor = System.Drawing.Color.Azure;
+            this.btnAgregarItem.BackgroundImage = global::Presentacion.Properties.Resources.add_16x16_32;
+            this.btnAgregarItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnAgregarItem.Location = new System.Drawing.Point(15, 1);
+            this.btnAgregarItem.Name = "btnAgregarItem";
+            this.btnAgregarItem.Size = new System.Drawing.Size(45, 25);
+            this.btnAgregarItem.TabIndex = 19;
+            this.btnAgregarItem.UseVisualStyleBackColor = false;
+            // 
             // btnImprimir
             // 
             this.btnImprimir.BackgroundImage = global::Presentacion.Properties.Resources.printer;
@@ -132,22 +217,32 @@
             this.btnImprimir.TabIndex = 18;
             this.btnImprimir.UseVisualStyleBackColor = true;
             // 
-            // lblItems
+            // btnGuardar
             // 
-            this.lblItems.BackColor = System.Drawing.Color.Teal;
-            this.lblItems.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblItems.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblItems.Location = new System.Drawing.Point(15, 215);
-            this.lblItems.Name = "lblItems";
-            this.lblItems.Size = new System.Drawing.Size(72, 23);
-            this.lblItems.TabIndex = 15;
-            this.lblItems.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGuardar.BackgroundImage = global::Presentacion.Properties.Resources.guardar;
+            this.btnGuardar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnGuardar.Location = new System.Drawing.Point(214, 244);
+            this.btnGuardar.Name = "btnGuardar";
+            this.btnGuardar.Size = new System.Drawing.Size(50, 40);
+            this.btnGuardar.TabIndex = 17;
+            this.btnGuardar.UseVisualStyleBackColor = true;
+            // 
+            // lblNumItems
+            // 
+            this.lblNumItems.BackColor = System.Drawing.Color.Teal;
+            this.lblNumItems.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNumItems.ForeColor = System.Drawing.SystemColors.Control;
+            this.lblNumItems.Location = new System.Drawing.Point(15, 215);
+            this.lblNumItems.Name = "lblNumItems";
+            this.lblNumItems.Size = new System.Drawing.Size(72, 23);
+            this.lblNumItems.TabIndex = 15;
+            this.lblNumItems.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(428, 231);
+            this.label10.Location = new System.Drawing.Point(477, 226);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(53, 15);
             this.label10.TabIndex = 10;
@@ -158,21 +253,33 @@
             this.txtTotal.BackColor = System.Drawing.Color.Ivory;
             this.txtTotal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTotal.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTotal.Location = new System.Drawing.Point(487, 224);
+            this.txtTotal.Location = new System.Drawing.Point(536, 219);
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.ReadOnly = true;
             this.txtTotal.Size = new System.Drawing.Size(100, 25);
             this.txtTotal.TabIndex = 8;
             this.txtTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // dgvDetalleVenta
+            // btnNuevo
             // 
-            this.dgvDetalleVenta.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDetalleVenta.Location = new System.Drawing.Point(15, 27);
-            this.dgvDetalleVenta.Name = "dgvDetalleVenta";
-            this.dgvDetalleVenta.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDetalleVenta.Size = new System.Drawing.Size(572, 182);
-            this.dgvDetalleVenta.TabIndex = 4;
+            this.btnNuevo.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnNuevo.BackgroundImage = global::Presentacion.Properties.Resources._new;
+            this.btnNuevo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnNuevo.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNuevo.Location = new System.Drawing.Point(161, 244);
+            this.btnNuevo.Name = "btnNuevo";
+            this.btnNuevo.Size = new System.Drawing.Size(51, 40);
+            this.btnNuevo.TabIndex = 3;
+            this.btnNuevo.UseVisualStyleBackColor = false;
+            // 
+            // dgvDetalleFactura
+            // 
+            this.dgvDetalleFactura.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDetalleFactura.Location = new System.Drawing.Point(15, 27);
+            this.dgvDetalleFactura.Name = "dgvDetalleFactura";
+            this.dgvDetalleFactura.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvDetalleFactura.Size = new System.Drawing.Size(621, 182);
+            this.dgvDetalleFactura.TabIndex = 4;
             // 
             // gbCliente
             // 
@@ -197,7 +304,7 @@
             this.gbCliente.Controls.Add(this.txtCodUsuario);
             this.gbCliente.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.gbCliente.ForeColor = System.Drawing.Color.Black;
-            this.gbCliente.Location = new System.Drawing.Point(7, 109);
+            this.gbCliente.Location = new System.Drawing.Point(44, 116);
             this.gbCliente.Name = "gbCliente";
             this.gbCliente.Size = new System.Drawing.Size(603, 145);
             this.gbCliente.TabIndex = 17;
@@ -311,7 +418,7 @@
             this.cboTipDoc.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboTipDoc.ForeColor = System.Drawing.Color.DarkSlateGray;
             this.cboTipDoc.FormattingEnabled = true;
-            this.cboTipDoc.Location = new System.Drawing.Point(239, 71);
+            this.cboTipDoc.Location = new System.Drawing.Point(239, 72);
             this.cboTipDoc.Name = "cboTipDoc";
             this.cboTipDoc.Size = new System.Drawing.Size(109, 23);
             this.cboTipDoc.TabIndex = 11;
@@ -387,7 +494,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(162, 73);
+            this.label3.Location = new System.Drawing.Point(199, 80);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(83, 13);
             this.label3.TabIndex = 16;
@@ -397,7 +504,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(50, 38);
+            this.label2.Location = new System.Drawing.Point(87, 45);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(144, 25);
             this.label2.TabIndex = 15;
@@ -410,7 +517,7 @@
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Location = new System.Drawing.Point(440, 4);
+            this.groupBox1.Location = new System.Drawing.Point(477, 11);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(168, 99);
             this.groupBox1.TabIndex = 14;
@@ -419,9 +526,9 @@
             // lblBoleta
             // 
             this.lblBoleta.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBoleta.Location = new System.Drawing.Point(8, 69);
+            this.lblBoleta.Location = new System.Drawing.Point(14, 69);
             this.lblBoleta.Name = "lblBoleta";
-            this.lblBoleta.Size = new System.Drawing.Size(156, 19);
+            this.lblBoleta.Size = new System.Drawing.Size(141, 19);
             this.lblBoleta.TabIndex = 8;
             // 
             // lblSerie
@@ -441,7 +548,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(164, 25);
             this.label6.TabIndex = 2;
-            this.label6.Text = "DETALLE DE VENTA";
+            this.label6.Text = "FACTURA DE VENTA";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label5
@@ -464,22 +571,24 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "R.U.C.";
             // 
-            // Detalle_Venta
+            // Factura_Venta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(616, 556);
+            this.ClientSize = new System.Drawing.Size(745, 610);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.gbCliente);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox1);
-            this.Name = "Detalle_Venta";
-            this.Text = "Detalle_Venta";
-            this.Load += new System.EventHandler(this.Detalle_Venta_Load);
+            this.Name = "Factura_Venta";
+            this.Text = "Factura_Venta";
+            this.Load += new System.EventHandler(this.Factura_Venta_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleVenta)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDetalleFactura)).EndInit();
             this.gbCliente.ResumeLayout(false);
             this.gbCliente.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -492,13 +601,23 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtCambio;
+        private System.Windows.Forms.TextBox txtEfectivo;
+        private System.Windows.Forms.Label lblMontoEnletras;
         private System.Windows.Forms.Button btnAnular;
         private System.Windows.Forms.Button btnSalir;
+        private System.Windows.Forms.Button btnQuitarItem;
+        private System.Windows.Forms.Button btnAgregarItem;
         private System.Windows.Forms.Button btnImprimir;
-        private System.Windows.Forms.Label lblItems;
+        private System.Windows.Forms.Button btnGuardar;
+        private System.Windows.Forms.Label lblNumItems;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtTotal;
-        private System.Windows.Forms.DataGridView dgvDetalleVenta;
+        private System.Windows.Forms.Button btnNuevo;
+        private System.Windows.Forms.DataGridView dgvDetalleFactura;
         private System.Windows.Forms.GroupBox gbCliente;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cboTipoPago;
@@ -526,6 +645,5 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label lblMontoEnletras;
     }
 }

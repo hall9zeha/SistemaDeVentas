@@ -101,6 +101,12 @@
     <Compile Include="Editar_Prenda.Designer.cs">
       <DependentUpon>Editar_Prenda.cs</DependentUpon>
     </Compile>
+    <Compile Include="Factura_Venta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Factura_Venta.Designer.cs">
+      <DependentUpon>Factura_Venta.cs</DependentUpon>
+    </Compile>
     <Compile Include="Inventario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editar_Prenda.resx">
       <DependentUpon>Editar_Prenda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Factura_Venta.resx">
+      <DependentUpon>Factura_Venta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inventario.resx">
       <DependentUpon>Inventario.cs</DependentUpon>

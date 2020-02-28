@@ -26,15 +26,18 @@ namespace Presentacion
         }
         void crearGrid()
         {
-            dgvVentas.Columns.Add("Codboleta", "Codboleta");
+            dgvVentas.Columns.Add("IdVenta", "IdVenta");
+            dgvVentas.Columns.Add("CodBoleta/Factura", "CodBoleta/Factura");
             dgvVentas.Columns.Add("Prendas", "Prendas");
             dgvVentas.Columns.Add("Total", "Total");
             dgvVentas.Columns.Add("FechaBoleta", "FechaBoleta");
-
+            dgvVentas.Columns.Add("Hora", "Hora");
             dgvVentas.Columns[0].Width = 70;
-            dgvVentas.Columns[1].Width = 60;
-            dgvVentas.Columns[2].Width = 100;
+            dgvVentas.Columns[1].Width = 180;
+            dgvVentas.Columns[2].Width = 60;
             dgvVentas.Columns[3].Width = 100;
+            dgvVentas.Columns[4].Width = 100;
+            dgvVentas.Columns[5].Width = 60;
 
             dgvVentas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvVentas.MultiSelect = false;
@@ -59,7 +62,7 @@ namespace Presentacion
         {
             cargarVentasFechaDoble(pickerFecha1.Text,pickerFecha2.Text);
         }
-        void cargarVentasFechaSimple(string fecha)
+        void cargarVentasFechaSimple(String fecha)
         {
 
             try
@@ -74,10 +77,12 @@ namespace Presentacion
                     {
                         num++;
                         string[] fila = new string[] {
-                        lista[i].Codboleta,
+                        lista[i].idVenta.ToString(),
+                        lista[i].CodVenta,
                         lista[i].Cantidad.ToString(),
                         lista[i].Precio_final.ToString("0.00"),
-                        lista[i].Fechaboleta.ToString("dd-MM-yy")};
+                        lista[i].Fechaboleta.ToString("dd-MM-yy"),
+                        lista[i].Fechaboleta.ToString("HH:mm:ss")};
                         dgvVentas.Rows.Add(fila);
 
                     }
@@ -102,10 +107,12 @@ namespace Presentacion
                 {
                     num++;
                     string[] fila = new string[] {
-                        lista[i].Codboleta,
+                        lista[i].idVenta.ToString(),
+                        lista[i].CodVenta,
                         lista[i].Cantidad.ToString(),
                         lista[i].Precio_final.ToString("0.00"),
-                        lista[i].Fechaboleta.ToString("dd-MM-yy")};
+                        lista[i].Fechaboleta.ToString("dd-MM-yy"),
+                        lista[i].Fechaboleta.ToString("HH:mm:ss")};
                     dgvVentas.Rows.Add(fila);
                 }
                 contarItems();
@@ -129,10 +136,12 @@ namespace Presentacion
                     {
                         num++;
                         string[] fila = new string[] {
-                        lista[i].Codboleta,
+                        lista[i].idVenta.ToString(),
+                        lista[i].CodVenta,
                         lista[i].Cantidad.ToString(),
                         lista[i].Precio_final.ToString("0.00"),
-                        lista[i].Fechaboleta.ToString("dd-MM-yy")};
+                        lista[i].Fechaboleta.ToString("dd-MM-yy"),
+                        lista[i].Fechaboleta.ToString("HH:mm:ss")};
                         dgvVentas.Rows.Add(fila);
 
                     }
@@ -164,7 +173,7 @@ namespace Presentacion
             {
                 foreach (DataGridViewRow row in dgvVentas.Rows)
                 {
-                    total += Convert.ToDouble(row.Cells[2].Value.ToString());
+                    total += Convert.ToDouble(row.Cells[3].Value.ToString());
                 }
                 lblMonto.Text = "S/." + total.ToString("0.00");
 
@@ -175,7 +184,7 @@ namespace Presentacion
 
         private void PickerFecha_ValueChanged(object sender, EventArgs e)
         {
-            cargarVentasFechaSimple(pickerFecha.Text);
+            cargarVentasFechaSimple(pickerFecha.Value.ToString("yyyy/MM/dd"));
         }
 
         private void TxtBuscar_TextChanged(object sender, EventArgs e)
@@ -186,8 +195,10 @@ namespace Presentacion
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            string CodBoleta = Convert.ToString(dgvVentas.CurrentRow.Cells[0].Value);
-            Detalle_Venta objDetalle_Venta = new Detalle_Venta(CodBoleta);
+            int idVenta = Convert.ToInt32(dgvVentas.CurrentRow.Cells[0].Value);
+            string CodBoleta = Convert.ToString(dgvVentas.CurrentRow.Cells[1].Value);
+            
+            Detalle_Venta objDetalle_Venta = new Detalle_Venta(idVenta,CodBoleta);
             objDetalle_Venta.ShowDialog();
         }
     }

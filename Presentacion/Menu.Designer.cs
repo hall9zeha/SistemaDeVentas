@@ -37,6 +37,7 @@
             this.boletaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.consultarVentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cambioDePrendaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.facturaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,7 +50,7 @@
             this.movimientosToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(948, 58);
+            this.menuStrip1.Size = new System.Drawing.Size(948, 43);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -89,7 +90,8 @@
             // boletaToolStripMenuItem
             // 
             this.boletaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.boletaToolStripMenuItem1});
+            this.boletaToolStripMenuItem1,
+            this.facturaToolStripMenuItem});
             this.boletaToolStripMenuItem.Name = "boletaToolStripMenuItem";
             this.boletaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.boletaToolStripMenuItem.Text = "Ventas";
@@ -114,6 +116,13 @@
             this.cambioDePrendaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cambioDePrendaToolStripMenuItem.Text = "Cambio de Prenda";
             this.cambioDePrendaToolStripMenuItem.Click += new System.EventHandler(this.CambioDePrendaToolStripMenuItem_Click);
+            // 
+            // facturaToolStripMenuItem
+            // 
+            this.facturaToolStripMenuItem.Name = "facturaToolStripMenuItem";
+            this.facturaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.facturaToolStripMenuItem.Text = "Factura";
+            this.facturaToolStripMenuItem.Click += new System.EventHandler(this.FacturaToolStripMenuItem_Click);
             // 
             // Menu
             // 
@@ -143,5 +152,6 @@
         private System.Windows.Forms.ToolStripMenuItem consultarVentasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem inventarioToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem cambioDePrendaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem facturaToolStripMenuItem;
     }
 }

@@ -198,14 +198,14 @@ namespace Presentacion
             try
             {
                 BoletaE b = new BoletaE();
-                b.Codboleta = lblBoleta.Text;
+                b.CodVenta = lblBoleta.Text;
                 b.Importe_rg = Convert.ToDouble(txtTotal.Text);
 
                 List<DetalleBoletaE> Detalle = new List<DetalleBoletaE>();
                 foreach (DataGridViewRow row in dgvDetalleBoleta.Rows)
                 {
                     DetalleBoletaE dt = new DetalleBoletaE();
-                    dt.Codboleta = lblBoleta.Text;
+                    //dt.Codboleta = lblBoleta.Text;
 
                     dt.Codproducto = row.Cells[1].Value.ToString();
                     dt.CodProducto_detalle = Convert.ToInt32(row.Cells[0].Value.ToString());
@@ -225,7 +225,7 @@ namespace Presentacion
         }
         void anularVenta()
         {
-            objB.Codboleta = lblBoleta.Text;
+            //objB.Codboleta = lblBoleta.Text;
             List<DetalleBoletaE> detalle = new List<DetalleBoletaE>();
             foreach (DataGridViewRow row in dgvDetalleBoleta.Rows)
             {

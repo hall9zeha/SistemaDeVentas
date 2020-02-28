@@ -13,11 +13,13 @@ namespace Presentacion
 {
     public partial class Detalle_Venta : Form
     {
+        int idVenta = 0;
         string codBoleta = "";
-        public Detalle_Venta(string CodBoleta)
+        public Detalle_Venta(int idVenta,string CodBoleta)
         {
             InitializeComponent();
             this.codBoleta = CodBoleta;
+            this.idVenta = idVenta;
         }
 
         private void Detalle_Venta_Load(object sender, EventArgs e)
@@ -78,7 +80,7 @@ namespace Presentacion
             try
             {
                 int num = 0;
-                List<DetalleBoletaE> lista = VentasN.Instancia.ListarDetalleBoleta(codBoleta);
+                List<DetalleBoletaE> lista = VentasN.Instancia.ListarDetalleBoleta(idVenta);
                 dgvDetalleVenta.Rows.Clear();
                 for (int i = 0; i < lista.Count; i++)
                 {
@@ -105,7 +107,7 @@ namespace Presentacion
         void anularVenta()
         {
             BoletaE b = new BoletaE();
-            b.Codboleta = lblBoleta.Text;
+            //b.Codboleta = lblBoleta.Text;
             List<DetalleBoletaE> detalle = new List<DetalleBoletaE>();
             foreach (DataGridViewRow row in dgvDetalleVenta.Rows)
             {

@@ -533,9 +533,9 @@
             // lblBoleta
             // 
             this.lblBoleta.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBoleta.Location = new System.Drawing.Point(79, 69);
+            this.lblBoleta.Location = new System.Drawing.Point(14, 69);
             this.lblBoleta.Name = "lblBoleta";
-            this.lblBoleta.Size = new System.Drawing.Size(85, 19);
+            this.lblBoleta.Size = new System.Drawing.Size(141, 19);
             this.lblBoleta.TabIndex = 8;
             // 
             // lblSerie

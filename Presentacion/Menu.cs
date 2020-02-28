@@ -143,5 +143,28 @@ namespace Presentacion
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void FacturaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Factura_Venta objFactura = new Factura_Venta();
+                objFactura.MdiParent = this;
+                foreach (Form frm in Application.OpenForms)
+                {
+                    if (frm is Factura_Venta)
+                    {
+                        frm.Show();
+                        frm.Size = MinimumSize;
+                        frm.WindowState = FormWindowState.Normal;
+                        return;
+                    }
+                }
+                objFactura.Show();
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message); }
+        }
+
     }
 }
