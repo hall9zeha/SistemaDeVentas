@@ -211,7 +211,7 @@ namespace Presentacion
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            Buscar_Prenda bprenda = new Buscar_Prenda();
+            Buscar_Prenda bprenda = new Buscar_Prenda(0);
             bprenda.ShowDialog();
         }
 

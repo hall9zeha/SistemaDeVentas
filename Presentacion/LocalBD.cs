@@ -15,6 +15,8 @@ namespace Presentacion
 
     List<DetalleInventarioE> listaBoleta = new List<DetalleInventarioE>();
     List<DetalleInventarioE> listaBoletaCambio = new List<DetalleInventarioE>();
+    List<DetalleInventarioE> listaFactura = new List<DetalleInventarioE>();
+
    
     private static readonly LocalBD _instancia = new LocalBD();
 
@@ -64,6 +66,50 @@ namespace Presentacion
         catch (Exception)
         { throw; }
     }
+    public List<DetalleInventarioE> ReturnListaFactura(int getset, int codProd, int cantidad, double precioUnidad)
+    {
+        try
+        {
+            if (getset ==1)
+            {
+                if (cantidad > 1)
+                {
+                    for (int i = 0; i < listaFactura.Count; i++)
+                    {
+                        if (listaFactura[i].CodStock == codProd)
+                        {
+                            listaFactura[i].Cantidad = cantidad;
+                            listaFactura[i].Precio = precioUnidad;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < listaFactura.Count; i++)
+                    {
+                        if (listaFactura[i].CodStock == codProd)
+                        {
+
+                            throw new ApplicationException("El Producto ya está en la lista");
+                        }
+                    }
+                    //usamremos el mismo método agregarproductoboleta por mientras, lo reutilizaremos, si no da problemas lo renombraremos como agregarproductoventa
+                    DetalleInventarioE detFactura = InventarioN.Instancia.AgregarProductoBoleta(codProd);
+                    detFactura.Cantidad = cantidad;
+                    detFactura.Precio = precioUnidad;
+                    listaFactura.Add(detFactura);
+                    
+
+                }
+                
+            }
+            return listaFactura;
+        }
+        catch (Exception)
+        { throw; }
+
+    }
     public List<DetalleInventarioE> ReturnListaCambio(int getset, int codProd, int cantidad ,double precioUnidad)
     {
         try
@@ -105,7 +151,7 @@ namespace Presentacion
         { throw; }
 
     }
-    public void RemovePrendaLista(int idstock)
+    public void RemoverPrendaListaBoleta(int idstock)
     {
         try
         {
@@ -122,6 +168,22 @@ namespace Presentacion
         {
             throw;
         }
+    }
+    public void RemoverPrendaListaFactura(int idStock)
+    {
+        try
+        {
+            foreach (DetalleInventarioE p in listaFactura)
+            {
+                if (p.CodStock == idStock)
+                {
+                    listaFactura.Remove(p);
+                    return;
+                }
+            }
+        }
+        catch (Exception)
+        { throw; }
     }
     public void RemovePrendaListaCambio(int codProd)
     {
@@ -155,6 +217,15 @@ namespace Presentacion
         try
         {
             listaBoleta.RemoveRange(0, listaBoleta.Count);
+        }
+        catch (Exception)
+        { throw; }
+    }
+    public void LimpiarListaFactura()
+    {
+        try
+        {
+            listaFactura.RemoveRange(0, listaFactura.Count);
         }
         catch (Exception)
         { throw; }

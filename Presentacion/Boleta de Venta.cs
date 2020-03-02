@@ -17,7 +17,8 @@ namespace Presentacion
     {
         BoletaE objB = new BoletaE();
         VentasN objVN = new VentasN();
-        
+        int tipoListaUsar = 0;
+
         public Boleta_de_Venta()
         {
             InitializeComponent();
@@ -54,6 +55,7 @@ namespace Presentacion
         private void Boleta_de_Venta_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+            
             crearGrid();
             generarCodigoBoleta();
             habilitarBotones(false, false, false, true, true);
@@ -87,13 +89,15 @@ namespace Presentacion
         }
         void generarCodigoBoleta()
         {
-            lblBoleta.Text = objVN.GenerarCodigoBoleta();           
+            string serie = "BO00";
+            lblBoleta.Text = objVN.GenerarCodigoBoletaFactura(serie,1);           
 
         }
 
         private void BtnAgregarItem_Click(object sender, EventArgs e)
         {
-            Buscar_Prenda objBuscar_Prenda = new Buscar_Prenda();
+            tipoListaUsar = 1;
+            Buscar_Prenda objBuscar_Prenda = new Buscar_Prenda(tipoListaUsar);
             objBuscar_Prenda.ShowDialog();
            
             List<DetalleInventarioE> lista = LocalBD.Instancia.ReturnListaBoleta(0, 0, 0, 0);
@@ -149,7 +153,7 @@ namespace Presentacion
                 if (dr == DialogResult.Yes)
                 {
                     int idStock = Convert.ToInt32(dgvDetalleBoleta.CurrentRow.Cells[0].Value);
-                    LocalBD.Instancia.RemovePrendaLista(idStock);
+                    LocalBD.Instancia.RemoverPrendaListaBoleta(idStock);
 
                     List<DetalleInventarioE> lista = LocalBD.Instancia.ReturnListaBoleta(0, 0, 0, 0);
                     llenarGridBoleta(lista);
@@ -198,9 +202,10 @@ namespace Presentacion
             try
             {
                 BoletaE b = new BoletaE();
+                int tipoComprobante = 1;
                 b.CodVenta = lblBoleta.Text;
                 b.Importe_rg = Convert.ToDouble(txtTotal.Text);
-
+                b.tipoComprobante = tipoComprobante;
                 List<DetalleBoletaE> Detalle = new List<DetalleBoletaE>();
                 foreach (DataGridViewRow row in dgvDetalleBoleta.Rows)
                 {

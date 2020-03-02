@@ -19,13 +19,15 @@ namespace Datos
 
         SqlConnection cn =  Conexion.Instancia.Conectar();
         //Método para generar un código string funcional desde la capa de negocio, aun sin funcionr desde la capa datos
-        public string GenerarCodigoBoleta()
+        public string GenerarCodigoBoletaFactura(string serie, int tipoComprobante)
         {
             try
             {
-                string Abc = "BT00";
+                //string Abc = "BT00";
+                
                
-                SqlCommand cmd = new SqlCommand(sql.Query_GenerarCodigoBoleta(), cn);
+                SqlCommand cmd = new SqlCommand(sql.Query_GenerarCodigoBoleta_Factura(), cn);
+                cmd.Parameters.AddWithValue("@tipoComprobante", tipoComprobante);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -42,7 +44,7 @@ namespace Datos
 
                 }
                 drCeros += numeracion;
-                string cadena = Abc + "-" + drCeros;
+                string cadena = serie + "-" + drCeros;
 
                 if (cn.State == ConnectionState.Open) cn.Close();
                 cn.Open();
@@ -55,7 +57,8 @@ namespace Datos
             
 
         }
-        
+      
+
         //fin del método
 
         //Método para guardar venta en la tabla tbboleta y detalle_tbboleta, con validación de stock correctamente funcional      

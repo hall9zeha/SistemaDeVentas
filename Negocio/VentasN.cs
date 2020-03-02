@@ -20,9 +20,9 @@ namespace Negocio
 
         }
 
-        public string GenerarCodigoBoleta()
+        public string GenerarCodigoBoletaFactura(string serie, int tipoComprobante)
         {
-            return objV.GenerarCodigoBoleta();
+            return objV.GenerarCodigoBoletaFactura(serie, tipoComprobante);
         }
        
         public int GuardarVenta(BoletaE b)
@@ -34,6 +34,7 @@ namespace Negocio
                 Cadxml += "<tbboleta ";
                 Cadxml += "codventa='" + b.CodVenta + "' ";
                 Cadxml += "importe='" + b.Importe_rg + "' ";
+                Cadxml += "tipocomprobante='" + b.tipoComprobante + "' ";
                 Cadxml += "importe_rg='" + b.Importe_rg + "'>";
                 
 

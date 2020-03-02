@@ -153,7 +153,7 @@ namespace Presentacion
         private void Button1_Click(object sender, EventArgs e)
         {
             string id = Convert.ToString(dgvInventario.CurrentRow.Cells[0].Value);
-            Detalle_Prenda Dprenda = new Detalle_Prenda(id);
+            Detalle_Prenda Dprenda = new Detalle_Prenda(id,0);
             Dprenda.Show();
         }
 

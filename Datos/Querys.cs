@@ -39,17 +39,22 @@ namespace Datos
             return Query;
         }
 
-        public string Query_GenerarCodigoBoleta()
-        {
-            string Query = @"Declare @Id Int
-                                select top 1 @Id = RIGHT(CodVenta,8) FROM tbboleta  order by CodVenta desc
+        public string Query_GenerarCodigoBoleta_Factura()
+       {
+          
+            string Query= @"
+
+            Declare @Id Int, @Val int
+                               if(@tipoComprobante=1)
+							   begin
+							    select top 1 @Id = RIGHT(CodVenta,8) FROM tbboleta  where tipoComprobante=1 order by CodVenta desc
                                 if LEN(@Id) is null
                                 begin
                                 set @id = 1
                                 end
-                                print @id
-                                Declare @Val int
-                                select @Val=COUNT(*) from tbboleta where RIGHT(CodVenta,8)=@id
+                                print @id 
+                               
+                                select @Val=COUNT(*) from tbboleta where RIGHT(CodVenta,8)=@id  and tipoComprobante=1
                                 if @val = 1
                                  begin
                                  set @Id = @Id+1
@@ -60,36 +65,38 @@ namespace Datos
                                  set @Id = @Id
                                  set @Val = @Val +1
                                  end
- 
-                                select @Id As Numero,@Val As Abc";
+								
+								 end
+								  
+								 if (@tipoComprobante=2)
+								begin
+								 select top 1 @Id = RIGHT(CodVenta,8) FROM tbboleta where tipoComprobante=2 order by CodVenta desc
+                                if LEN(@Id) is null
+                                begin
+                                set @id = 1
+                                end
+                                print @id
+                                
+                                select @Val=COUNT(*) from tbboleta where RIGHT(CodVenta,8)=@id and tipoComprobante=2
+                                if @val = 1
+                                 begin
+                                 set @Id = @Id+1
+                                 set @Val = 1
+                                 end
+                                else
+                                 begin
+                                 set @Id = @Id
+                                 set @Val = @Val +1
+                                 end
+								 
+							end
+							select @Id As Numero,@Val As Abc
+							
+                                ";
             return Query;
+
         }
 
-        public string Query_GenerarCodigoFactura()
-        {
-            string Query = @"Declare @Id Int
-                                select top 1 @Id = RIGHT(Codboleta,8) FROM tbboleta  order by Codboleta desc
-                                if LEN(@Id) is null
-                                begin
-                                set @id = 1
-                                end
-                                print @id
-                                Declare @Val int
-                                select @Val=COUNT(*) from tbboleta where RIGHT(Codboleta,8)=@id
-                                if @val = 1
-                                 begin
-                                 set @Id = @Id+1
-                                 set @Val = 1
-                                 end
-                                else
-                                 begin
-                                 set @Id = @Id
-                                 set @Val = @Val +1
-                                 end
- 
-                                select @Id As Numero,@Val As Abc";
-            return Query;
-        }
         public string Query_GuardarVenta()
         {
             string Query = @"
@@ -105,13 +112,14 @@ namespace Datos
 		                          BEGIN
 		                           RAISERROR('Uno ó mas productos no cuentan con el stock suficiente',16,1)
 		                          END
-		                          INSERT INTO tbboleta(CodVenta,Fechaboleta,Importe,Importe_rg,estadoVenta)
-                                   SELECT b.codventa,GETDATE(),b.importe, b.importe_rg, 1
+		                          INSERT INTO tbboleta(CodVenta,Fechaboleta,Importe,Importe_rg,estadoVenta, tipoComprobante)
+                                   SELECT b.codventa,GETDATE(),b.importe, b.importe_rg, 1, tipocomprobante
 		                           FROM OpenXML(@h,'root/tbboleta',1)WITH(
 		                           codventa nvarchar(20),
 		                           importe decimal(5,2),
 		                           importe_rg decimal(5,2),
-                                   estadoventa int
+                                   estadoventa int,
+                                   tipocomprobante int
 		                           )b 
                                    set @idVenta=@@identity
 		   

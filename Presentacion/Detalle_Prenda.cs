@@ -17,11 +17,13 @@ namespace Presentacion
         InventarioE objE = new InventarioE();
         InventarioN objN = new InventarioN();
         string Id = "";
+        int tipoListaUsar = 0;
         Image img = null;
-        public Detalle_Prenda(string id)
+        public Detalle_Prenda(string id ,int tipoListaUsar)
         {
             InitializeComponent();
             this.Id = id;
+            this.tipoListaUsar = tipoListaUsar;
         }
         void CrearGrid()
         {
@@ -104,36 +106,8 @@ namespace Presentacion
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            
-                try
-                {
-                
-                int idStock = Convert.ToInt32(dgvdetalle.CurrentRow.Cells[0].Value);
-                 
-                int stock= Convert.ToInt32(dgvdetalle.CurrentRow.Cells[8].Value);
-                if (stock >= 1)
-                {
-                    if (txtreg.Text != "" )
-                    {
 
-                        double precio = Convert.ToDouble(txtreg.Text);
-                        LocalBD.Instancia.ReturnListaBoleta(1, idStock, 1, precio);
-                        MessageBox.Show("Prenda Agregada");
-                        txtreg.Clear();
-                    }
-                    else if(txtreg.Text=="")
-                    {
-                        double pventa = Convert.ToDouble(txtpventa.Text);
-                        
-                        LocalBD.Instancia.ReturnListaBoleta(1, idStock, 1, pventa);
-                        MessageBox.Show("Prenda Agregada");
-                    }
-                }
-                else
-                { MessageBox.Show("Cantidad Insuficiente"); }
-                }
-                catch (Exception ex)
-                { MessageBox.Show(ex.Message); }
+            agregarProductoLista();
             
         }
 
@@ -147,6 +121,59 @@ namespace Presentacion
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }
 
+        }
+        void agregarProductoLista()
+        {
+            try
+            {
+
+                int idStock = Convert.ToInt32(dgvdetalle.CurrentRow.Cells[0].Value);
+
+                int stock = Convert.ToInt32(dgvdetalle.CurrentRow.Cells[8].Value);
+                if (stock >= 1 && tipoListaUsar == 1)
+                {
+                    if (txtreg.Text != "")
+                    {
+
+                        double precio = Convert.ToDouble(txtreg.Text);
+                        LocalBD.Instancia.ReturnListaBoleta(1, idStock, 1, precio);
+                        MessageBox.Show("Prenda Agregada");
+                        txtreg.Clear();
+                    }
+                    else if (txtreg.Text == "")
+                    {
+                        double pventa = Convert.ToDouble(txtpventa.Text);
+
+                        LocalBD.Instancia.ReturnListaBoleta(1, idStock, 1, pventa);
+                        MessageBox.Show("Prenda Agregada");
+                    }
+                }
+
+
+                else if (stock >= 1 && tipoListaUsar == 2)
+                {
+                    if (txtreg.Text != "")
+                    {
+
+                        double precio = Convert.ToDouble(txtreg.Text);
+                        LocalBD.Instancia.ReturnListaFactura(1, idStock, 1, precio);
+                        MessageBox.Show("Prenda Agregada");
+                        txtreg.Clear();
+                    }
+                    else if (txtreg.Text == "")
+                    {
+                        double pventa = Convert.ToDouble(txtpventa.Text);
+
+                        LocalBD.Instancia.ReturnListaFactura(1, idStock, 1, pventa);
+                        MessageBox.Show("Prenda Agregada");
+                    }
+                }
+                else
+                { MessageBox.Show("Cantidad Insuficiente"); }
+            }
+
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message); }
         }
     }
 }

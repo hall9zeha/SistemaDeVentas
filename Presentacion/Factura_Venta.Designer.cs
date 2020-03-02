@@ -68,7 +68,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lblBoleta = new System.Windows.Forms.Label();
+            this.lblFactura = new System.Windows.Forms.Label();
             this.lblSerie = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -150,6 +150,7 @@
             this.txtEfectivo.Size = new System.Drawing.Size(100, 25);
             this.txtEfectivo.TabIndex = 27;
             this.txtEfectivo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtEfectivo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtEfectivo_KeyPress);
             // 
             // lblMontoEnletras
             // 
@@ -184,6 +185,7 @@
             this.btnSalir.Size = new System.Drawing.Size(51, 40);
             this.btnSalir.TabIndex = 21;
             this.btnSalir.UseVisualStyleBackColor = false;
+            this.btnSalir.Click += new System.EventHandler(this.BtnSalir_Click);
             // 
             // btnQuitarItem
             // 
@@ -195,6 +197,7 @@
             this.btnQuitarItem.Size = new System.Drawing.Size(45, 25);
             this.btnQuitarItem.TabIndex = 20;
             this.btnQuitarItem.UseVisualStyleBackColor = false;
+            this.btnQuitarItem.Click += new System.EventHandler(this.BtnQuitarItem_Click);
             // 
             // btnAgregarItem
             // 
@@ -206,6 +209,7 @@
             this.btnAgregarItem.Size = new System.Drawing.Size(45, 25);
             this.btnAgregarItem.TabIndex = 19;
             this.btnAgregarItem.UseVisualStyleBackColor = false;
+            this.btnAgregarItem.Click += new System.EventHandler(this.BtnAgregarItem_Click);
             // 
             // btnImprimir
             // 
@@ -226,6 +230,7 @@
             this.btnGuardar.Size = new System.Drawing.Size(50, 40);
             this.btnGuardar.TabIndex = 17;
             this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.BtnGuardar_Click);
             // 
             // lblNumItems
             // 
@@ -271,6 +276,7 @@
             this.btnNuevo.Size = new System.Drawing.Size(51, 40);
             this.btnNuevo.TabIndex = 3;
             this.btnNuevo.UseVisualStyleBackColor = false;
+            this.btnNuevo.Click += new System.EventHandler(this.BtnNuevo_Click);
             // 
             // dgvDetalleFactura
             // 
@@ -512,7 +518,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.lblBoleta);
+            this.groupBox1.Controls.Add(this.lblFactura);
             this.groupBox1.Controls.Add(this.lblSerie);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
@@ -523,13 +529,13 @@
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             // 
-            // lblBoleta
+            // lblFactura
             // 
-            this.lblBoleta.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBoleta.Location = new System.Drawing.Point(14, 69);
-            this.lblBoleta.Name = "lblBoleta";
-            this.lblBoleta.Size = new System.Drawing.Size(141, 19);
-            this.lblBoleta.TabIndex = 8;
+            this.lblFactura.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFactura.Location = new System.Drawing.Point(14, 69);
+            this.lblFactura.Name = "lblFactura";
+            this.lblFactura.Size = new System.Drawing.Size(141, 19);
+            this.lblFactura.TabIndex = 8;
             // 
             // lblSerie
             // 
@@ -575,7 +581,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(745, 610);
+            this.ClientSize = new System.Drawing.Size(721, 610);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.gbCliente);
             this.Controls.Add(this.label3);
@@ -640,7 +646,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label lblBoleta;
+        private System.Windows.Forms.Label lblFactura;
         private System.Windows.Forms.Label lblSerie;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;

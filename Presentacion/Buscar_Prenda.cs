@@ -18,10 +18,12 @@ namespace Presentacion
         InventarioE objE = new InventarioE();
         InventarioN objN = new InventarioN();
         int tipoBusqueda = 0;
+        int tipoListaUsar = 0;
         Image img = null;
-        public Buscar_Prenda()
+        public Buscar_Prenda(int tipoListaUsar)
         {
             InitializeComponent();
+            this.tipoListaUsar = tipoListaUsar;
         }
 
         private void Buscar_Prenda_Load(object sender, EventArgs e)
@@ -156,7 +158,7 @@ namespace Presentacion
         private void Button1_Click(object sender, EventArgs e)
         {
           string id = Convert.ToString(dgvBuscarInventario.CurrentRow.Cells[0].Value);
-            Detalle_Prenda Dprenda = new Detalle_Prenda(id);
+            Detalle_Prenda Dprenda = new Detalle_Prenda(id, tipoListaUsar);
             Dprenda.Show();
            
             
