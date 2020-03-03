@@ -55,15 +55,15 @@ namespace Datos
                                 print @id 
                                
                                 select @Val=COUNT(*) from tbboleta where RIGHT(CodVenta,8)=@id  and tipoComprobante=1
-                                if @val = 1
+                              if @id = 99999999
                                  begin
-                                 set @Id = @Id+1
-                                 set @Val = 1
+                                 set @Id = 1
+                                 set @Val =@Val + 1
                                  end
                                 else
                                  begin
                                  set @Id = @Id
-                                 set @Val = @Val +1
+                                 set @Val = @Val 
                                  end
 								
 								 end
@@ -78,15 +78,15 @@ namespace Datos
                                 print @id
                                 
                                 select @Val=COUNT(*) from tbboleta where RIGHT(CodVenta,8)=@id and tipoComprobante=2
-                                if @val = 1
+                                if @id = 99999999
                                  begin
-                                 set @Id = @Id+1
-                                 set @Val = 1
+                                 set @Id = 1
+                                 set @Val =@Val + 1
                                  end
                                 else
                                  begin
                                  set @Id = @Id
-                                 set @Val = @Val +1
+                                 set @Val = @Val 
                                  end
 								 
 							end
@@ -703,6 +703,80 @@ namespace Datos
                             ";
 
 
+            return Query;
+        }
+
+        public string Query_MantenimientoCliente()
+        {
+            string Query = @"
+
+                                begin
+                                declare @h int ,@mensaje nvarchar(500)
+                                exec sp_xml_preparedocument @h output, @CadXml 
+                                begin try
+                                begin transaction
+                                insert into tbClientes(tipoDocumento, nroDocumento, nombreCliente, apellidoCliente, sexoCliente,
+                                direccionCliente, telefonoCliente, correoCliente, fechaRegistro, estadoCliente )
+                                select c.tipodocumento, c.nrodocumento, c.nombrecliente, c.apellidocliente, c.sexocliente,
+                                c.direccioncliente, c.telefonocliente, c.correocliente, getdate(), 1
+                                from openxml(@h, 'root/tbClientes', 1)with
+                                (
+                                tipodocumento int,
+                                nrodocumento nvarchar(max),
+                                nombrecliente nvarchar(max),
+                                apellidocliente nvarchar(max),
+                                sexocliente nvarchar(2),
+                                direccioncliente nvarchar(max),
+                                telefonocliente nvarchar(20),
+                                correocliente nvarchar(max),
+                                tipoaccion int
+                                )c where c.tipoaccion=1
+                                update cl set
+                                cl.tipoDocumento=c.tipodocumento,
+                                cl.nroDocumento=c.nrodocumento,
+                                cl.nombreCliente=c.nombrecliente,
+                                cl.apellidoCliente=c.apellidocliente,
+                                cl.sexoCliente=c.sexocliente,
+                                cl.direccionCliente=c.direccioncliente,
+                                cl.telefonoCliente=c.telefonocliente,
+                                cl.correoCliente=c.correocliente
+                                from openxml (@h,'root/tbClientes',1)with
+                                (
+                                idcliente int,
+                                tipodocumento int,
+                                nrodocumento nvarchar(max),
+                                nombrecliente nvarchar(max),
+                                apellidocliente nvarchar(max),
+                                sexocliente nvarchar(2),
+                                direccioncliente nvarchar(max),
+                                telefonocliente nvarchar(20),
+                                correocliente nvarchar(max),
+                                tipoaccion int
+                                )c inner join tbClientes cl on c.idcliente=cl.idCliente where c.tipoaccion=2
+                                update cl set 
+                                cl.estadoCliente=0
+                                from openxml(@h, 'root/tbClientes', 1)with
+                                (idcliente int,
+                                tipoaccion int)c inner join tbClientes cl on c.idcliente=cl.idCliente where c.tipoaccion=3
+                                if(@@trancount>0) commit transaction
+                                end try
+                                begin catch
+                                if (@@trancount >0)rollback transaction
+                                begin
+                                select @mensaje=error_message();
+                                raiserror(@mensaje, 16,1)
+                                end
+                                end catch
+                                end
+                            ";
+            return Query;
+        }
+
+        public string Query_ListarTipoDocCliente()
+        {
+            string Query = @"
+                            select  * from tbTipoDocumento
+                            ";
             return Query;
         }
     }

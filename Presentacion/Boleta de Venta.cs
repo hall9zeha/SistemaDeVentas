@@ -89,7 +89,7 @@ namespace Presentacion
         }
         void generarCodigoBoleta()
         {
-            string serie = "BO00";
+            string serie = "BO" + 00;
             lblBoleta.Text = objVN.GenerarCodigoBoletaFactura(serie,1);           
 
         }

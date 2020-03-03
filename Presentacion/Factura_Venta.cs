@@ -61,7 +61,7 @@ namespace Presentacion
         }
         void generarCodigoFactura()
         {
-            string serie = "FT00";
+            string serie = "FT" + 00;
             lblFactura.Text = objVN.GenerarCodigoBoletaFactura(serie,2);
 
         }

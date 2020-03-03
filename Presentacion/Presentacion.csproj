@@ -76,6 +76,12 @@
     <Compile Include="Cambio_de_Prenda.Designer.cs">
       <DependentUpon>Cambio_de_Prenda.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cliente.Designer.cs">
+      <DependentUpon>Cliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="CrearTicket.cs" />
     <Compile Include="Detalle_Cambios.cs">
       <SubType>Form</SubType>
@@ -148,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cambio_de_Prenda.resx">
       <DependentUpon>Cambio_de_Prenda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cliente.resx">
+      <DependentUpon>Cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Detalle_Cambios.resx">
       <DependentUpon>Detalle_Cambios.cs</DependentUpon>

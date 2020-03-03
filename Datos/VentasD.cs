@@ -23,7 +23,7 @@ namespace Datos
         {
             try
             {
-                //string Abc = "BT00";
+                
                 
                
                 SqlCommand cmd = new SqlCommand(sql.Query_GenerarCodigoBoleta_Factura(), cn);
@@ -33,18 +33,21 @@ namespace Datos
                 da.Fill(dt);
                 DataRow dr;
                 dr = dt.Rows[0];
+                string correlativoVenta = dr[0].ToString();
+                int correlativoConvert = int.Parse(correlativoVenta);
 
-                string codigoTabla = dr[0].ToString();
-                int codeTablaConvert = int.Parse(codigoTabla);
+                string serieVenta = dr[1].ToString();
+                int serieConvert = int.Parse(serieVenta);
+
                 string drCeros = "";
-                string numeracion = codeTablaConvert.ToString();
+                string numeracion = correlativoConvert.ToString();
                 for (int i = 0; i <=7  - numeracion.Length; i++)
                 {
                     drCeros += "0";
 
                 }
                 drCeros += numeracion;
-                string cadena = serie + "-" + drCeros;
+                string cadena = serie + serieVenta + "-" + drCeros;
 
                 if (cn.State == ConnectionState.Open) cn.Close();
                 cn.Open();

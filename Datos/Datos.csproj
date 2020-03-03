@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClienteD.cs" />
     <Compile Include="Conexion.cs" />
     <Compile Include="InventarioD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoletaE.cs" />
+    <Compile Include="ClienteE.cs" />
     <Compile Include="DetalleBoletaE.cs" />
     <Compile Include="InventarioE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

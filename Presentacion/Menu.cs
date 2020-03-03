@@ -166,5 +166,27 @@ namespace Presentacion
             { MessageBox.Show(ex.Message); }
         }
 
+        private void ClientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Cliente objCliente = new Cliente();
+                objCliente.MdiParent = this;
+
+                foreach (Form frm in Application.OpenForms)
+                {
+                    if (frm is Cliente)
+                    {
+                        frm.Show();
+                        frm.Size = MinimumSize;
+                        frm.WindowState = FormWindowState.Normal;
+                        return;
+                    }
+                }
+                objCliente.Show();
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message); }
+        }
     }
 }
