@@ -44,7 +44,106 @@ namespace Datos
             da.Fill(dt);
             return dt;
         }
+        public List<ClienteE> BuscarCliente(int tipoBusqueda, string filtro)
+        {
 
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            List<ClienteE> lista = null;
+            try
+            {
+                cmd = new SqlCommand(sql.query_BuscarCliente(), cn);
+                cmd.Parameters.AddWithValue("@tipoBusqueda", tipoBusqueda);
+                cmd.Parameters.AddWithValue("@filtro", filtro);
+                cn.Open();
+                dr = cmd.ExecuteReader();
+                lista = new List<ClienteE>();
+                while(dr.Read())
+                {
 
+                    ClienteE c = new ClienteE();
+                    c.idCliente = Convert.ToInt32(dr["idCliente"].ToString());
+                    c.descTipDocumento = dr["nombreTipoDoc"].ToString();
+                    c.nroDocumento = dr["nroDocumento"].ToString();
+                    c.nombreCliente = dr["nombreCliente"].ToString();
+                    c.apellidoCliente = dr["apellidoCliente"].ToString();
+                    c.sexoCliente = dr["SexoCliente"].ToString();
+                    c.direccionCliente = dr["direccionCliente"].ToString();
+                    c.telefonoCliente = dr["telefonoCliente"].ToString();
+                    c.correoCliente = dr["correoCliente"].ToString();
+                    c.fechaRegistro = dr["fechaRegistro"].ToString();
+                    lista.Add(c);
+                }
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+            return lista;
+
+        }
+        public ClienteE TraerCliente(int idCliente, string nroDocumento)
+        {
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            ClienteE c = null;
+            try
+            {
+                cmd = new SqlCommand(sql.query_TrerCliente(), cn);
+                cmd.Parameters.AddWithValue("@idCliente", idCliente);
+                cmd.Parameters.AddWithValue("@nroDocumento", nroDocumento);
+                cn.Open();
+                dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    c = new ClienteE();
+                    c.idCliente = Convert.ToInt32(dr["idCliente"].ToString());
+                    c.descTipDocumento = dr["nombreTipoDoc"].ToString();
+                    c.nroDocumento = dr["nroDocumento"].ToString();
+                    c.nombreCliente = dr["nombreCliente"].ToString();
+                    c.apellidoCliente = dr["apellidoCliente"].ToString();
+                    c.sexoCliente = dr["SexoCliente"].ToString();
+                    c.direccionCliente = dr["direccionCliente"].ToString();
+                    c.telefonoCliente = dr["telefonoCliente"].ToString();
+                    c.correoCliente = dr["correoCliente"].ToString();
+                    c.fechaRegistro = dr["fechaRegistro"].ToString();
+                }
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+            return c;
+        }
+        public List<ClienteE> ListarCliente()
+        {
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            List<ClienteE> lista = null;
+            try
+            {
+                cmd = new SqlCommand(sql.query_ListarCliente(), cn);
+                cn.Open();
+                dr = cmd.ExecuteReader();
+                lista = new List<ClienteE>();
+                while (dr.Read())
+                {
+                    ClienteE c = new ClienteE();
+                    c.idCliente = Convert.ToInt32(dr["idCliente"].ToString());
+                    c.descTipDocumento = dr["nombreTipoDoc"].ToString();
+                    c.nroDocumento = dr["nroDocumento"].ToString();
+                    c.nombreCliente = dr["nombreCliente"].ToString();
+                    c.apellidoCliente = dr["apellidoCliente"].ToString();
+                    c.sexoCliente = dr["SexoCliente"].ToString();
+                    c.direccionCliente = dr["direccionCliente"].ToString();
+                    c.telefonoCliente = dr["telefonoCliente"].ToString();
+                    c.correoCliente = dr["correoCliente"].ToString();
+                    c.fechaRegistro = dr["fechaRegistro"].ToString();
+                    lista.Add(c);
+                }
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+            return lista;
+        }
     }
 }

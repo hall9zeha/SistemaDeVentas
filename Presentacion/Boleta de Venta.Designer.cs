@@ -486,6 +486,7 @@
             this.btnBuscarCliente.Size = new System.Drawing.Size(35, 30);
             this.btnBuscarCliente.TabIndex = 5;
             this.btnBuscarCliente.UseVisualStyleBackColor = false;
+            this.btnBuscarCliente.Click += new System.EventHandler(this.BtnBuscarCliente_Click);
             // 
             // txtCodUsuario
             // 

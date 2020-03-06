@@ -16,7 +16,7 @@ namespace Presentacion
     List<DetalleInventarioE> listaBoleta = new List<DetalleInventarioE>();
     List<DetalleInventarioE> listaBoletaCambio = new List<DetalleInventarioE>();
     List<DetalleInventarioE> listaFactura = new List<DetalleInventarioE>();
-
+    int _idCliente = 0;
    
     private static readonly LocalBD _instancia = new LocalBD();
 
@@ -24,8 +24,21 @@ namespace Presentacion
     {
         get { return LocalBD._instancia; }
             }
-   
 
+    public int ReturnIdCliente(int getset, int idCliente)
+    {
+        try
+        {
+            if (getset == 1)
+            {
+                _idCliente = idCliente;
+
+            }
+            return _idCliente;
+        }
+        catch (Exception)
+        { throw; }
+    }
     public List<DetalleInventarioE> ReturnListaBoleta(int getset, int idstock, int cantidad, double precio)
     {
         try

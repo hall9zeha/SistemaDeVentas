@@ -779,5 +779,88 @@ namespace Datos
                             ";
             return Query;
         }
+
+        public string query_BuscarCliente()
+        {
+            string Query = @"
+                            begin
+                            if(@tipoBusqueda=1)
+                            begin
+                            select
+                            c.idCliente, t.nombreTipoDoc, c.nroDocumento,
+                            c.nombreCliente, c.apellidoCliente, c.sexoCliente,
+                            c.direccionCliente, c.telefonoCliente, c.correoCliente,
+                            c.fechaRegistro
+
+                            from tbClientes c inner join tbTipoDocumento t on c.tipoDocumento=t.idTipoDoc
+                            where c.nroDocumento like '%'+ @filtro +'%' and c.estadoCliente=1
+                            end
+
+                            if(@tipoBusqueda=2)
+                            begin
+                            select
+                            c.idCliente, t.nombreTipoDoc, c.nroDocumento,
+                            c.nombreCliente, c.apellidoCliente, c.sexoCliente,
+                            c.direccionCliente, c.telefonoCliente, c.correoCliente,
+                            c.fechaRegistro
+
+                            from tbClientes c inner join tbTipoDocumento t on c.tipoDocumento=t.idTipoDoc
+                            where c.nombreCliente like '%'+ @filtro +'%' and c.estadoCliente=1
+                            end
+                            end
+                            ";
+            return Query;
+        }
+
+        public string query_TrerCliente()
+        {
+            string Query = @"
+                            begin
+                        if(@idCliente!=0)
+                        begin
+                            select
+                            c.idCliente, t.nombreTipoDoc, c.nroDocumento,
+                            c.nombreCliente, c.apellidoCliente, c.sexoCliente,
+                            c.direccionCliente, c.telefonoCliente, c.correoCliente,
+                            c.fechaRegistro
+
+                            from tbClientes c inner join tbTipoDocumento t on c.tipoDocumento=t.idTipoDoc
+                            where c.idCliente = @idCliente  and c.estadoCliente=1
+                        end 
+                        else
+                        begin
+                            select
+                            c.idCliente, t.nombreTipoDoc, c.nroDocumento,
+                            c.nombreCliente, c.apellidoCliente, c.sexoCliente,
+                            c.direccionCliente, c.telefonoCliente, c.correoCliente,
+                            c.fechaRegistro
+
+                            from tbClientes c inner join tbTipoDocumento t on c.tipoDocumento=t.idTipoDoc
+                            where c.nroDocumento = @nroDocumento  and c.estadoCliente=1
+                           end
+                            end
+                            ";
+            return Query;
+        }
+        public string query_ListarCliente()
+        {
+            string Query = @"
+                            begin
+                        set nocount on
+                            select
+                            c.idCliente, t.nombreTipoDoc, c.nroDocumento,
+                            c.nombreCliente, c.apellidoCliente, c.sexoCliente,
+                            c.direccionCliente, c.telefonoCliente, c.correoCliente,
+                            c.fechaRegistro
+
+                            from tbClientes c inner join tbTipoDocumento t on C.tipoDocumento=T.idTipoDoc
+                            where C.estadoCliente=1
+                        set nocount off
+
+                           
+                            end
+                            ";
+            return Query;
+        }
     }
 }

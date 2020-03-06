@@ -17,6 +17,7 @@ namespace Presentacion
     {
         BoletaE objB = new BoletaE();
         VentasN objVN = new VentasN();
+        DataTable dt = new DataTable();
         int tipoListaUsar = 0;
 
         public Boleta_de_Venta()
@@ -59,7 +60,15 @@ namespace Presentacion
             crearGrid();
             generarCodigoBoleta();
             habilitarBotones(false, false, false, true, true);
-            
+            cargarTipoDoc();
+            int idCliente = LocalBD.Instancia.ReturnIdCliente(0, 0);
+        }
+        void cargarTipoDoc()
+        {
+            dt = ClienteN.Instancia.CargarTipoDoc();
+            cboTipDoc.DataSource = dt;
+            cboTipDoc.ValueMember = "idTipoDoc";
+            cboTipDoc.DisplayMember = "AbreviaturaNombre";
         }
         void montoTotal()
         {
@@ -133,6 +142,22 @@ namespace Presentacion
             {
                 MessageBox.Show(ex.Message);
             }
+
+        }
+        void buscarCliente(string nroDocumento)
+        {
+            //try
+            //{
+                ClienteE c = new ClienteE();
+                c = ClienteN.Instancia.TraerCliente(0, nroDocumento);
+                txtNombreCliente.Text = c.nombreCliente;
+                txtDireccionCliente.Text = c.direccionCliente;
+                txtNumDoc.Text = c.nroDocumento;
+                cboTipDoc.Text = c.descTipDocumento;
+                int i = LocalBD.Instancia.ReturnIdCliente(1,c.idCliente);
+            //}
+            //catch (Exception ex)
+            //{ MessageBox.Show(ex.Message); }
 
         }
         void contarItems()
@@ -386,6 +411,30 @@ namespace Presentacion
                 habilitarBotones(true, false, false, false, false);
             }
             
+        }
+
+        private void BtnBuscarCliente_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string nroDocumento = txtNumDoc.Text;
+                buscarCliente(nroDocumento);
+
+            }
+            catch (ApplicationException)
+            {
+                DialogResult dr = MessageBox.Show("No se encontro el cliente ¿Quieres abrir la búsqueda avanzada?", "Mensaje", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.Yes)
+                {
+                    Mantenimiento_Cliente objMCliente = new Mantenimiento_Cliente();
+                    objMCliente.ShowDialog();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+           
         }
     }
 }

@@ -126,6 +126,12 @@
       <DependentUpon>Inventario_Prendas.cs</DependentUpon>
     </Compile>
     <Compile Include="LocalBD.cs" />
+    <Compile Include="Mantenimiento_Cliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mantenimiento_Cliente.Designer.cs">
+      <DependentUpon>Mantenimiento_Cliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -178,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Inventario_Prendas.resx">
       <DependentUpon>Inventario_Prendas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mantenimiento_Cliente.resx">
+      <DependentUpon>Mantenimiento_Cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>

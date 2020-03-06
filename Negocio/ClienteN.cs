@@ -46,5 +46,29 @@ namespace Negocio
         {
             return objCli.CargarTipoDoc();
         }
+        public List<ClienteE> BuscarCliente(int tipoBusqueda, string filtro)
+        {
+            List<ClienteE> lista = objCli.BuscarCliente(tipoBusqueda, filtro);
+            return lista;
+        }
+        public ClienteE TraerCliente(int idCliente, string nroDocumento)
+        {
+            try
+            {
+                ClienteE c = objCli.TraerCliente(idCliente, nroDocumento);
+                if (c == null) throw new ApplicationException("Ha ocurrido un error en la transacción");
+                return c;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public List<ClienteE> ListarCliente()
+        {
+            List<ClienteE>lista= objCli.ListarCliente();
+            if (lista == null) throw new ApplicationException("Ha ocurrido un error en la transacción");
+            return lista;
+        }
     }
 }

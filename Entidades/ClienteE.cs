@@ -10,6 +10,7 @@ namespace Entidades
     {
         public int idCliente { get; set; }
         public int tipoDocumento { get; set; }
+        public string descTipDocumento { get; set; }
         public string nroDocumento { get; set; }
         public string nombreCliente { get; set; }
         public string apellidoCliente { get; set; }

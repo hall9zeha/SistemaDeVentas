@@ -170,12 +170,13 @@ namespace Presentacion
         {
             try
             {
-                Cliente objCliente = new Cliente();
+                
+                Mantenimiento_Cliente objCliente = new Mantenimiento_Cliente();
                 objCliente.MdiParent = this;
 
                 foreach (Form frm in Application.OpenForms)
                 {
-                    if (frm is Cliente)
+                    if (frm is Mantenimiento_Cliente)
                     {
                         frm.Show();
                         frm.Size = MinimumSize;
@@ -187,6 +188,11 @@ namespace Presentacion
             }
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }
+        }
+
+        private void ClienteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
