@@ -146,8 +146,7 @@ namespace Presentacion
         }
         void buscarCliente(string nroDocumento)
         {
-            //try
-            //{
+            
                 ClienteE c = new ClienteE();
                 c = ClienteN.Instancia.TraerCliente(0, nroDocumento);
                 txtNombreCliente.Text = c.nombreCliente;
@@ -155,9 +154,7 @@ namespace Presentacion
                 txtNumDoc.Text = c.nroDocumento;
                 cboTipDoc.Text = c.descTipDocumento;
                 int i = LocalBD.Instancia.ReturnIdCliente(1,c.idCliente);
-            //}
-            //catch (Exception ex)
-            //{ MessageBox.Show(ex.Message); }
+           
 
         }
         void contarItems()
