@@ -55,15 +55,15 @@ namespace Datos
                                 print @id 
                                
                                 select @Val=COUNT(*) from tbboleta where RIGHT(CodVenta,8)=@id  and tipoComprobante=1
-                              if @id = 99999999
+                              if @Val = 1
                                  begin
-                                 set @Id = 1
-                                 set @Val =@Val + 1
+                                 set @Id = @Id + 1
+                                 set @Val =1
                                  end
                                 else
                                  begin
                                  set @Id = @Id
-                                 set @Val = @Val 
+                                 set @Val = @Val  + 1 
                                  end
 								
 								 end
@@ -78,15 +78,36 @@ namespace Datos
                                 print @id
                                 
                                 select @Val=COUNT(*) from tbboleta where RIGHT(CodVenta,8)=@id and tipoComprobante=2
-                                if @id = 99999999
+                                if @Val = 1
                                  begin
-                                 set @Id = 1
-                                 set @Val =@Val + 1
+                                 set @Id = @Id + 1
+                                 set @Val = 1
                                  end
                                 else
                                  begin
                                  set @Id = @Id
-                                 set @Val = @Val 
+                                 set @Val = @Val + 1 
+                                 end
+                                 end   
+                                if (@tipoComprobante=3)
+								begin
+								 select top 1 @Id = RIGHT(CodVenta,8) FROM tbboleta where tipoComprobante=3 order by CodVenta desc
+                                if LEN(@Id) is null
+                                begin
+                                set @id = 1
+                                end
+                                print @id
+                                
+                                select @Val=COUNT(*) from tbboleta where RIGHT(CodVenta,8)=@id and tipoComprobante=3
+                                if @Val = 1
+                                 begin
+                                 set @Id = @Id + 1
+                                 set @Val =1
+                                 end
+                                else
+                                 begin
+                                 set @Id = @Id
+                                 set @Val = @Val + 1 
                                  end
 								 
 							end

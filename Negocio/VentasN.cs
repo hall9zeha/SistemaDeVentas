@@ -25,7 +25,7 @@ namespace Negocio
             return objV.GenerarCodigoBoletaFactura(serie, tipoComprobante);
         }
        
-        public int GuardarVenta(BoletaE b)
+        public int GuardarVenta(VentasE b)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace Negocio
                 Cadxml += "importe_rg='" + b.Importe_rg + "'>";
                 
 
-                foreach (DetalleBoletaE dt in b.detalleBoleta)
+                foreach (DetalleVentasE dt in b.detalleBoleta)
                 {
                     Cadxml += "<detalle_tbboleta ";
                     //Cadxml += "codboleta='" + dt.Codboleta + "' ";
@@ -64,14 +64,14 @@ namespace Negocio
             }
 
         }
-        public int AnularVenta(BoletaE b)
+        public int AnularVenta(VentasE b)
         {
             try
             {
                 String CadXml = "";
                 CadXml += "<tbboleta ";
                 CadXml += "idventa='" + b.idVenta + "'>";
-                foreach (DetalleBoletaE dt in b.detalleBoleta)
+                foreach (DetalleVentasE dt in b.detalleBoleta)
                 {
                     CadXml += "<tbstock ";
                     CadXml += "codestock='" + dt.CodProducto_detalle + "' ";
@@ -90,30 +90,30 @@ namespace Negocio
             { throw; }
 
         }
-        public List<BoletaE> MostrarVentasSimple(String fecha)
+        public List<VentasE> MostrarVentasSimple(String fecha)
         {
-            List<BoletaE> lista = VentasD.Instancia.MostrarVentasSimple(fecha);
+            List<VentasE> lista = VentasD.Instancia.MostrarVentasSimple(fecha);
             return lista;
         }
 
-        public List<BoletaE> MostrarVentasFechaDoble(string fechaIni, string fechaFin)
+        public List<VentasE> MostrarVentasFechaDoble(string fechaIni, string fechaFin)
         {
-            List<BoletaE> lista = VentasD.Instancia.MostrarVentasFechaDoble(fechaIni,fechaFin);
+            List<VentasE> lista = VentasD.Instancia.MostrarVentasFechaDoble(fechaIni,fechaFin);
             return lista;
         }
-        public List<BoletaE> BuscarVentaBoleta(string boleta)
+        public List<VentasE> BuscarVentaBoleta(string boleta)
         {
-            List<BoletaE> lista = VentasD.Instancia.BuscarVentaBoleta(boleta);
+            List<VentasE> lista = VentasD.Instancia.BuscarVentaBoleta(boleta);
             return lista;
         }
-        public List<DetalleBoletaE> ListarDetalleBoleta(int idVenta)
+        public List<DetalleVentasE> ListarDetalleBoleta(int idVenta)
         {
-            List<DetalleBoletaE> lista = objV.ListarDetalleBoleta(idVenta);
+            List<DetalleVentasE> lista = objV.ListarDetalleBoleta(idVenta);
             return lista;
         }
-        public List<DetalleBoletaE> ListarDetalleBoletaCambio(int idVenta)
+        public List<DetalleVentasE> ListarDetalleBoletaCambio(int idVenta)
         {
-          List<DetalleBoletaE> lista = objV.ListarDetalleBoletaCambio(idVenta);
+          List<DetalleVentasE> lista = objV.ListarDetalleBoletaCambio(idVenta);
             return lista;
         }
         //INICIO métodos de prueba para el módulo devolucion
@@ -128,7 +128,7 @@ namespace Negocio
             return lista;
         }
        
-        public int GuardarCambioDePrenda(BoletaE b)
+        public int GuardarCambioDePrenda(VentasE b)
         {
             try
             {
@@ -139,7 +139,7 @@ namespace Negocio
               //  Cadxml += "estadocambio='" + b.EstadoCambio + "'>";
 
 
-                foreach (DetalleBoletaE dt in b.detalleBoleta)
+                foreach (DetalleVentasE dt in b.detalleBoleta)
                 {
                     Cadxml += "<detalle_tbboleta ";
                     Cadxml += "idventa='" + dt.IdVenta + "' ";

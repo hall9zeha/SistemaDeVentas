@@ -46,150 +46,159 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Agregar_Prenda.cs">
+    <Compile Include="frmAgregar_Prenda.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Agregar_Prenda.Designer.cs">
-      <DependentUpon>Agregar_Prenda.cs</DependentUpon>
+    <Compile Include="frmAgregar_Prenda.Designer.cs">
+      <DependentUpon>frmAgregar_Prenda.cs</DependentUpon>
     </Compile>
-    <Compile Include="Boleta de Venta.cs">
+    <Compile Include="frmBoleta de Venta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Boleta de Venta.Designer.cs">
-      <DependentUpon>Boleta de Venta.cs</DependentUpon>
+    <Compile Include="frmBoleta de Venta.Designer.cs">
+      <DependentUpon>frmBoleta de Venta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Buscar_Cambio.cs">
+    <Compile Include="frmBuscar_Cambio.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Buscar_Cambio.Designer.cs">
-      <DependentUpon>Buscar_Cambio.cs</DependentUpon>
+    <Compile Include="frmBuscar_Cambio.Designer.cs">
+      <DependentUpon>frmBuscar_Cambio.cs</DependentUpon>
     </Compile>
-    <Compile Include="Buscar_Prenda.cs">
+    <Compile Include="frmBuscar_Prenda.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Buscar_Prenda.Designer.cs">
-      <DependentUpon>Buscar_Prenda.cs</DependentUpon>
+    <Compile Include="frmBuscar_Prenda.Designer.cs">
+      <DependentUpon>frmBuscar_Prenda.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cambio_de_Prenda.cs">
+    <Compile Include="frmCambio_de_Prenda.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cambio_de_Prenda.Designer.cs">
-      <DependentUpon>Cambio_de_Prenda.cs</DependentUpon>
+    <Compile Include="frmCambio_de_Prenda.Designer.cs">
+      <DependentUpon>frmCambio_de_Prenda.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cliente.cs">
+    <Compile Include="frmCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cliente.Designer.cs">
-      <DependentUpon>Cliente.cs</DependentUpon>
+    <Compile Include="frmCliente.Designer.cs">
+      <DependentUpon>frmCliente.cs</DependentUpon>
     </Compile>
     <Compile Include="CrearTicket.cs" />
-    <Compile Include="Detalle_Cambios.cs">
+    <Compile Include="frmDetalle_Cambios.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Detalle_Cambios.Designer.cs">
-      <DependentUpon>Detalle_Cambios.cs</DependentUpon>
+    <Compile Include="frmDetalle_Cambios.Designer.cs">
+      <DependentUpon>frmDetalle_Cambios.cs</DependentUpon>
     </Compile>
-    <Compile Include="Detalle_Prenda.cs">
+    <Compile Include="frmDetalle_Prenda.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Detalle_Prenda.Designer.cs">
-      <DependentUpon>Detalle_Prenda.cs</DependentUpon>
+    <Compile Include="frmDetalle_Prenda.Designer.cs">
+      <DependentUpon>frmDetalle_Prenda.cs</DependentUpon>
     </Compile>
-    <Compile Include="Detalle_Venta.cs">
+    <Compile Include="frmDetalle_Venta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Detalle_Venta.Designer.cs">
-      <DependentUpon>Detalle_Venta.cs</DependentUpon>
+    <Compile Include="frmDetalle_Venta.Designer.cs">
+      <DependentUpon>frmDetalle_Venta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editar_Prenda.cs">
+    <Compile Include="frmEditar_Prenda.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Editar_Prenda.Designer.cs">
-      <DependentUpon>Editar_Prenda.cs</DependentUpon>
+    <Compile Include="frmEditar_Prenda.Designer.cs">
+      <DependentUpon>frmEditar_Prenda.cs</DependentUpon>
     </Compile>
-    <Compile Include="Factura_Venta.cs">
+    <Compile Include="frmFactura_Venta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Factura_Venta.Designer.cs">
-      <DependentUpon>Factura_Venta.cs</DependentUpon>
+    <Compile Include="frmFactura_Venta.Designer.cs">
+      <DependentUpon>frmFactura_Venta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Inventario.cs">
+    <Compile Include="frmInventario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Inventario.Designer.cs">
-      <DependentUpon>Inventario.cs</DependentUpon>
+    <Compile Include="frmInventario.Designer.cs">
+      <DependentUpon>frmInventario.cs</DependentUpon>
     </Compile>
-    <Compile Include="Inventario_Prendas.cs">
+    <Compile Include="frmInventario_Prendas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Inventario_Prendas.Designer.cs">
-      <DependentUpon>Inventario_Prendas.cs</DependentUpon>
+    <Compile Include="frmInventario_Prendas.Designer.cs">
+      <DependentUpon>frmInventario_Prendas.cs</DependentUpon>
     </Compile>
     <Compile Include="LocalBD.cs" />
-    <Compile Include="Mantenimiento_Cliente.cs">
+    <Compile Include="frmMantenimiento_Cliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Mantenimiento_Cliente.Designer.cs">
-      <DependentUpon>Mantenimiento_Cliente.cs</DependentUpon>
+    <Compile Include="frmMantenimiento_Cliente.Designer.cs">
+      <DependentUpon>frmMantenimiento_Cliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="Menu.cs">
+    <Compile Include="frmMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Menu.Designer.cs">
-      <DependentUpon>Menu.cs</DependentUpon>
+    <Compile Include="frmMenu.Designer.cs">
+      <DependentUpon>frmMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmNota_De_Venta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmNota_De_Venta.Designer.cs">
+      <DependentUpon>frmNota_De_Venta.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Ventas.cs">
+    <Compile Include="frmVentas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Ventas.Designer.cs">
-      <DependentUpon>Ventas.cs</DependentUpon>
+    <Compile Include="frmVentas.Designer.cs">
+      <DependentUpon>frmVentas.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Agregar_Prenda.resx">
-      <DependentUpon>Agregar_Prenda.cs</DependentUpon>
+    <EmbeddedResource Include="frmAgregar_Prenda.resx">
+      <DependentUpon>frmAgregar_Prenda.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Boleta de Venta.resx">
-      <DependentUpon>Boleta de Venta.cs</DependentUpon>
+    <EmbeddedResource Include="frmBoleta de Venta.resx">
+      <DependentUpon>frmBoleta de Venta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Buscar_Cambio.resx">
-      <DependentUpon>Buscar_Cambio.cs</DependentUpon>
+    <EmbeddedResource Include="frmBuscar_Cambio.resx">
+      <DependentUpon>frmBuscar_Cambio.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Buscar_Prenda.resx">
-      <DependentUpon>Buscar_Prenda.cs</DependentUpon>
+    <EmbeddedResource Include="frmBuscar_Prenda.resx">
+      <DependentUpon>frmBuscar_Prenda.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cambio_de_Prenda.resx">
-      <DependentUpon>Cambio_de_Prenda.cs</DependentUpon>
+    <EmbeddedResource Include="frmCambio_de_Prenda.resx">
+      <DependentUpon>frmCambio_de_Prenda.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cliente.resx">
-      <DependentUpon>Cliente.cs</DependentUpon>
+    <EmbeddedResource Include="frmCliente.resx">
+      <DependentUpon>frmCliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Detalle_Cambios.resx">
-      <DependentUpon>Detalle_Cambios.cs</DependentUpon>
+    <EmbeddedResource Include="frmDetalle_Cambios.resx">
+      <DependentUpon>frmDetalle_Cambios.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Detalle_Prenda.resx">
-      <DependentUpon>Detalle_Prenda.cs</DependentUpon>
+    <EmbeddedResource Include="frmDetalle_Prenda.resx">
+      <DependentUpon>frmDetalle_Prenda.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Detalle_Venta.resx">
-      <DependentUpon>Detalle_Venta.cs</DependentUpon>
+    <EmbeddedResource Include="frmDetalle_Venta.resx">
+      <DependentUpon>frmDetalle_Venta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Editar_Prenda.resx">
-      <DependentUpon>Editar_Prenda.cs</DependentUpon>
+    <EmbeddedResource Include="frmEditar_Prenda.resx">
+      <DependentUpon>frmEditar_Prenda.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Factura_Venta.resx">
-      <DependentUpon>Factura_Venta.cs</DependentUpon>
+    <EmbeddedResource Include="frmFactura_Venta.resx">
+      <DependentUpon>frmFactura_Venta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Inventario.resx">
-      <DependentUpon>Inventario.cs</DependentUpon>
+    <EmbeddedResource Include="frmInventario.resx">
+      <DependentUpon>frmInventario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Inventario_Prendas.resx">
-      <DependentUpon>Inventario_Prendas.cs</DependentUpon>
+    <EmbeddedResource Include="frmInventario_Prendas.resx">
+      <DependentUpon>frmInventario_Prendas.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Mantenimiento_Cliente.resx">
-      <DependentUpon>Mantenimiento_Cliente.cs</DependentUpon>
+    <EmbeddedResource Include="frmMantenimiento_Cliente.resx">
+      <DependentUpon>frmMantenimiento_Cliente.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Menu.resx">
-      <DependentUpon>Menu.cs</DependentUpon>
+    <EmbeddedResource Include="frmMenu.resx">
+      <DependentUpon>frmMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmNota_De_Venta.resx">
+      <DependentUpon>frmNota_De_Venta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -201,8 +210,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Ventas.resx">
-      <DependentUpon>Ventas.cs</DependentUpon>
+    <EmbeddedResource Include="frmVentas.resx">
+      <DependentUpon>frmVentas.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

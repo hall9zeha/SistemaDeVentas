@@ -14,9 +14,11 @@ namespace Presentacion
     {
 
     List<DetalleInventarioE> listaBoleta = new List<DetalleInventarioE>();
-    List<DetalleInventarioE> listaBoletaCambio = new List<DetalleInventarioE>();
+    List<DetalleInventarioE> listaCambio = new List<DetalleInventarioE>();
     List<DetalleInventarioE> listaFactura = new List<DetalleInventarioE>();
-    int _idCliente = 0;
+    List<DetalleInventarioE> listaNotaVenta = new List<DetalleInventarioE>();
+    int _idCliente = 0, _idClienteFact=0, _idClienteNV=0;
+    int invocador = 0;
    
     private static readonly LocalBD _instancia = new LocalBD();
 
@@ -38,6 +40,44 @@ namespace Presentacion
         }
         catch (Exception)
         { throw; }
+    }
+    public int ReturnIdClienteFact(int getset, int idCliente)
+    {
+        try
+        {
+            if (getset == 1)
+            {
+                _idClienteFact = idCliente;
+            }
+            return _idClienteFact;
+        }
+        catch (Exception)
+        { throw; }
+        
+    }
+    public int ReturnIdClienteNV(int getset, int idCliente)
+    {
+        try
+        {
+            if (getset == 1)
+            {
+                _idClienteNV = idCliente;
+            }
+            return _idClienteNV;
+        }
+        catch (Exception)
+        { throw; }
+    }
+    public int Invocador(int getset, int frm)
+    {
+        try
+        {
+            if (getset == 1)
+                invocador = frm;
+        }
+        catch (Exception)
+        { throw; }
+        return invocador;
     }
     public List<DetalleInventarioE> ReturnListaBoleta(int getset, int idstock, int cantidad, double precio)
     {
@@ -75,6 +115,47 @@ namespace Presentacion
                 }
             }
             return listaBoleta;
+        }
+        catch (Exception)
+        { throw; }
+    }
+    public List<DetalleInventarioE> ReturnListaNotaVenta(int getset, int codProd, int cantidad, double precioUnidad)
+    {
+        try
+        {
+            if (getset == 1)
+            {
+                if (cantidad > 1)
+                {
+                    for (int i = 0; i < listaNotaVenta.Count; i++)
+                    {
+                        if (listaNotaVenta[i].CodStock == codProd)
+                        {
+                            listaNotaVenta[i].Precio = precioUnidad;
+                            listaNotaVenta[i].Cantidad = cantidad;
+                            break;
+
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < listaNotaVenta.Count; i++)
+                    {
+                        if (listaNotaVenta[i].CodStock == codProd)
+                        {
+                            throw new ApplicationException("El producto ya está en la lista");
+                        }
+                    }
+                }
+                DetalleInventarioE detNotaVenta = InventarioN.Instancia.AgregarProductoBoleta(codProd);
+                detNotaVenta.Cantidad = cantidad;
+                detNotaVenta.Precio = precioUnidad;
+                listaNotaVenta.Add(detNotaVenta);
+                
+
+            }
+            return listaNotaVenta;
         }
         catch (Exception)
         { throw; }
@@ -131,21 +212,21 @@ namespace Presentacion
             {
                 if (cantidad > 1)
                 {
-                    for (int i = 0; i < listaBoletaCambio.Count; i++)
+                    for (int i = 0; i < listaCambio.Count; i++)
                     {
-                        if (listaBoletaCambio[i].CodStock == codProd)
+                        if (listaCambio[i].CodStock == codProd)
                         {
-                            listaBoletaCambio[i].Stock = cantidad;
-                            listaBoletaCambio[i].MontoCambio = precioUnidad;
+                            listaCambio[i].Stock = cantidad;
+                            listaCambio[i].MontoCambio = precioUnidad;
                             break;
                         }
                     }
                 }
                 else
                 {
-                    for (int i = 0; i < listaBoletaCambio.Count; i++)
+                    for (int i = 0; i < listaCambio.Count; i++)
                     {
-                        if (listaBoletaCambio[i].CodStock == codProd)
+                        if (listaCambio[i].CodStock == codProd)
                         {
                             throw new ApplicationException("El producto ya esta en la lista");
 
@@ -154,11 +235,11 @@ namespace Presentacion
                     DetalleInventarioE objInventario = VentasN.Instancia.TraerPrendaCambio(codProd);
                     objInventario.Cantidad = cantidad;
                     objInventario.MontoCambio = precioUnidad;
-                    listaBoletaCambio.Add(objInventario);
+                    listaCambio.Add(objInventario);
                 }
 
             }
-            return listaBoletaCambio;
+            return listaCambio;
         }
         catch (Exception)
         { throw; }
@@ -178,6 +259,26 @@ namespace Presentacion
             }
         }
         catch (Exception )
+        {
+            throw;
+        }
+    }
+
+    public void RemoverPrendaListaNotaVenta(int codProd)
+    {
+        try
+        {
+            foreach (DetalleInventarioE p in listaNotaVenta)
+            {
+                if (p.CodStock == codProd)
+                {
+                    listaNotaVenta.Remove(p);
+                    return;
+                }
+            }
+
+        }
+        catch (Exception)
         {
             throw;
         }
@@ -202,11 +303,11 @@ namespace Presentacion
     {
         try
         {
-            foreach (DetalleInventarioE p in listaBoletaCambio)
+            foreach (DetalleInventarioE p in listaCambio)
             {
                 if (p.CodStock == codProd)
                 {
-                    listaBoletaCambio.Remove(p);
+                    listaCambio.Remove(p);
                     return;
                 }
             }
@@ -219,7 +320,7 @@ namespace Presentacion
     {
         try
         {
-            listaBoletaCambio.RemoveRange(0, listaBoletaCambio.Count);
+            listaCambio.RemoveRange(0, listaCambio.Count);
 
         }
         catch (Exception)
@@ -230,6 +331,16 @@ namespace Presentacion
         try
         {
             listaBoleta.RemoveRange(0, listaBoleta.Count);
+        }
+        catch (Exception)
+        { throw; }
+    }
+
+    public void LimpiarListaNotaVenta()
+    {
+        try
+        {
+            listaNotaVenta.RemoveRange(0, listaNotaVenta.Count);
         }
         catch (Exception)
         { throw; }
