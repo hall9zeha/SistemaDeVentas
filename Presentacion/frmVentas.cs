@@ -77,7 +77,7 @@ namespace Presentacion
                     {
                         num++;
                         string[] fila = new string[] {
-                        lista[i].idVenta.ToString(),
+                        lista[i].IdVenta.ToString(),
                         lista[i].CodVenta,
                         lista[i].Cantidad.ToString(),
                         lista[i].Precio_final.ToString("0.00"),
@@ -107,7 +107,7 @@ namespace Presentacion
                 {
                     num++;
                     string[] fila = new string[] {
-                        lista[i].idVenta.ToString(),
+                        lista[i].IdVenta.ToString(),
                         lista[i].CodVenta,
                         lista[i].Cantidad.ToString(),
                         lista[i].Precio_final.ToString("0.00"),
@@ -136,7 +136,7 @@ namespace Presentacion
                     {
                         num++;
                         string[] fila = new string[] {
-                        lista[i].idVenta.ToString(),
+                        lista[i].IdVenta.ToString(),
                         lista[i].CodVenta,
                         lista[i].Cantidad.ToString(),
                         lista[i].Precio_final.ToString("0.00"),

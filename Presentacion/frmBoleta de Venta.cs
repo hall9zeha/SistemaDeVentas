@@ -96,11 +96,16 @@ namespace Presentacion
             }
 
         }
+        
         void generarCodigoBoleta()
         {
             string serie = "BO" + 00;
             lblBoleta.Text = objVN.GenerarCodigoBoletaFactura(serie,1);           
 
+        }
+        void montoEnLetras()
+        {
+            lblMontoEnletras.Text = ("SON: " + AccionesEnControles.Instancia.MontoEnLetras(txtTotal.Text) + "SOLES").ToLower();
         }
 
         private void BtnAgregarItem_Click(object sender, EventArgs e)
@@ -114,6 +119,7 @@ namespace Presentacion
             montoTotal();
             contarItems();
             habilitarBotones(true, true, true,true,true);
+            montoEnLetras();
         }
 
         void  llenarGridBoleta(List<DetalleInventarioE> lista)
@@ -151,11 +157,11 @@ namespace Presentacion
             {
                 ClienteE c = null;
                 c = ClienteN.Instancia.TraerCliente(idCli, nroDocumento);
-                txtNombreCliente.Text = c.nombreCliente;
-                txtDireccionCliente.Text = c.direccionCliente;
-                txtNumDoc.Text = c.nroDocumento;
-                cboTipDoc.Text = c.descTipDocumento;
-                int i = LocalBD.Instancia.ReturnIdCliente(1, c.idCliente);
+                txtNombreCliente.Text = c.NombreCliente;
+                txtDireccionCliente.Text = c.DireccionCliente;
+                txtNumDoc.Text = c.NroDocumento;
+                cboTipDoc.Text = c.DescTipDocumento;
+                int i = LocalBD.Instancia.ReturnIdCliente(1, c.IdCliente);
 
             }
             catch (Exception)
@@ -186,6 +192,7 @@ namespace Presentacion
                     llenarGridBoleta(lista);
                     montoTotal();
                     contarItems();
+                    montoEnLetras();
 
                 }
             }
@@ -232,7 +239,7 @@ namespace Presentacion
                 int tipoComprobante = 1;
                 b.CodVenta = lblBoleta.Text;
                 b.Importe_rg = Convert.ToDouble(txtTotal.Text);
-                b.tipoComprobante = tipoComprobante;
+                b.TipoComprobante = tipoComprobante;
                 List<DetalleVentasE> Detalle = new List<DetalleVentasE>();
                 foreach (DataGridViewRow row in dgvDetalleBoleta.Rows)
                 {
@@ -246,8 +253,8 @@ namespace Presentacion
                     dt.Precio_final = Convert.ToDouble(row.Cells[4].Value.ToString());
                     Detalle.Add(dt);
                 }
-
-                b.detalleBoleta = Detalle;
+                
+                b.DetalleVenta = Detalle;
                 int resultado = VentasN.Instancia.GuardarVenta(b);
                 MessageBox.Show("Venta Registrada");
 
@@ -266,7 +273,7 @@ namespace Presentacion
                 dt.Cantidad = Convert.ToInt32(row.Cells[5].Value.ToString());
                 detalle.Add(dt);
             }
-            objB.detalleBoleta = detalle;
+            objB.DetalleVenta = detalle;
             int resultado = VentasN.Instancia.AnularVenta(objB);
             MessageBox.Show("Venta Anulada");
         }
@@ -290,7 +297,8 @@ namespace Presentacion
                 objTicket.TextoIzquierda("R.F.C: XXXXXXXXX-XX");
                 objTicket.TextoIzquierda("EMAIL: vmwaretars@gmail.com");
                 objTicket.TextoIzquierda("");
-                objTicket.TextoExtremos("Caja # 1", "Ticket # " + lblBoleta.Text);
+                objTicket.TextoCentro("BOLETA DE VENTA");
+                objTicket.TextoExtremos("Caja # 1", "N° # " + lblBoleta.Text);
                 objTicket.LineasAsteriscos();
 
                 
@@ -324,6 +332,8 @@ namespace Presentacion
                 { txtEfectivo.Text = "0"; }
                 if (txtCambio.Text == "")
                 { txtCambio.Text = "0"; }
+                objTicket.TextoIzquierda(lblMontoEnletras.Text);
+                objTicket.LineasAsteriscos();
                 objTicket.AgregarTotales("         EFECTIVO......S/", Convert.ToDecimal(txtEfectivo.Text));
                 objTicket.AgregarTotales("         CAMBIO........S/", Convert.ToDecimal(txtCambio.Text)
                     );

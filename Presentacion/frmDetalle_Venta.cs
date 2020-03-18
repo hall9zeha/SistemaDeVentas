@@ -116,7 +116,7 @@ namespace Presentacion
                 dt.Cantidad = Convert.ToInt32(row.Cells[6].Value.ToString());
                 detalle.Add(dt);
             }
-            b.detalleBoleta = detalle;
+            b.DetalleVenta = detalle;
             int resultado = VentasN.Instancia.AnularVenta(b);
             MessageBox.Show("Venta Anulada");
         }

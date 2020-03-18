@@ -108,6 +108,7 @@ namespace Presentacion
         {
 
             agregarProductoLista();
+            this.Close();
             
         }
 

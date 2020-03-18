@@ -45,16 +45,16 @@ namespace Presentacion
             try
             {
                 _tipoAccion = 1;
-                if (txtIdCliente.Text != "0") { _tipoAccion = 2; objE.idCliente = Convert.ToInt32(txtIdCliente.Text); }
-                objE.tipoDocumento = Convert.ToInt32(cboTipDoc.SelectedValue);
-                objE.nroDocumento = txtNumDoc.Text;
-                objE.nombreCliente = txtNombre.Text;
-                objE.apellidoCliente = txtApellido.Text;
-                if (rbMasculino.Checked == true) objE.sexoCliente = "M"; else objE.sexoCliente = "F";
-                objE.direccionCliente = txtDireccion.Text;
-                objE.telefonoCliente = txtCelular.Text;
-                objE.correoCliente = txtCorreo.Text;
-                objE.fechaRegistro = dtpFechaNac.Value.ToString("yy/MM/dd");
+                if (txtIdCliente.Text != "0") { _tipoAccion = 2; objE.IdCliente = Convert.ToInt32(txtIdCliente.Text); }
+                objE.TipoDocumento = Convert.ToInt32(cboTipDoc.SelectedValue);
+                objE.NroDocumento = txtNumDoc.Text;
+                objE.NombreCliente = txtNombre.Text;
+                objE.ApellidoCliente = txtApellido.Text;
+                if (rbMasculino.Checked == true) objE.SexoCliente = "M"; else objE.SexoCliente = "F";
+                objE.DireccionCliente = txtDireccion.Text;
+                objE.TelefonoCliente = txtCelular.Text;
+                objE.CorreoCliente = txtCorreo.Text;
+                objE.FechaRegistro = dtpFechaNac.Value.ToString("yy/MM/dd");
                 objN.MantenimientoCliente(objE, _tipoAccion);
                 if (_tipoAccion == 1) { MessageBox.Show("Cliente registrado"); }
                 else { MessageBox.Show("Registro Modificado"); }
@@ -69,15 +69,15 @@ namespace Presentacion
                 if (_idCliente != 0)
                 {
                     ClienteE c = objN.TraerCliente(_idCliente, 0.ToString());
-                    cboTipDoc.Text = c.descTipDocumento;
-                    txtNumDoc.Text = c.nroDocumento;
-                    txtNombre.Text = c.nombreCliente;
-                    txtApellido.Text = c.apellidoCliente;
-                    txtCelular.Text = c.telefonoCliente;
-                    txtCorreo.Text = c.correoCliente;
-                    txtDireccion.Text = c.direccionCliente;
-                    dtpFechaNac.Value = Convert.ToDateTime(c.fechaRegistro);
-                    if (c.sexoCliente == "M") rbMasculino.Checked = true; else rbFemenino.Checked = true;
+                    cboTipDoc.Text = c.DescTipDocumento;
+                    txtNumDoc.Text = c.NroDocumento;
+                    txtNombre.Text = c.NombreCliente;
+                    txtApellido.Text = c.ApellidoCliente;
+                    txtCelular.Text = c.TelefonoCliente;
+                    txtCorreo.Text = c.CorreoCliente;
+                    txtDireccion.Text = c.DireccionCliente;
+                    dtpFechaNac.Value = Convert.ToDateTime(c.FechaRegistro);
+                    if (c.SexoCliente == "M") rbMasculino.Checked = true; else rbFemenino.Checked = true;
                 }
             }
             catch (Exception ex)

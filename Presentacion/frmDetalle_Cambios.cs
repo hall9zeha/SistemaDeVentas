@@ -65,9 +65,9 @@ namespace Presentacion
                    Detalle.Add(dt);
                             }
 
-                b.detalleBoleta = Detalle;
+                b.DetalleVenta = Detalle;
                 b.Importe_rg = Convert.ToDouble(nuevoTotal.Text);
-                b.idVenta = _idVenta;
+                b.IdVenta = _idVenta;
 
                 int resultado = VentasN.Instancia.GuardarCambioDePrenda(b);
                 

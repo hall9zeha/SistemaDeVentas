@@ -8,20 +8,20 @@ namespace Entidades
 {
     public class ClienteE
     {
-        public int idCliente { get; set; }
-        public int tipoDocumento { get; set; }
-        public string descTipDocumento { get; set; }
-        public string nroDocumento { get; set; }
-        public string nombreCliente { get; set; }
-        public string apellidoCliente { get; set; }
-        public string sexoCliente { get; set; }
-        public string direccionCliente{ get; set; }
-        public string telefonoCliente { get; set; }
+        public int IdCliente { get; set; }
+        public int TipoDocumento { get; set; }
+        public string DescTipDocumento { get; set; }
+        public string NroDocumento { get; set; }
+        public string NombreCliente { get; set; }
+        public string ApellidoCliente { get; set; }
+        public string SexoCliente { get; set; }
+        public string DireccionCliente{ get; set; }
+        public string TelefonoCliente { get; set; }
 
-        public string correoCliente { get; set; }
-        public string fechaRegistro { get; set; }
+        public string CorreoCliente { get; set; }
+        public string FechaRegistro { get; set; }
 
-        public int estadoCliente { get; set; }
+        public int EstadoCliente { get; set; }
 
     }
 }

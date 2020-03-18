@@ -118,7 +118,7 @@ namespace Datos
                 {
                     VentasE b = new VentasE();
 
-                    b.idVenta = Convert.ToInt32(dr["idVenta"].ToString());
+                    b.IdVenta = Convert.ToInt32(dr["idVenta"].ToString());
                     b.CodVenta = dr["CodVenta"].ToString();
                     b.Cantidad = Convert.ToInt32(dr["Prendas"].ToString());
                     b.Precio_final = Convert.ToDouble(dr["Total"].ToString());
@@ -150,7 +150,7 @@ namespace Datos
                 {
                     VentasE b = new VentasE();
 
-                    b.idVenta = Convert.ToInt32(dr["idVenta"].ToString());
+                    b.IdVenta = Convert.ToInt32(dr["idVenta"].ToString());
                     b.CodVenta = dr["CodVenta"].ToString();
                     b.Cantidad = Convert.ToInt32(dr["Prendas"].ToString());
                     b.Precio_final = Convert.ToDouble(dr["Total"].ToString());
@@ -181,7 +181,36 @@ namespace Datos
                 {
                     VentasE b = new VentasE();
 
-                    b.idVenta = Convert.ToInt32(dr["idVenta"].ToString());
+                    b.IdVenta = Convert.ToInt32(dr["idVenta"].ToString());
+                    b.CodVenta = dr["CodVenta"].ToString();
+                    b.Cantidad = Convert.ToInt32(dr["Prendas"].ToString());
+                    b.Precio_final = Convert.ToDouble(dr["Total"].ToString());
+                    b.Fechaboleta = Convert.ToDateTime(dr["Fechaboleta"].ToString());
+                    lista.Add(b);
+                }
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+            return lista;
+        }
+        public List<VentasE> ListarVentas()
+        {
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            List<VentasE> lista = null;
+            try
+            {
+                cmd = new SqlCommand(sql.Query_ListarVentas(), cn);
+                
+                cn.Open();
+                dr = cmd.ExecuteReader();
+                lista = new List<VentasE>();
+                while (dr.Read())
+                {
+                    VentasE b = new VentasE();
+
+                    b.IdVenta = Convert.ToInt32(dr["idVenta"].ToString());
                     b.CodVenta = dr["CodVenta"].ToString();
                     b.Cantidad = Convert.ToInt32(dr["Prendas"].ToString());
                     b.Precio_final = Convert.ToDouble(dr["Total"].ToString());

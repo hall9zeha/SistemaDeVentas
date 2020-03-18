@@ -34,8 +34,8 @@ namespace Presentacion
             dgvCambioPrenda.Columns.Add("Boleta/Factura", "Boleta/Factura");
             dgvCambioPrenda.Columns.Add("Prendas", "Prendas");
             dgvCambioPrenda.Columns.Add("Total", "Total");
-            dgvCambioPrenda.Columns.Add("FechaBoleta", "FechaBoleta");
-            dgvCambioPrenda.Columns.Add("Hora", "Hora");
+            dgvCambioPrenda.Columns.Add("FechaVenta", "FechaVenta");
+            dgvCambioPrenda.Columns.Add("HoraVenta", "HoraVenta");
 
             dgvCambioPrenda.Columns[0].Width = 70;
             dgvCambioPrenda.Columns[1].Width = 100;
@@ -64,7 +64,7 @@ namespace Presentacion
                     {
                         num++;
                         string[] fila = new string[] {
-                        lista[i].idVenta.ToString(),
+                        lista[i].IdVenta.ToString(),
                         lista[i].CodVenta,
                         lista[i].Cantidad.ToString(),
                         lista[i].Precio_final.ToString("0.00"),
@@ -80,6 +80,37 @@ namespace Presentacion
                     dgvCambioPrenda.Rows.Clear();
                    
                 }
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message); }
+        }
+        void listarVentas()
+        {
+
+            try
+            {
+
+                
+                    int num = 0;
+                    List<VentasE> lista = VentasN.Instancia.ListarVentas();
+                    dgvCambioPrenda.Rows.Clear();
+
+                    for (int i = 0; i < lista.Count; i++)
+                    {
+                        num++;
+                        string[] fila = new string[] {
+                        lista[i].IdVenta.ToString(),
+                        lista[i].CodVenta,
+                        lista[i].Cantidad.ToString(),
+                        lista[i].Precio_final.ToString("0.00"),
+                        lista[i].Fechaboleta.ToString("dd-MM-yy"),
+                        lista[i].Fechaboleta.ToString("HH:mm:ss")};
+                        dgvCambioPrenda.Rows.Add(fila);
+
+                    }
+
+                
+               
             }
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }
@@ -102,6 +133,11 @@ namespace Presentacion
             }
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            listarVentas();
         }
     }
 }

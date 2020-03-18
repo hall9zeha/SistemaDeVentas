@@ -32,6 +32,7 @@
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCambioPrenda)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -41,7 +42,7 @@
             this.dgvCambioPrenda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCambioPrenda.Location = new System.Drawing.Point(102, 130);
             this.dgvCambioPrenda.Name = "dgvCambioPrenda";
-            this.dgvCambioPrenda.Size = new System.Drawing.Size(449, 231);
+            this.dgvCambioPrenda.Size = new System.Drawing.Size(471, 231);
             this.dgvCambioPrenda.TabIndex = 0;
             this.dgvCambioPrenda.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
             // 
@@ -61,11 +62,11 @@
             this.groupBox1.Size = new System.Drawing.Size(200, 47);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Buscar boleta";
+            this.groupBox1.Text = "Buscar por número de  comprobante";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(476, 392);
+            this.button1.Location = new System.Drawing.Point(102, 376);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 3;
@@ -73,15 +74,26 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // Cambio_de_Prenda
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(597, 130);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(99, 23);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "Listar ventas";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
+            // 
+            // frmCambio_de_Prenda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dgvCambioPrenda);
-            this.Name = "Cambio_de_Prenda";
+            this.Name = "frmCambio_de_Prenda";
             this.Text = "Cambio_de_Prenda";
             this.Load += new System.EventHandler(this.Cambio_de_Prenda_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCambioPrenda)).EndInit();
@@ -97,5 +109,6 @@
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }

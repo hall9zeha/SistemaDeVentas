@@ -469,6 +469,30 @@ namespace Datos
                             ";
             return Query;
         }
+        public string Query_ListarVentas()
+        {
+            string Query = @"
+                            select 
+                            b.idVenta,
+                            b.CodVenta,
+                            sum(dt.Cantidad)as Prendas,
+                            --sum(dt.Precio_final)as Total,
+                            b.Importe_rg as Total, 
+                            b.Fechaboleta
+                            from tbboleta b inner join detalle_tbboleta dt
+                            
+                            on b.idVenta=dt.IdVenta
+                            group by 
+                            b.idVenta,
+                            b.CodVenta,
+                            --dt.Cantidad,
+                            --dt.Precio_final,
+                            b.Importe_rg,
+                            b.Fechaboleta
+                            order by Fechaboleta
+                            ";
+            return Query;
+        }
 
         public string Query_ListarDetalleVenta()
         {

@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccionesEnControles.cs" />
     <Compile Include="frmAgregar_Prenda.cs">
       <SubType>Form</SubType>
     </Compile>

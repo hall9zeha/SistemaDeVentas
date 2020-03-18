@@ -62,16 +62,16 @@ namespace Datos
                 {
 
                     ClienteE c = new ClienteE();
-                    c.idCliente = Convert.ToInt32(dr["idCliente"].ToString());
-                    c.descTipDocumento = dr["nombreTipoDoc"].ToString();
-                    c.nroDocumento = dr["nroDocumento"].ToString();
-                    c.nombreCliente = dr["nombreCliente"].ToString();
-                    c.apellidoCliente = dr["apellidoCliente"].ToString();
-                    c.sexoCliente = dr["SexoCliente"].ToString();
-                    c.direccionCliente = dr["direccionCliente"].ToString();
-                    c.telefonoCliente = dr["telefonoCliente"].ToString();
-                    c.correoCliente = dr["correoCliente"].ToString();
-                    c.fechaRegistro = dr["fechaRegistro"].ToString();
+                    c.IdCliente = Convert.ToInt32(dr["idCliente"].ToString());
+                    c.DescTipDocumento = dr["nombreTipoDoc"].ToString();
+                    c.NroDocumento = dr["nroDocumento"].ToString();
+                    c.NombreCliente = dr["nombreCliente"].ToString();
+                    c.ApellidoCliente = dr["apellidoCliente"].ToString();
+                    c.SexoCliente = dr["SexoCliente"].ToString();
+                    c.DireccionCliente = dr["direccionCliente"].ToString();
+                    c.TelefonoCliente = dr["telefonoCliente"].ToString();
+                    c.CorreoCliente = dr["correoCliente"].ToString();
+                    c.FechaRegistro = dr["fechaRegistro"].ToString();
                     lista.Add(c);
                 }
             }
@@ -96,16 +96,16 @@ namespace Datos
                 if (dr.Read())
                 {
                     c = new ClienteE();
-                    c.idCliente = Convert.ToInt32(dr["idCliente"].ToString());
-                    c.descTipDocumento = dr["nombreTipoDoc"].ToString();
-                    c.nroDocumento = dr["nroDocumento"].ToString();
-                    c.nombreCliente = dr["nombreCliente"].ToString();
-                    c.apellidoCliente = dr["apellidoCliente"].ToString();
-                    c.sexoCliente = dr["SexoCliente"].ToString();
-                    c.direccionCliente = dr["direccionCliente"].ToString();
-                    c.telefonoCliente = dr["telefonoCliente"].ToString();
-                    c.correoCliente = dr["correoCliente"].ToString();
-                    c.fechaRegistro = dr["fechaRegistro"].ToString();
+                    c.IdCliente = Convert.ToInt32(dr["idCliente"].ToString());
+                    c.DescTipDocumento = dr["nombreTipoDoc"].ToString();
+                    c.NroDocumento = dr["nroDocumento"].ToString();
+                    c.NombreCliente = dr["nombreCliente"].ToString();
+                    c.ApellidoCliente = dr["apellidoCliente"].ToString();
+                    c.SexoCliente = dr["SexoCliente"].ToString();
+                    c.DireccionCliente = dr["direccionCliente"].ToString();
+                    c.TelefonoCliente = dr["telefonoCliente"].ToString();
+                    c.CorreoCliente = dr["correoCliente"].ToString();
+                    c.FechaRegistro = dr["fechaRegistro"].ToString();
                 }
             }
             catch (Exception)
@@ -127,16 +127,16 @@ namespace Datos
                 while (dr.Read())
                 {
                     ClienteE c = new ClienteE();
-                    c.idCliente = Convert.ToInt32(dr["idCliente"].ToString());
-                    c.descTipDocumento = dr["nombreTipoDoc"].ToString();
-                    c.nroDocumento = dr["nroDocumento"].ToString();
-                    c.nombreCliente = dr["nombreCliente"].ToString();
-                    c.apellidoCliente = dr["apellidoCliente"].ToString();
-                    c.sexoCliente = dr["SexoCliente"].ToString();
-                    c.direccionCliente = dr["direccionCliente"].ToString();
-                    c.telefonoCliente = dr["telefonoCliente"].ToString();
-                    c.correoCliente = dr["correoCliente"].ToString();
-                    c.fechaRegistro = dr["fechaRegistro"].ToString();
+                    c.IdCliente = Convert.ToInt32(dr["idCliente"].ToString());
+                    c.DescTipDocumento = dr["nombreTipoDoc"].ToString();
+                    c.NroDocumento = dr["nroDocumento"].ToString();
+                    c.NombreCliente = dr["nombreCliente"].ToString();
+                    c.ApellidoCliente = dr["apellidoCliente"].ToString();
+                    c.SexoCliente = dr["SexoCliente"].ToString();
+                    c.DireccionCliente = dr["direccionCliente"].ToString();
+                    c.TelefonoCliente = dr["telefonoCliente"].ToString();
+                    c.CorreoCliente = dr["correoCliente"].ToString();
+                    c.FechaRegistro = dr["fechaRegistro"].ToString();
                     lista.Add(c);
                 }
             }

@@ -150,6 +150,7 @@
             this.txtEfectivo.Size = new System.Drawing.Size(100, 25);
             this.txtEfectivo.TabIndex = 27;
             this.txtEfectivo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtEfectivo.TextChanged += new System.EventHandler(this.TxtEfectivo_TextChanged);
             this.txtEfectivo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtEfectivo_KeyPress);
             // 
             // lblMontoEnletras

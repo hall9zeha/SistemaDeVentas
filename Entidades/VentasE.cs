@@ -8,7 +8,7 @@ namespace Entidades
 {
     public class VentasE
     {
-        public  int idVenta { get; set; }
+        public  int IdVenta { get; set; }
         public string CodVenta { get; set; }
         
         public DateTime Fechaboleta { get; set; }
@@ -16,15 +16,15 @@ namespace Entidades
         public string Descripción { get; set; }
         public int Cantidad { get; set; }
         public double Precio_final { get; set; }
-        public int estadoVenta { get; set; }
-        public string serieVenta { get; set; }
-        public string correlativoVenta { get; set; }
-        public int tipoComprobante { get; set; }
-        public int tipoPago { get; set; }
-        public int idCliente { get; set; }
-        public int idUsuario { get; set; }
+        public int EstadoVenta { get; set; }
+        public string SerieVenta { get; set; }
+        public string CorrelativoVenta { get; set; }
+        public int TipoComprobante { get; set; }
+        public int TipoPago { get; set; }
+        public int IdCliente { get; set; }
+        public int IdUsuario { get; set; }
         
-        public List<DetalleVentasE> detalleBoleta { get; set; }
+        public List<DetalleVentasE> DetalleVenta { get; set; }
        
        
     }

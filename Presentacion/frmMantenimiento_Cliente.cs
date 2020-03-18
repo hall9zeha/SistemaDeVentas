@@ -71,16 +71,16 @@ namespace Presentacion
                     {
                         num++;
                         String[] fila = new string[] {
-                        lista[i].idCliente.ToString(),
-                        lista[i].descTipDocumento,
-                        lista[i].nroDocumento,
-                        lista[i].nombreCliente,
-                        lista[i].apellidoCliente,
-                        lista[i].sexoCliente,
-                        lista[i].direccionCliente,
-                        lista[i].telefonoCliente,
-                        lista[i].correoCliente,
-                        lista[i].fechaRegistro,
+                        lista[i].IdCliente.ToString(),
+                        lista[i].DescTipDocumento,
+                        lista[i].NroDocumento,
+                        lista[i].NombreCliente,
+                        lista[i].ApellidoCliente,
+                        lista[i].SexoCliente,
+                        lista[i].DireccionCliente,
+                        lista[i].TelefonoCliente,
+                        lista[i].CorreoCliente,
+                        lista[i].FechaRegistro,
 
                     };
                         dgvClientes.Rows.Add(fila);
@@ -106,17 +106,16 @@ namespace Presentacion
                     {
                         num++;
                     String[] fila = new string[] {
-                        lista[i].idCliente.ToString(),
-                        num.ToString(),
-                        lista[i].descTipDocumento,
-                        lista[i].nroDocumento,
-                        lista[i].nombreCliente,
-                        lista[i].apellidoCliente,
-                        lista[i].sexoCliente,
-                        lista[i].direccionCliente,
-                        lista[i].telefonoCliente,
-                        lista[i].correoCliente,
-                        lista[i].fechaRegistro,
+                        lista[i].IdCliente.ToString(),
+                        lista[i].DescTipDocumento,
+                        lista[i].NroDocumento,
+                        lista[i].NombreCliente,
+                        lista[i].ApellidoCliente,
+                        lista[i].SexoCliente,
+                        lista[i].DireccionCliente,
+                        lista[i].TelefonoCliente,
+                        lista[i].CorreoCliente,
+                        lista[i].FechaRegistro,
 
                     };
                         dgvClientes.Rows.Add(fila);
@@ -167,7 +166,7 @@ namespace Presentacion
             DialogResult dr = MessageBox.Show("Realmente quiere eliminar el cliente", "Mensaje", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dr == DialogResult.Yes)
             {
-                objE.idCliente = idCliente;
+                objE.IdCliente = idCliente;
                 objCliN.MantenimientoCliente(objE,3);
                 MessageBox.Show("Cliente eliminado");
                 
@@ -221,6 +220,10 @@ namespace Presentacion
                 else if (frmInvocador == 2)
                 {
                     LocalBD.Instancia.ReturnIdClienteFact(1, idCli);
+                }
+                else if (frmInvocador == 3)
+                {
+                    LocalBD.Instancia.ReturnIdClienteNV(1, idCli);
                 }
                 else
                 {

@@ -34,11 +34,11 @@ namespace Negocio
                 Cadxml += "<tbboleta ";
                 Cadxml += "codventa='" + b.CodVenta + "' ";
                 Cadxml += "importe='" + b.Importe_rg + "' ";
-                Cadxml += "tipocomprobante='" + b.tipoComprobante + "' ";
+                Cadxml += "tipocomprobante='" + b.TipoComprobante + "' ";
                 Cadxml += "importe_rg='" + b.Importe_rg + "'>";
                 
 
-                foreach (DetalleVentasE dt in b.detalleBoleta)
+                foreach (DetalleVentasE dt in b.DetalleVenta)
                 {
                     Cadxml += "<detalle_tbboleta ";
                     //Cadxml += "codboleta='" + dt.Codboleta + "' ";
@@ -70,15 +70,15 @@ namespace Negocio
             {
                 String CadXml = "";
                 CadXml += "<tbboleta ";
-                CadXml += "idventa='" + b.idVenta + "'>";
-                foreach (DetalleVentasE dt in b.detalleBoleta)
+                CadXml += "idventa='" + b.IdVenta + "'>";
+                foreach (DetalleVentasE dt in b.DetalleVenta)
                 {
                     CadXml += "<tbstock ";
                     CadXml += "codestock='" + dt.CodProducto_detalle + "' ";
                     CadXml += "stock='" + dt.Cantidad + "'/>";
 
                     CadXml += "<detalle_tbboleta ";
-                    CadXml += "idventa='" + b.idVenta + "'/>";
+                    CadXml += "idventa='" + b.IdVenta + "'/>";
                 }
                 CadXml += "</tbboleta>";
                 CadXml = "<root>" + CadXml + "</root>";
@@ -104,6 +104,11 @@ namespace Negocio
         public List<VentasE> BuscarVentaBoleta(string boleta)
         {
             List<VentasE> lista = VentasD.Instancia.BuscarVentaBoleta(boleta);
+            return lista;
+        }
+        public List<VentasE> ListarVentas()
+        {
+            List<VentasE> lista = VentasD.Instancia.ListarVentas();
             return lista;
         }
         public List<DetalleVentasE> ListarDetalleBoleta(int idVenta)
@@ -134,12 +139,12 @@ namespace Negocio
             {
                 string Cadxml = "";
                 Cadxml += "<tbboleta ";
-                Cadxml += "idventa='" + b.idVenta + "' ";
+                Cadxml += "idventa='" + b.IdVenta + "' ";
                 Cadxml += "importe_rg='" + b.Importe_rg + "'>";
               //  Cadxml += "estadocambio='" + b.EstadoCambio + "'>";
 
 
-                foreach (DetalleVentasE dt in b.detalleBoleta)
+                foreach (DetalleVentasE dt in b.DetalleVenta)
                 {
                     Cadxml += "<detalle_tbboleta ";
                     Cadxml += "idventa='" + dt.IdVenta + "' ";

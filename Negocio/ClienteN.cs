@@ -23,15 +23,15 @@ namespace Negocio
             {
                 String CadXml = "";
                 CadXml += "<tbClientes ";
-                CadXml += "idcliente='" + c.idCliente + "' ";
-                CadXml += "tipodocumento='" + c.tipoDocumento + "' ";
-                CadXml += "nrodocumento='" + c.nroDocumento + "' ";
-                CadXml += "nombrecliente='" + c.nombreCliente + "' ";
-                CadXml += "apellidocliente='" + c.apellidoCliente + "' ";
-                CadXml += "sexocliente='" + c.sexoCliente + "' ";
-                CadXml += "direccioncliente='" + c.direccionCliente + "' ";
-                CadXml += "telefonocliente='" + c.telefonoCliente + "' ";
-                CadXml += "correocliente='" + c.correoCliente + "' ";
+                CadXml += "idcliente='" + c.IdCliente + "' ";
+                CadXml += "tipodocumento='" + c.TipoDocumento + "' ";
+                CadXml += "nrodocumento='" + c.NroDocumento + "' ";
+                CadXml += "nombrecliente='" + c.NombreCliente + "' ";
+                CadXml += "apellidocliente='" + c.ApellidoCliente + "' ";
+                CadXml += "sexocliente='" + c.SexoCliente + "' ";
+                CadXml += "direccioncliente='" + c.DireccionCliente + "' ";
+                CadXml += "telefonocliente='" + c.TelefonoCliente + "' ";
+                CadXml += "correocliente='" + c.CorreoCliente + "' ";
                 CadXml += "tipoaccion='" + tipoaccion + "'/>";
                 CadXml = "<root>" + CadXml + "</root>";
                 int resultado = ClienteD.Instancia.MantenimientoCliente(CadXml);

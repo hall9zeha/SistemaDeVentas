@@ -65,6 +65,10 @@ namespace Presentacion
             lblFactura.Text = objVN.GenerarCodigoBoletaFactura(serie,2);
 
         }
+        void montoEnLetras()
+        {
+            lblMontoEnletras.Text = (" SON: " + AccionesEnControles.Instancia.MontoEnLetras(txtTotal.Text) + " SOLES ").ToLower();
+        }
         void llenarGridFactura(List<DetalleInventarioE> lista)
         {
             try
@@ -129,7 +133,7 @@ namespace Presentacion
                 int tipoComprobante = 2;
                 b.CodVenta = lblFactura.Text;
                 b.Importe_rg = Convert.ToDouble(txtTotal.Text);
-                b.tipoComprobante = tipoComprobante;
+                b.TipoComprobante = tipoComprobante;
                 List<DetalleVentasE> Detalle = new List<DetalleVentasE>();
                 foreach (DataGridViewRow row in dgvDetalleFactura.Rows)
                 {
@@ -143,7 +147,7 @@ namespace Presentacion
                     Detalle.Add(dt);
                 }
 
-                b.detalleBoleta = Detalle;
+                b.DetalleVenta = Detalle;
                 int resultado = VentasN.Instancia.GuardarVenta(b);
                 MessageBox.Show("Venta Registrada");
 
@@ -161,7 +165,7 @@ namespace Presentacion
                 dt.Cantidad = Convert.ToInt32(row.Cells[5].Value.ToString());
                 detalle.Add(dt);
             }
-            objB.detalleBoleta = detalle;
+            objB.DetalleVenta = detalle;
             int resultado = VentasN.Instancia.AnularVenta(objB);
             MessageBox.Show("Venta Anulada");
         }
@@ -173,11 +177,11 @@ namespace Presentacion
                 ClienteE c = new ClienteE();
 
                 c = ClienteN.Instancia.TraerCliente(idCli, nroDocumento);
-                txtNombreCliente.Text = c.nombreCliente;
-                txtNumDoc.Text = c.nroDocumento;
-                txtDireccionCliente.Text = c.direccionCliente;
-                cboTipDoc.Text = c.descTipDocumento;
-                LocalBD.Instancia.ReturnIdClienteFact(1, c.idCliente);
+                txtNombreCliente.Text = c.NombreCliente;
+                txtNumDoc.Text = c.NroDocumento;
+                txtDireccionCliente.Text = c.DireccionCliente;
+                cboTipDoc.Text = c.DescTipDocumento;
+                LocalBD.Instancia.ReturnIdClienteFact(1, c.IdCliente);
             }
             catch (Exception)
             { throw; }
@@ -192,6 +196,7 @@ namespace Presentacion
             llenarGridFactura(lista);
             montoTotal();
             contarItems();
+            montoEnLetras();
             habilitarBotones(true, true, true, true, true);
 
         }
@@ -206,6 +211,7 @@ namespace Presentacion
                 List<DetalleInventarioE> lista = LocalBD.Instancia.ReturnListaFactura(0, 0, 0, 0);
                 llenarGridFactura(lista);
                 montoTotal();
+                montoEnLetras();
                 contarItems();
             }
         }
@@ -256,7 +262,8 @@ namespace Presentacion
                 objTicket.TextoIzquierda("R.F.C: XXXXXXXXX-XX");
                 objTicket.TextoIzquierda("EMAIL: vmwaretars@gmail.com");
                 objTicket.TextoIzquierda("");
-                objTicket.TextoExtremos("Caja # 1", "Ticket # " + lblFactura.Text);
+                objTicket.TextoCentro("FACTURA DE VENTA");
+                objTicket.TextoExtremos("Caja # 1", "N° # " + lblFactura.Text);
                 objTicket.LineasAsteriscos();
 
 
@@ -290,6 +297,8 @@ namespace Presentacion
                 { txtEfectivo.Text = "0"; }
                 if (txtCambio.Text == "")
                 { txtCambio.Text = "0"; }
+                objTicket.TextoIzquierda(lblMontoEnletras.Text);
+                objTicket.LineasAsteriscos();
                 objTicket.AgregarTotales("         EFECTIVO......S/", Convert.ToDecimal(txtEfectivo.Text));
                 objTicket.AgregarTotales("         CAMBIO........S/", Convert.ToDecimal(txtCambio.Text)
                     );
@@ -409,6 +418,11 @@ namespace Presentacion
         private void DgvDetalleFactura_KeyUp(object sender, KeyEventArgs e)
         {
             montoTotal();
+        }
+
+        private void TxtEfectivo_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
