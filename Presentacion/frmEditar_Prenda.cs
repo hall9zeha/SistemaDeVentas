@@ -205,5 +205,17 @@ namespace Presentacion
             eliminarDetallePrenda();
             listarDetallePrenda();
         }
+        void limpiarControles()
+        {
+            txtcolor.Clear();
+            cmbtallaalfa.Text = "";
+            txttallanum.Clear();
+            txtcantidad.Clear();
+        }
+
+        private void Button5_Click(object sender, EventArgs e)
+        {
+            limpiarControles();
+        }
     }
 }
