@@ -7,10 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Entidades;
-using Negocio;
+using System.IO;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System.Data.SqlClient;
 using Datos;
+using Negocio;
+using Entidades;
 
 namespace Presentacion
 {
@@ -178,10 +181,141 @@ namespace Presentacion
             if (num == 0)
             { habilitarBotones(true, false, false); }
         }
+        void genCodigoDeBarra()
+        {
 
+            Document doc = new Document(new iTextSharp.text.Rectangle(24, 12), 5, 5, 1, 1);
+
+            try
+            {
+                int numPrendas = 0;
+                string code = Convert.ToString(dgvprenda.CurrentRow.Cells[0].Value.ToString());
+                int precio = Convert.ToInt32(txtprecioventa.Text);
+                string[] color = { }; /*Convert.ToString(dgvprenda.CurrentRow.Cells[1].Value.ToString());*/
+                string cantidad = txtcantidad.Text;
+                string desc = txtdescripcion.Text;
+                
+                    for (int i=0; i < dgvprenda.RowCount; i++)
+                    {
+                        color = new string[] { dgvprenda.Rows[i].Cells[1].Value.ToString() };
+                  
+                }
+                
+
+                string Marca = txtmarca.Text;
+                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/codes.pdf", FileMode.Create));
+                doc.Open();
+
+                DataTable dt = new DataTable();
+                dt.Columns.Add("ID");
+                dt.Columns.Add("Price");
+                dt.Columns.Add("Color");
+                dt.Columns.Add("Cantidad");
+                dt.Columns.Add("Descripcion");
+                dt.Columns.Add("Marca");
+                foreach (DataGridViewRow row in dgvprenda.Rows)
+                {
+                    numPrendas++;
+                }
+                for (int i = 0; i < numPrendas; i++)
+                {
+                    DataRow row = dt.NewRow();
+                    row["ID"] = code + i.ToString();
+                    row["Price"] = "S/. " + precio.ToString("0.00");
+                    row["Descripcion"] = desc;
+                    row["Marca"] = Marca;
+                    row["Color"] = dgvprenda.Rows[i].Cells[1].Value.ToString();
+                    row["Cantidad"] = cantidad;
+                    dt.Rows.Add(row);
+                }
+                System.Drawing.Image img1 = null;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    if (i != 0)
+                        doc.NewPage();
+                    PdfContentByte cb1 = writer.DirectContent;
+                    BaseFont bf = BaseFont.CreateFont(BaseFont.TIMES_BOLDITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+
+                    cb1.SetFontAndSize(bf, 2.0f);
+                    cb1.BeginText();
+                    cb1.SetTextMatrix(1.2f, 9.5f);
+                    cb1.ShowText(dt.Rows[i]["Descripcion"].ToString() );
+                    cb1.EndText();
+
+                    PdfContentByte cb4 = writer.DirectContent;
+                    BaseFont bf3 = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                    cb4.SetFontAndSize(bf3, 1.3f);
+                    cb4.BeginText();
+                    cb4.SetTextMatrix(1.2f, 7.5f);
+                    cb4.ShowText(dt.Rows[i]["Marca"].ToString());
+                    cb4.EndText();
+
+
+                    PdfContentByte cb2 = writer.DirectContent;
+                    BaseFont bf1 = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                    cb2.SetFontAndSize(bf1, 1.3f);
+                    cb2.BeginText();
+                    cb2.SetTextMatrix(1.2f, 6.3f);
+                    cb2.ShowText(dt.Rows[i]["color"].ToString());
+                    cb2.EndText();
+
+
+                    PdfContentByte cb3 = writer.DirectContent;
+                    BaseFont bf2 = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+                    cb3.SetFontAndSize(bf2, 1.3f);
+                    cb3.BeginText();
+                    cb3.SetTextMatrix(17.5f, 1.0f);
+                    cb3.ShowText(dt.Rows[i]["Price"].ToString());
+                    cb3.EndText();
+
+
+
+
+                    iTextSharp.text.pdf.PdfContentByte cb = writer.DirectContent;
+                    iTextSharp.text.pdf.Barcode128 bc = new Barcode128();
+                    bc.TextAlignment = Element.ALIGN_LEFT;
+                    bc.Code = dt.Rows[i]["ID"].ToString();
+                    bc.StartStopText = false;
+                    bc.CodeType = iTextSharp.text.pdf.Barcode128.EAN13;
+                    bc.Extended = true;
+                   //mostrando la imagen del producto en un picturebox
+                    System.Drawing.Image bimg = bc.CreateDrawingImage(System.Drawing.Color.Black, System.Drawing.Color.White);
+                    img1 = bimg;
+                    //fin de la propiedad
+                    pictureBox1.Image = img1;
+
+                    iTextSharp.text.Image img = bc.CreateImageWithBarcode(cb, iTextSharp.text.BaseColor.BLACK, iTextSharp.text.BaseColor.BLACK);
+
+                    cb.SetTextMatrix(1.5f, 3.0f);
+                    img.ScaleToFit(60, 5);
+                    img.SetAbsolutePosition(1.5f, 1);
+                    cb.AddImage(img);
+
+                }
+
+                ////////////////////***********************************//////////////////////
+
+
+                doc.Close();
+                System.Diagnostics.Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/codes.pdf");
+                //MessageBox.Show("el archivo se guardo en escritorio con el nombre de codes.pdf");
+            }
+            catch
+            {
+            }
+            finally
+            {
+                doc.Close();
+            }
+        }
         private void Lblcode_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Button2_Click_1(object sender, EventArgs e)
+        {
+            genCodigoDeBarra();
         }
     }
 }
