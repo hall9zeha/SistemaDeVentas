@@ -96,7 +96,8 @@ namespace Negocio
                     CadXml += "talla_alfanum='" + s.Talla_alfanum + "' ";
                     CadXml += "talla_num='" + s.Talla_num + "' ";
                     CadXml += "cantidad='" + s.Cantidad + "' ";
-                    CadXml += "stock='" + s.Stock + "'/>";
+                    CadXml += "stock='" + s.Stock + "' ";
+                    CadXml += "codigodebarra='" + s.CodigoDeBarra + "'/>";
                 }
                 CadXml += "</tbinventario>";
                 CadXml = "<root>" + CadXml + "</root>";
@@ -123,6 +124,7 @@ namespace Negocio
                 Cadxml += "talla_num='" + s.Talla_num + "' ";
                 Cadxml += "cantidad='" + s.Cantidad + "' ";
                 Cadxml += "stock='" + s.Stock + "' ";
+                Cadxml += "codigodebarra='" + s.CodigoDeBarra + "' ";
                 Cadxml += "tipoaccion='" + tipoaccion + "'/>";
                 Cadxml = "<root>" + Cadxml + "</root>";
                 int result = objD.MantenimientoDetalleInventario(Cadxml);

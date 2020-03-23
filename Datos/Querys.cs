@@ -298,6 +298,7 @@ namespace Datos
                                 s.Talla_alfanum,
                                 s.Talla_num,
                                 s.Cantidad,
+                                s.CodigoDeBarra,
                                 i.PrecioVenta,
                                 s.Stock from tbstock s inner join tbinventario i on s.Codproducto= i.Codproducto where s.Codproducto=@Codproducto";
 
@@ -339,8 +340,8 @@ namespace Datos
                         precio decimal(5,2),
                         precioventa decimal(5,2)
                         )i
-                        insert into  tbstock(Codproducto, Color, Talla_alfanum, Talla_num, Cantidad, Stock )
-                        select s.codproducto, s.color, s.talla_alfanum, s.talla_num, s.cantidad, s.stock
+                        insert into  tbstock(Codproducto, Color, Talla_alfanum, Talla_num, Cantidad, Stock, CodigoDeBarra )
+                        select s.codproducto, s.color, s.talla_alfanum, s.talla_num, s.cantidad, s.stock, s.codigodebarra
                         from openxml(@h, 'root/tbinventario/tbstock',1)with
                         (
                         codproducto nvarchar(20),
@@ -348,7 +349,8 @@ namespace Datos
                         talla_alfanum nvarchar(max),
                         talla_num int ,
                         cantidad int,
-                        stock int
+                        stock int,
+                        codigodebarra nvarchar(max)
                         )s
                         if (@@trancount>0)commit transaction
                         end try
@@ -697,8 +699,8 @@ namespace Datos
                                 begin try
                                 begin transaction
 
-                                insert into tbstock(Codproducto, Color, Talla_alfanum, Talla_num, Cantidad, Stock)
-                                select s.codproducto, s.color, s.talla_alfanum, s.talla_num, s.cantidad, s.stock
+                                insert into tbstock(Codproducto, Color, Talla_alfanum, Talla_num, Cantidad, Stock, CodigoDeBarra)
+                                select s.codproducto, s.color, s.talla_alfanum, s.talla_num, s.cantidad, s.stock, s.codigodebarra
                                 from openxml(@h,'root/tbstock', 1)with
                                 (
                                 codproducto nvarchar(20),
@@ -707,6 +709,7 @@ namespace Datos
                                 talla_num int,
                                 cantidad int,
                                 stock int,
+                                codigodebarra nvarchar(max),
                                 tipoaccion int
                                 )s where tipoaccion=1
 

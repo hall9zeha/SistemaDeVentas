@@ -35,12 +35,14 @@ namespace Presentacion
             dgvprenda.Columns.Add("Talla_Alfa", "Talla_Alfa");
             dgvprenda.Columns.Add("Talla_N", "Talla_N");
             dgvprenda.Columns.Add("Cantidad", "Cantidad");
+            dgvprenda.Columns.Add("BarCode", "BarCode");
 
             dgvprenda.Columns[0].Width = 150;
             dgvprenda.Columns[1].Width = 100;
             dgvprenda.Columns[2].Width = 60;
             dgvprenda.Columns[3].Width = 60;
             dgvprenda.Columns[4].Width = 60;
+            dgvprenda.Columns[5].Width = 100;
         }
         private void Label4_Click(object sender, EventArgs e)
         {
@@ -94,6 +96,7 @@ namespace Presentacion
                     s.Talla_num = Convert.ToInt32(row.Cells[3].Value.ToString());
                     s.Cantidad = Convert.ToInt32(row.Cells[4].Value.ToString());
                     s.Stock = Convert.ToInt32(row.Cells[4].Value.ToString());
+                    s.CodigoDeBarra = row.Cells[5].Value.ToString();
                     Detalle.Add(s);
                 }
                 objE.detalleInventario = Detalle;
@@ -113,11 +116,25 @@ namespace Presentacion
         void agregarPrendaGrid()
 
         {
+            int val = 0;
+            int i = 0;
             if (txtcolor.Text == "") txtcolor.Text = "vacio"; else txtcolor.Text=txtcolor.Text;
             if (cmbtallaalfa.Text == "") cmbtallaalfa.Text = "vacio"; else cmbtallaalfa.Text = cmbtallaalfa.Text;
             if (txttallanum.Text == "") txttallanum.Text = "0"; else txttallanum.Text = txttallanum.Text;
             if (txtcantidad.Text == "") txtcantidad.Text = "0"; else txtcantidad.Text = txtcantidad.Text;
-           dgvprenda.Rows.Add(lblcode.Text, txtcolor.Text, cmbtallaalfa.Text, txttallanum.Text, txtcantidad.Text);
+           
+            //método para agregar codigo numérico que se convertira en codigo de barras al grid
+           //este código será el mismo código del producto + 1 al final
+            foreach (DataGridViewRow row in dgvprenda.Rows)
+            {
+                i++;
+                if (i > 0)
+                {
+                    val += 1;
+                }
+            }
+            dgvprenda.Rows.Add(lblcode.Text, txtcolor.Text, cmbtallaalfa.Text, txttallanum.Text, txtcantidad.Text, lblcode.Text + val);
+            //fin del método
 
         }
 
@@ -278,7 +295,7 @@ namespace Presentacion
                     bc.StartStopText = false;
                     bc.CodeType = iTextSharp.text.pdf.Barcode128.EAN13;
                     bc.Extended = true;
-                   //mostrando la imagen del producto en un picturebox
+                   //mostrando la imagen de codeBar  del producto en un picturebox
                     System.Drawing.Image bimg = bc.CreateDrawingImage(System.Drawing.Color.Black, System.Drawing.Color.White);
                     img1 = bimg;
                     //fin de la propiedad

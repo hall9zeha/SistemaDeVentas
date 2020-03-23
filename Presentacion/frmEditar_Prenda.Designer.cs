@@ -55,11 +55,16 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
+            this.btnBarCode = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvprenda)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // button4
@@ -216,7 +221,7 @@
             this.groupBox2.Controls.Add(this.dgvprenda);
             this.groupBox2.Location = new System.Drawing.Point(438, 100);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(435, 233);
+            this.groupBox2.Size = new System.Drawing.Size(508, 233);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Prendas";
@@ -228,8 +233,9 @@
             this.dgvprenda.Location = new System.Drawing.Point(19, 20);
             this.dgvprenda.Name = "dgvprenda";
             this.dgvprenda.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvprenda.Size = new System.Drawing.Size(403, 199);
+            this.dgvprenda.Size = new System.Drawing.Size(471, 199);
             this.dgvprenda.TabIndex = 0;
+            this.dgvprenda.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgvprenda_CellContentClick);
             this.dgvprenda.SelectionChanged += new System.EventHandler(this.Dgvprenda_SelectionChanged);
             // 
             // groupBox1
@@ -323,11 +329,42 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.Button5_Click);
             // 
+            // btnBarCode
+            // 
+            this.btnBarCode.Location = new System.Drawing.Point(830, 430);
+            this.btnBarCode.Name = "btnBarCode";
+            this.btnBarCode.Size = new System.Drawing.Size(98, 56);
+            this.btnBarCode.TabIndex = 15;
+            this.btnBarCode.Text = "Generar Codigo de  Barras";
+            this.btnBarCode.UseVisualStyleBackColor = true;
+            this.btnBarCode.Click += new System.EventHandler(this.BtnBarCode_Click);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.pictureBox1);
+            this.groupBox5.Location = new System.Drawing.Point(952, 100);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(172, 100);
+            this.groupBox5.TabIndex = 17;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Código de barras";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(16, 25);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(143, 53);
+            this.pictureBox1.TabIndex = 16;
+            this.pictureBox1.TabStop = false;
+            // 
             // frmEditar_Prenda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(878, 521);
+            this.ClientSize = new System.Drawing.Size(1143, 521);
+            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.btnBarCode);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -348,6 +385,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvprenda)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -380,5 +419,8 @@
         private System.Windows.Forms.TextBox txtcolor;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnBarCode;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.GroupBox groupBox5;
     }
 }

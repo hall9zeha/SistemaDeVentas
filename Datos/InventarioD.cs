@@ -244,6 +244,7 @@ namespace Datos
                     objS.Talla_alfanum = dr["Talla_alfanum"].ToString();
                     objS.Talla_num = Convert.ToInt32(dr["Talla_num"].ToString());
                     objS.Stock = Convert.ToInt32(dr["Stock"].ToString());
+                    objS.CodigoDeBarra = dr["CodigoDeBarra"].ToString();
                     objS.Precio = Convert.ToDouble(dr["PrecioVenta"].ToString());
                     lista.Add(objS);
 

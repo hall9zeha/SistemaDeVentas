@@ -290,5 +290,8 @@
   <ItemGroup>
     <None Include="Resources\Shopping cart_24x24.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\barcodes_40531.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
