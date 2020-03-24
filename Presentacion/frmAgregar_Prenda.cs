@@ -220,7 +220,8 @@ namespace Presentacion
                 
 
                 string Marca = txtmarca.Text;
-                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/codes.pdf", FileMode.Create));
+                string path = $"E:\\PDFS\\barCode.pdf";
+                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(path, FileMode.Create));
                 doc.Open();
 
                 DataTable dt = new DataTable();
@@ -314,7 +315,7 @@ namespace Presentacion
 
 
                 doc.Close();
-                System.Diagnostics.Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/codes.pdf");
+                System.Diagnostics.Process.Start(path);
                 //MessageBox.Show("el archivo se guardo en escritorio con el nombre de codes.pdf");
             }
             catch
