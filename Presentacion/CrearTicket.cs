@@ -13,35 +13,17 @@ namespace Presentacion
         StringBuilder linea = new StringBuilder();
         int maxCar = 40, cortar;
 
-        public string LineasGuion()
+        public string DibujarLineas(string caracter)
         {
-            string guion = "";
 
+            string simbol = "";
             for (int i = 0; i < maxCar; i++)
             {
-                guion += "-";
+                simbol += caracter;
             }
-            return linea.AppendLine(guion).ToString();
+            return linea.AppendLine(simbol).ToString();
         }
-        public string LineasAsteriscos()
-        {
-            string asterisco = "";
-            for (int i = 0; i < maxCar; i++)
-            {
-                asterisco += "*";
-            }
-            return linea.AppendLine(asterisco).ToString();
-        }
-
-        public string LineasIgual()
-        {
-            string igual = "";
-            for (int i = 0; i < maxCar; i++)
-            {
-                igual += "=";
-            }
-            return linea.AppendLine(igual).ToString();
-        }
+      
 
         public void EncabezadoTicket()
         {
@@ -89,7 +71,7 @@ namespace Presentacion
                 {
                     espacios += " ";
                 }
-                linea.AppendLine(espacios + texto);
+               linea.AppendLine(espacios + texto);
             }
         }
         public void TextoCentro(string texto)

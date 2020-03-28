@@ -264,7 +264,7 @@ namespace Presentacion
                 objTicket.TextoIzquierda("");
                 objTicket.TextoCentro("FACTURA DE VENTA");
                 objTicket.TextoExtremos("Caja # 1", "N° # " + lblFactura.Text);
-                objTicket.LineasAsteriscos();
+                objTicket.DibujarLineas("*");
 
 
                 objTicket.TextoIzquierda("");
@@ -274,11 +274,11 @@ namespace Presentacion
                 objTicket.TextoIzquierda("NUM DOC:");
                 objTicket.TextoIzquierda("");
                 objTicket.TextoExtremos("FECHA: " + DateTime.Now.ToShortDateString(), "HORA: " + DateTime.Now.ToShortTimeString());
-                objTicket.LineasAsteriscos();
+                objTicket.DibujarLineas("*");
 
 
                 objTicket.EncabezadoTicket();
-                objTicket.LineasAsteriscos();
+                objTicket.DibujarLineas("*");
                 foreach (DataGridViewRow row in dgvDetalleFactura.Rows)
                 {
                     objTicket.AgregarArticulo(
@@ -298,7 +298,7 @@ namespace Presentacion
                 if (txtCambio.Text == "")
                 { txtCambio.Text = "0"; }
                 objTicket.TextoIzquierda(lblMontoEnletras.Text);
-                objTicket.LineasAsteriscos();
+                objTicket.DibujarLineas("*");
                 objTicket.AgregarTotales("         EFECTIVO......S/", Convert.ToDecimal(txtEfectivo.Text));
                 objTicket.AgregarTotales("         CAMBIO........S/", Convert.ToDecimal(txtCambio.Text)
                     );

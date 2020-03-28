@@ -181,6 +181,7 @@ namespace Presentacion
             {
                 int numPrendas = 0;
                 string code = Convert.ToString(dgvprenda.CurrentRow.Cells[1].Value.ToString());
+                int stock = Convert.ToInt32(dgvprenda.CurrentRow.Cells[5].Value.ToString());
                 int precio = Convert.ToInt32(txtprecioventa.Text);
                 string cantidad = txtcantidad.Text;
                 string desc = txtdescripcion.Text;
@@ -203,17 +204,22 @@ namespace Presentacion
                     {
                         numPrendas++;
                     }
-                    for (int i = 0; i < numPrendas; i++)
-                    {
-                        DataRow row = dt.NewRow();
-                        row["ID"] = dgvprenda.Rows[i].Cells[1].Value.ToString()+ i.ToString();
-                        row["Price"] = "S/. " + precio.ToString("0.00");
-                        row["Descripcion"] = desc;
-                        row["Marca"] = marca;
-                        row["Color"] = dgvprenda.Rows[i].Cells[2].Value.ToString();
-                        row["Cantidad"] = cantidad;
-                        dt.Rows.Add(row);
-                    }
+                    
+                        for (int i = 0; i < numPrendas; i++)
+                        {
+                        for (int n = 0; n < Convert.ToInt32(dgvprenda.Rows[i].Cells[5].Value.ToString()); n++)
+                        {
+                            DataRow row = dt.NewRow();
+                            row["ID"] = dgvprenda.Rows[i].Cells[1].Value.ToString() + i.ToString();
+                            row["Price"] = "S/. " + precio.ToString("0.00");
+                            row["Descripcion"] = desc;
+                            row["Marca"] = marca;
+                            row["Color"] = dgvprenda.Rows[i].Cells[2].Value.ToString();
+                            row["Cantidad"] = cantidad;
+                            dt.Rows.Add(row);
+                        }
+                        }
+                   
                     System.Drawing.Image img1 = null;
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
@@ -283,7 +289,8 @@ namespace Presentacion
                 }
                 else if (tipoGen == 2)
                 {
-                  
+                    for (int i = 0; i < stock; i++)
+                    {
                         DataRow row = dt.NewRow();
                         row["ID"] = dgvprenda.CurrentRow.Cells[6].Value.ToString();
                         row["Price"] = "S/. " + precio.ToString("0.00");
@@ -292,6 +299,7 @@ namespace Presentacion
                         row["Color"] = dgvprenda.CurrentRow.Cells[2].Value.ToString();
                         row["Cantidad"] = cantidad;
                         dt.Rows.Add(row);
+                    }
                    
                     System.Drawing.Image img1 = null;
                     for (int i = 0; i < dt.Rows.Count; i++)
@@ -397,6 +405,9 @@ namespace Presentacion
                 pictureBox1.Image = img1;
 
                 //fin de prueaba
+                //Prueba de cargar codigo QR en un picture box que contiene el texto del color de cada prenda
+                pictureBox2.Image=CodesMethods.Instancia.CodigoQR(row.Cells[6].Value.ToString());
+                //fin de prueba
             }
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }
@@ -462,6 +473,7 @@ namespace Presentacion
         private void Button5_Click(object sender, EventArgs e)
         {
             limpiarControles();
+            
         }
 
         private void BtnBarCode_Click(object sender, EventArgs e)

@@ -220,6 +220,7 @@
             this.btnImprimir.Size = new System.Drawing.Size(50, 40);
             this.btnImprimir.TabIndex = 18;
             this.btnImprimir.UseVisualStyleBackColor = true;
+            this.btnImprimir.Click += new System.EventHandler(this.BtnImprimir_Click);
             // 
             // btnGuardar
             // 

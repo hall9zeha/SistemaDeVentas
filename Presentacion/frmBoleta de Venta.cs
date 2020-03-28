@@ -11,6 +11,11 @@ using Datos;
 using Entidades;
 using Negocio;
 using System.Data.SqlClient;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
+using System.Globalization;
+
 namespace Presentacion
 {
     public partial class Boleta_de_Venta : Form
@@ -299,7 +304,7 @@ namespace Presentacion
                 objTicket.TextoIzquierda("");
                 objTicket.TextoCentro("BOLETA DE VENTA");
                 objTicket.TextoExtremos("Caja # 1", "N° # " + lblBoleta.Text);
-                objTicket.LineasAsteriscos();
+                objTicket.DibujarLineas("*");
 
                 
                 objTicket.TextoIzquierda("");
@@ -309,11 +314,11 @@ namespace Presentacion
                 objTicket.TextoIzquierda("NUM DOC:");
                 objTicket.TextoIzquierda("");
                 objTicket.TextoExtremos("FECHA: " + DateTime.Now.ToShortDateString(), "HORA: " + DateTime.Now.ToShortTimeString());
-                objTicket.LineasAsteriscos();
+                objTicket.DibujarLineas("*");
 
                 
                 objTicket.EncabezadoTicket();
-                objTicket.LineasAsteriscos();
+                objTicket.DibujarLineas("*");
                 foreach (DataGridViewRow row in dgvDetalleBoleta.Rows)
                 {
                     objTicket.AgregarArticulo(
@@ -333,7 +338,7 @@ namespace Presentacion
                 if (txtCambio.Text == "")
                 { txtCambio.Text = "0"; }
                 objTicket.TextoIzquierda(lblMontoEnletras.Text);
-                objTicket.LineasAsteriscos();
+                objTicket.DibujarLineas("*");
                 objTicket.AgregarTotales("         EFECTIVO......S/", Convert.ToDecimal(txtEfectivo.Text));
                 objTicket.AgregarTotales("         CAMBIO........S/", Convert.ToDecimal(txtCambio.Text)
                     );
@@ -358,6 +363,9 @@ namespace Presentacion
             }
 
         }
+        //prueba de convertir ticket en pdf y agregarle imagen QR
+       
+        //prueba de convertir ticket en pdf y agregarle imagen QR
         private void BtnSalir_Click(object sender, EventArgs e)
         {
             this.Dispose();
@@ -470,5 +478,82 @@ namespace Presentacion
         {
 
         }
+
+        private void BtnImprimir_Click(object sender, EventArgs e)
+        {
+            ticketEnPdf();
+        }
+
+        //Método para crear el ticket en pdf
+        private void ticketEnPdf()
+        {
+            TicketPdf tic = new TicketPdf();
+            
+            tic.HeaderImage = $"C:\\Users\\HALL9000\\Documents\\GitHub\\N.E.N.A\\Presentacion\\Resources\\nena.png";
+
+            tic.AddHeaderLine("COMPANY BARRY ZEHA");
+            tic.AddHeaderLine("");
+            tic.AddHeaderLine("EXPEDIDO EN LOCAL PRINCIPAL");
+            tic.AddHeaderLine("DIREC: DIRECCION DE LA EMPRESA");
+            tic.AddHeaderLine("TELEF: 4530000");
+            tic.AddHeaderLine("R.F.C: XXXXXXXXX-XX");
+            tic.AddHeaderLine("EMAIL: vmwaretars@gmail.com");
+            tic.AddHeaderLine("");
+            tic.AddHeaderLine("BOLETA DE VENTA");
+            tic.AddHeaderLine("");
+            tic.AddSubHeaderLine("Caja # 1  N° # " + lblBoleta.Text);
+           
+            tic.AddHeaderLine("ATENDIÓ: Barry ");
+            tic.AddHeaderLine("CLIENTE: PUBLICO EN GENERAL");
+            tic.AddHeaderLine("TIPODOC:");
+            tic.AddHeaderLine("NUM DOC:");
+            tic.AddSubHeaderLine("");
+            tic.AddSubHeaderLine("FECHA: " + DateTime.Now.ToShortDateString() + " HORA: " + DateTime.Now.ToShortTimeString());
+            foreach (DataGridViewRow row in dgvDetalleBoleta.Rows)
+            {
+                tic.AddItem(
+                    row.Cells[5].Value.ToString(),
+                    row.Cells[2].Value.ToString(),
+                    String.Format(new CultureInfo("es-PE"), "{0:C}",
+                    Convert.ToDouble(row.Cells[5].Value.ToString()) *
+                    Convert.ToDouble(row.Cells[7].Value.ToString()))
+
+
+                    );
+                
+            }
+            double iva = 0;
+            tic.AddTotal("SUBTOTAL", String.Format(new CultureInfo("es-PE"), "{0:C}",
+           txtTotal.Text));
+            tic.AddTotal("IVA", String.Format(new CultureInfo("es-PE"), "{0:C}",
+                iva=Double.Parse(txtTotal.Text) * 0.20));
+            tic.AddTotal("TOTAL", String.Format(new CultureInfo("es-PE"), "{0:C}",
+                Double.Parse(txtTotal.Text) + iva));
+            tic.AddTotal("DESCUENTO", String.Format(new CultureInfo("es-PE"), "{0:C}",
+                -0));
+            tic.AddTotal("GRAN TOTAL", String.Format(new CultureInfo("es-PE"), "{0:C}",
+                Double.Parse(txtTotal.Text) + iva));
+            tic.AddTotal("", "");//Ponemos un total 
+                                    //en blanco que sirve de espacio 
+            tic.AddTotal("RECIBIDO", String.Format(new CultureInfo("es-PE"), "{0:C}",
+                txtEfectivo.Text));
+            tic.AddTotal("CAMBIO", String.Format(new CultureInfo("es-PE"), "{0:C}",
+                txtCambio.Text));
+            tic.AddTotal("", "");//Ponemos un total 
+                                 //en blanco que sirve de espacio 
+            foreach (DataGridViewRow row1 in dgvDetalleBoleta.Rows)
+            {
+                tic.CadenaQR = Convert.ToString(row1.Cells[2].Value.ToString()) + Convert.ToString(row1.Cells[7].Value.ToString());
+            }
+            //tic.CadenaQR=Convert.ToString(dgvDetalleBoleta.CurrentRow.Cells[2].Value.ToString()) + txtTotal.Text;
+            tic.AddFooterLine("Gracias por su compra, cualquier reclamo");
+            tic.AddFooterLine("deberá presentar este comprobante de com");
+            tic.AddFooterLine("pra, boleta de venta conforma a resoluci");
+            tic.AddFooterLine("on de Barry Zeha Developer,vuelva pronto");
+            tic.Path = $"E:\\PDFS\\";
+            tic.FileName = "Ticket.pdf";
+            tic.Print();
+        }
+        //Fin del método
     }
 }

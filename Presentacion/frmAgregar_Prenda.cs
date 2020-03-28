@@ -237,14 +237,17 @@ namespace Presentacion
                 }
                 for (int i = 0; i < numPrendas; i++)
                 {
-                    DataRow row = dt.NewRow();
-                    row["ID"] = code + i.ToString();
-                    row["Price"] = "S/. " + precio.ToString("0.00");
-                    row["Descripcion"] = desc;
-                    row["Marca"] = Marca;
-                    row["Color"] = dgvprenda.Rows[i].Cells[1].Value.ToString();
-                    row["Cantidad"] = cantidad;
-                    dt.Rows.Add(row);
+                    for (int n = 0; n < Convert.ToInt32(dgvprenda.Rows[i].Cells[4].Value.ToString()); n++)
+                    {
+                        DataRow row = dt.NewRow();
+                        row["ID"] = code + i.ToString();
+                        row["Price"] = "S/. " + precio.ToString("0.00");
+                        row["Descripcion"] = desc;
+                        row["Marca"] = Marca;
+                        row["Color"] = dgvprenda.Rows[i].Cells[1].Value.ToString();
+                        row["Cantidad"] = cantidad;
+                        dt.Rows.Add(row);
+                    }
                 }
                 System.Drawing.Image img1 = null;
                 for (int i = 0; i < dt.Rows.Count; i++)

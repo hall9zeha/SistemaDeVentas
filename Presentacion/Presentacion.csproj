@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gma.QrCodeNet.Encoding, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\QrCode.Net.0.4.0.0\lib\net45\Gma.QrCodeNet.Encoding.dll</HintPath>
+    </Reference>
     <Reference Include="itextsharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\itextsharp.dll</HintPath>
@@ -130,6 +133,7 @@
     <Compile Include="frmInventario_Prendas.Designer.cs">
       <DependentUpon>frmInventario_Prendas.cs</DependentUpon>
     </Compile>
+    <Compile Include="CodesMethods.cs" />
     <Compile Include="LocalBD.cs" />
     <Compile Include="frmMantenimiento_Cliente.cs">
       <SubType>Form</SubType>
@@ -157,6 +161,7 @@
     <Compile Include="frmVentas.Designer.cs">
       <DependentUpon>frmVentas.cs</DependentUpon>
     </Compile>
+    <Compile Include="TicketPdf.cs" />
     <EmbeddedResource Include="frmAgregar_Prenda.resx">
       <DependentUpon>frmAgregar_Prenda.cs</DependentUpon>
     </EmbeddedResource>
@@ -218,6 +223,7 @@
     <EmbeddedResource Include="frmVentas.resx">
       <DependentUpon>frmVentas.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -292,6 +298,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\barcodes_40531.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4043250-avatar-child-girl-kid_113270.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nena.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

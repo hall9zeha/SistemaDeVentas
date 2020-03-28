@@ -17,7 +17,7 @@ namespace Presentacion
         VentasE objE = new VentasE();
         ClienteN objCliN = new ClienteN();
         DataTable dt = new DataTable();
-
+        CodesMethods objCodes = new CodesMethods();
         public frmNota_De_Venta()
         {
             InitializeComponent();
@@ -371,7 +371,7 @@ namespace Presentacion
                 objTicket.TextoIzquierda("");
                 objTicket.TextoCentro("NOTA DE VENTA");
                 objTicket.TextoExtremos("Caja # 1", "N° # " + lblCorrelativo.Text);
-                objTicket.LineasAsteriscos();
+                objTicket.DibujarLineas("*");
 
 
                 objTicket.TextoIzquierda("");
@@ -394,11 +394,11 @@ namespace Presentacion
 
                 objTicket.TextoIzquierda("");
                 objTicket.TextoExtremos("FECHA: " + DateTime.Now.ToShortDateString(), "HORA: " + DateTime.Now.ToShortTimeString());
-                objTicket.LineasAsteriscos();
+                objTicket.DibujarLineas("*");
 
 
                 objTicket.EncabezadoTicket();
-                objTicket.LineasAsteriscos();
+                objTicket.DibujarLineas("*");
                 foreach (DataGridViewRow row in dgvDetalleNotaVenta.Rows)
                 {
                     objTicket.AgregarArticulo(
@@ -418,7 +418,7 @@ namespace Presentacion
                 if (txtCambio.Text == "")
                 { txtCambio.Text = "0"; }
                 objTicket.TextoIzquierda(lblMontoEnletras.Text);
-                objTicket.LineasAsteriscos();
+                objTicket.DibujarLineas("*");
                 objTicket.AgregarTotales("         EFECTIVO......S/", Convert.ToDecimal(txtEfectivo.Text));
                 objTicket.AgregarTotales("         CAMBIO........S/", Convert.ToDecimal(txtCambio.Text)
                     );
@@ -433,6 +433,8 @@ namespace Presentacion
                 objTicket.TextoIzquierda("");
                 objTicket.TextoIzquierda("ARTÍCULOS VENDIDOS: " + art.ToString());
                 objTicket.TextoIzquierda("");
+                objTicket.TextoIzquierda("");
+                
                 objTicket.TextoCentro("¡GRACIAS POR SU COMPRA!");
                 objTicket.CortarTicket();
                 objTicket.ImprimirTicket("Microsoft XPS Document Writer");
