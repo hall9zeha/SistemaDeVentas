@@ -140,9 +140,7 @@ namespace Presentacion
                                 lista[i].Codproducto,
                                 lista[i].inventario.Descripción,
                                 lista[i].Marca,
-                                //lista[i].Color,
-                                //lista[i].Talla_alfanum,
-                                //lista[i].Talla_num.ToString(),
+                                
                                 lista[i].Precio.ToString("0.00"),
                                 lista[i].Cantidad.ToString(),
                                 lista[i].Stock.ToString()};
@@ -249,7 +247,7 @@ namespace Presentacion
                 foreach (DataGridViewRow row in dgvDetalleBoleta.Rows)
                 {
                     DetalleVentasE dt = new DetalleVentasE();
-                    //dt.Codboleta = lblBoleta.Text;
+                    
 
                     dt.Codproducto = row.Cells[1].Value.ToString();
                     dt.CodProducto_detalle = Convert.ToInt32(row.Cells[0].Value.ToString());
@@ -269,7 +267,7 @@ namespace Presentacion
         }
         void anularVenta()
         {
-            //objB.Codboleta = lblBoleta.Text;
+            
             List<DetalleVentasE> detalle = new List<DetalleVentasE>();
             foreach (DataGridViewRow row in dgvDetalleBoleta.Rows)
             {
@@ -363,9 +361,7 @@ namespace Presentacion
             }
 
         }
-        //prueba de convertir ticket en pdf y agregarle imagen QR
-       
-        //prueba de convertir ticket en pdf y agregarle imagen QR
+        
         private void BtnSalir_Click(object sender, EventArgs e)
         {
             this.Dispose();
