@@ -22,6 +22,7 @@ namespace Presentacion
     {
         VentasE objB = new VentasE();
         VentasN objVN = new VentasN();
+        AccionesEnControles objAc = new AccionesEnControles();
         DataTable dt = new DataTable();
         int tipoListaUsar = 0;
 
@@ -65,16 +66,16 @@ namespace Presentacion
             crearGrid();
             generarCodigoBoleta();
             habilitarBotones(false, false, false, true, true);
-            cargarTipoDoc();
+            
+            //los métodos de llenado de los comboBox, estan en la clase Acciones en controles, para ser reutilizados, ya que 
+            //serán llamados en tres formularios diferentes ,boleta, factura y nota de ventas, asi dejamos de escribir código redundante en cada formulario 
+            objAc.LlenarCboMoneda(this.gbCliente);
+            objAc.LlenarCboTipoPago(this.cboTipoPago);
+            objAc.LlenarCboTipoDoc(this.cboTipDoc);
+            //*******************************************
             int idCliente = LocalBD.Instancia.ReturnIdCliente(0, 0);
         }
-        void cargarTipoDoc()
-        {
-            dt = ClienteN.Instancia.CargarTipoDoc();
-            cboTipDoc.DataSource = dt;
-            cboTipDoc.ValueMember = "idTipoDoc";
-            cboTipDoc.DisplayMember = "AbreviaturaNombre";
-        }
+       
         void montoTotal()
         {
             double subTotal = 0.0;
@@ -243,6 +244,10 @@ namespace Presentacion
                 b.CodVenta = lblBoleta.Text;
                 b.Importe_rg = Convert.ToDouble(txtTotal.Text);
                 b.TipoComprobante = tipoComprobante;
+                b.TipoPago = Convert.ToInt32(cboTipoPago.SelectedValue);
+                b.IdCliente = LocalBD.Instancia.ReturnIdCliente(0,0);
+                b.TipoMoneda = Convert.ToInt32(CboMoneda.SelectedValue);
+                //a implementar cuando se haga el login b.IdUsuario = 0;
                 List<DetalleVentasE> Detalle = new List<DetalleVentasE>();
                 foreach (DataGridViewRow row in dgvDetalleBoleta.Rows)
                 {
@@ -435,6 +440,7 @@ namespace Presentacion
             {
                 string numDoc=txtNumDoc.Text;
                 buscarCliente(0, numDoc);
+                
 
             }
             catch (ApplicationException)

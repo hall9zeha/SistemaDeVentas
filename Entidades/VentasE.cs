@@ -23,7 +23,7 @@ namespace Entidades
         public int TipoPago { get; set; }
         public int IdCliente { get; set; }
         public int IdUsuario { get; set; }
-        
+        public int TipoMoneda { get; set; }          
         public List<DetalleVentasE> DetalleVenta { get; set; }
        
        

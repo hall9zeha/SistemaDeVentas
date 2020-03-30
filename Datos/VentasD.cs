@@ -223,6 +223,61 @@ namespace Datos
             finally { cmd.Connection.Close(); }
             return lista;
         }
+        public List<TipoPagoE> ListarTipoPago()
+        {
+           
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            List<TipoPagoE> lista = null;
+            try
+            {
+                string Query = @"select * from tbTipoPago";
+                cmd = new SqlCommand(Query, cn);
+               
+                cn.Open();
+                dr = cmd.ExecuteReader();
+                lista = new List<TipoPagoE>();
+                while(dr.Read())
+                {
+                    TipoPagoE p = new TipoPagoE();
+                    p.IdTipoPago = Convert.ToInt32(dr["IdTipoPago"]);
+                    p.Descripcion = dr["Descripcion"].ToString();
+                   
+                    lista.Add(p);
+                }
+            }
+            catch
+            { throw; }
+            finally { cmd.Connection.Close(); }
+            return lista;
+        }
+        public List<MonedaE> ListarMoneda()
+        {
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            List<MonedaE> lista = null;
+
+            try
+            {
+                string Query = "select * from tbMoneda";
+                cmd = new SqlCommand(Query, cn);
+                cn.Open();
+                dr = cmd.ExecuteReader();
+                lista = new List<MonedaE>();
+                while (dr.Read())
+                {
+                    MonedaE m = new MonedaE();
+                    m.IdMoneda = Convert.ToInt32(dr["IdMoneda"]);
+                    m.Descripcion= dr["Descripcion"].ToString();
+                    
+                    lista.Add(m);
+                }
+            }
+            catch
+            { throw; }
+            finally { cmd.Connection.Close(); }
+            return lista;
+        }
         public List<DetalleVentasE> ListarDetalleBoleta(int  idVenta)
         {
             SqlCommand cmd = null;

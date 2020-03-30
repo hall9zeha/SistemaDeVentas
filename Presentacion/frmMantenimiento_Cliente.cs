@@ -211,8 +211,12 @@ namespace Presentacion
             try
             {
                 int idCli = Convert.ToInt32(dgvClientes.CurrentRow.Cells[0].Value);
-                
+                //LocalBD.Instancia.ReturnIdCliente(1, idCli);
+                //LocalBD.Instancia.ReturnIdClienteFact(1, idCli);
+                //LocalBD.Instancia.ReturnIdClienteNV(1, idCli);
+
                 int frmInvocador = LocalBD.Instancia.Invocador(0,0);
+
                 if (frmInvocador == 1)
                 {
                     LocalBD.Instancia.ReturnIdCliente(1, idCli);

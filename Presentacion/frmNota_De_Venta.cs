@@ -16,7 +16,7 @@ namespace Presentacion
         VentasN objN = new VentasN();
         VentasE objE = new VentasE();
         ClienteN objCliN = new ClienteN();
-        DataTable dt = new DataTable();
+        AccionesEnControles objAc = new AccionesEnControles();
         CodesMethods objCodes = new CodesMethods();
         public frmNota_De_Venta()
         {
@@ -55,10 +55,17 @@ namespace Presentacion
         private void FrmNota_De_Venta_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
+            
+            crearGrid();
+            generarCodigoDeNVenta();
+            objAc.LlenarCboMoneda(this.gbCliente);
+            objAc.LlenarCboTipoPago(this.cboTipoPago);
+            habilitarBotones(false, false, false, false, true, false);
+        }
+        void generarCodigoDeNVenta()
+        {
             string serie = "VE" + 00;
             lblCorrelativo.Text = objN.GenerarCodigoBoletaFactura(serie, 3);
-            crearGrid();
-            habilitarBotones(false, false, false, false, true, false);
         }
         void llenarGridNotaVenta(List<DetalleInventarioE> lista)
         {
@@ -163,6 +170,7 @@ namespace Presentacion
                 c = objCliN.TraerCliente(idCli, numDoc);
                 txtNombreCliente.Text = c.NombreCliente + " " + c.ApellidoCliente;
                 txtNumDoc.Text = c.NroDocumento;
+                LocalBD.Instancia.ReturnIdClienteNV(1, c.IdCliente);
             }
             catch (ApplicationException)
             {
@@ -186,6 +194,9 @@ namespace Presentacion
                 v.CodVenta = lblCorrelativo.Text;
                 v.Importe_rg = Convert.ToDouble(txtTotal.Text);
                 v.TipoComprobante = tipoComprobante;
+                v.IdCliente = LocalBD.Instancia.ReturnIdClienteNV(0, 0);               
+                v.TipoPago = Convert.ToInt32(cboTipoPago.SelectedValue);
+                v.TipoMoneda = Convert.ToInt32(CboMoneda.SelectedValue);
                 List<DetalleVentasE> detalleVenta = new List<DetalleVentasE>();
                 foreach (DataGridViewRow row in dgvDetalleNotaVenta.Rows)
                 {
@@ -319,8 +330,7 @@ namespace Presentacion
         {
             dgvDetalleNotaVenta.Rows.Clear();
             limpiarControles();
-            string serie = "VE" + 00;
-            lblCorrelativo.Text = objN.GenerarCodigoBoletaFactura(serie, 3);
+            generarCodigoDeNVenta();
 
         }
         void limpiarControles()
