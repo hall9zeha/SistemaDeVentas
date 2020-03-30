@@ -16,6 +16,7 @@ namespace Presentacion
     {
         VentasE objB = new VentasE();
         VentasN objVN = new VentasN();
+        AccionesEnControles objAc = new AccionesEnControles();
         int tipoListaUsar = 0;
         public Factura_Venta()
         {
@@ -57,6 +58,9 @@ namespace Presentacion
             this.CenterToScreen();
             crearGrid();
             generarCodigoFactura();
+            objAc.LlenarCboMoneda(this.gbCliente);
+            objAc.LlenarCboTipoDoc(this.cboTipDoc);
+            objAc.LlenarCboTipoPago(this.cboTipoPago);
             habilitarBotones(false, false, false, true, true);
         }
         void generarCodigoFactura()
@@ -134,6 +138,10 @@ namespace Presentacion
                 b.CodVenta = lblFactura.Text;
                 b.Importe_rg = Convert.ToDouble(txtTotal.Text);
                 b.TipoComprobante = tipoComprobante;
+                b.TipoPago = Convert.ToInt32(cboTipoPago.SelectedValue);
+                b.IdCliente = LocalBD.Instancia.ReturnIdClienteFact(0, 0);
+                b.TipoMoneda = Convert.ToInt32(CboMoneda.SelectedValue);
+                //a implementar cuando se haga el login b.IdUsuario = 0;
                 List<DetalleVentasE> Detalle = new List<DetalleVentasE>();
                 foreach (DataGridViewRow row in dgvDetalleFactura.Rows)
                 {

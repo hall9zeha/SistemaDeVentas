@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Entidades;
 using Negocio;
 namespace Presentacion
@@ -15,6 +17,7 @@ namespace Presentacion
             get { return AccionesEnControles._instancia; }
 
         }
+        VentasN objVN = new VentasN();
         #region montoEnLetras
         public string MontoEnLetras(string monto)
         {
@@ -110,7 +113,75 @@ namespace Presentacion
 
         }
         #endregion montoEnLetras
+        //llenando un control combobox que este dentro de un control groupbox recorre los controles
+        //e identifica el combobox con el nombre indicado y lo llena con la coleccion que traigamos, sea List o dataTable
+        public void LlenarCboMoneda(Control control)
+        {
+            try
+            {
+                foreach (Control CboMoneda in control.Controls)
+                {
+                    if (CboMoneda is ComboBox)
+                    {
+                        if (CboMoneda.Name == "CboMoneda")
+                        {
+                            List<MonedaE> lista = objVN.ListarMoneda();
+                            ((ComboBox)CboMoneda).ValueMember = "IdMoneda";
+                            ((ComboBox)CboMoneda).DisplayMember = "Descripcion";
+                            ((ComboBox)CboMoneda).DataSource = lista;
 
+                        }
+                    }
+                }
+            }
+            catch (ApplicationException) { throw; }
+            catch
+            { throw; }
+        }
+        //En este otro método no recorremos el groupbox en el cual están los controles, solo definimos la condición
+        //de existencia del control comboBox y le pasamos el nombre del mismo a nuestro método para que lo cargue
+        public void LlenarCboTipoPago(Control control)
+        {
+            try
+            {
+                //Control CboTipoPago=null;
+                if (control is ComboBox)
+                {
+                    if (control.Name == "cboTipoPago")
+                    {
+                        List<TipoPagoE> lista = objVN.ListarTipoPago();
+                        ((ComboBox)control).ValueMember = "IdTipoPago";
+                        ((ComboBox)control).DisplayMember = "Descripcion";
+                        ((ComboBox)control).DataSource = lista;
 
+                    }
+                }
+            }
+            catch (ApplicationException)
+            { throw; }
+            catch { throw; }
+        }
+        //Los métodos anteriores llenaban el control ComboBox con una coleccion de datos tipo List<T>, pero ahora lo haremos con un DataTabe
+        public void LlenarCboTipoDoc(Control control)
+        {
+            try
+            {
+                if (control is ComboBox)
+                {
+                    if (control.Name == "cboTipDoc")
+                    {
+                        DataTable dt = new DataTable();
+                        dt = ClienteN.Instancia.CargarTipoDoc();
+                        ((ComboBox)control).ValueMember = "idTipoDoc";
+                        ((ComboBox)control).DisplayMember = "AbreviaturaNombre";
+                        ((ComboBox)control).DataSource = dt;
+                    }
+                }
+            }
+            catch (ApplicationException)
+            { throw; }
+            catch
+            { throw; }
+        }
     }
 }

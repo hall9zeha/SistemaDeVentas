@@ -35,6 +35,10 @@ namespace Negocio
                 Cadxml += "codventa='" + b.CodVenta + "' ";
                 Cadxml += "importe='" + b.Importe_rg + "' ";
                 Cadxml += "tipocomprobante='" + b.TipoComprobante + "' ";
+                Cadxml += "tipopago='" + b.TipoPago + "' ";
+                Cadxml += "idcliente='" + b.IdCliente + "' ";
+                Cadxml += "idUsuario='" + b.IdUsuario + "' ";
+                Cadxml += "tipomoneda='" + b.TipoMoneda + "' ";
                 Cadxml += "importe_rg='" + b.Importe_rg + "'>";
                 
 
@@ -111,6 +115,20 @@ namespace Negocio
             List<VentasE> lista = VentasD.Instancia.ListarVentas();
             return lista;
         }
+        public List<TipoPagoE> ListarTipoPago()
+        {
+            List<TipoPagoE> lista = objV.ListarTipoPago();
+            return lista;
+
+        }
+        public List<MonedaE> ListarMoneda()
+        {
+
+            List<MonedaE> lista = objV.ListarMoneda();
+            return lista;
+
+        }
+
         public List<DetalleVentasE> ListarDetalleBoleta(int idVenta)
         {
             List<DetalleVentasE> lista = objV.ListarDetalleBoleta(idVenta);

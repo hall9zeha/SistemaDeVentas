@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MonedaE.cs" />
+    <Compile Include="TipoPagoE.cs" />
     <Compile Include="VentasE.cs" />
     <Compile Include="ClienteE.cs" />
     <Compile Include="DetalleVentasE.cs" />

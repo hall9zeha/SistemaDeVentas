@@ -133,14 +133,18 @@ namespace Datos
 		                          BEGIN
 		                           RAISERROR('Uno ó mas productos no cuentan con el stock suficiente',16,1)
 		                          END
-		                          INSERT INTO tbboleta(CodVenta,Fechaboleta,Importe,Importe_rg,estadoVenta, tipoComprobante)
-                                   SELECT b.codventa,GETDATE(),b.importe, b.importe_rg, 1, tipocomprobante
+		                          INSERT INTO tbboleta(CodVenta,Fechaboleta,Importe,Importe_rg,estadoVenta, tipoComprobante, tipoPago, idCliente, idUsuario, tipoMoneda)
+                                   SELECT b.codventa,GETDATE(),b.importe, b.importe_rg, 1, tipocomprobante, tipopago, idcliente, idusuario, tipomoneda
 		                           FROM OpenXML(@h,'root/tbboleta',1)WITH(
 		                           codventa nvarchar(20),
 		                           importe decimal(5,2),
 		                           importe_rg decimal(5,2),
                                    estadoventa int,
-                                   tipocomprobante int
+                                   tipocomprobante int,
+                                   tipopago int,
+                                   idcliente int,
+                                   idusuario int,
+                                   tipomoneda int
 		                           )b 
                                    set @idVenta=@@identity
 		   
