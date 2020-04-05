@@ -161,7 +161,7 @@ namespace Presentacion
             { throw; }
             catch { throw; }
         }
-        //Los métodos anteriores llenaban el control ComboBox con una coleccion de datos tipo List<T>, pero ahora lo haremos con un DataTabe
+        //Los métodos anteriores llenaban el control ComboBox con una coleccion de datos tipo List<T>, pero ahora lo haremos con un DataTable
         public void LlenarCboTipoDoc(Control control)
         {
             try

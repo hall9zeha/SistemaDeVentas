@@ -25,7 +25,7 @@ namespace Presentacion
         AccionesEnControles objAc = new AccionesEnControles();
         DataTable dt = new DataTable();
         int tipoListaUsar = 0;
-
+        double igv = 0.18;
         public Boleta_de_Venta()
         {
             InitializeComponent();
@@ -81,6 +81,8 @@ namespace Presentacion
             double subTotal = 0.0;
             try
             {
+                double iva = 0;
+                double granTotal = 0;
                 foreach (DataGridViewRow row in dgvDetalleBoleta.Rows)
                 {
                     if (row.Cells[4].Value == null) row.Cells[4].Value = 0;
@@ -88,7 +90,9 @@ namespace Presentacion
                     if (row.Cells[5].Value == null) row.Cells[5].Value = 0;
                     { row.Cells[7].Value = Convert.ToDouble(row.Cells[4].Value) * Convert.ToDouble(row.Cells[5].Value);
                         subTotal += Convert.ToDouble(row.Cells[7].Value);
-                        txtTotal.Text = subTotal.ToString("0.00");
+                        iva = subTotal * igv;
+                        granTotal = subTotal + iva;
+                        txtTotal.Text = granTotal.ToString("0.00");
                     }
                 }
                 if (dgvDetalleBoleta.RowCount == 0)
@@ -222,8 +226,8 @@ namespace Presentacion
                 {
                     
                     guardarVenta();
-                    imprimirTicket();
-                    habilitarBotones(true, false, true, false, false);
+                    //imprimirTicket();
+                    //habilitarBotones(true, false, true, false, false);
                    
                 }
                 else
@@ -265,10 +269,13 @@ namespace Presentacion
                 b.DetalleVenta = Detalle;
                 int resultado = VentasN.Instancia.GuardarVenta(b);
                 MessageBox.Show("Venta Registrada");
-
+                imprimirTicket();
+                habilitarBotones(true, false, true, false, false);
             }
             catch (Exception ex)
-            { MessageBox.Show(ex.Message); }
+            { MessageBox.Show(ex.Message);
+                habilitarBotones(true, true, false, true, true);
+            }
         }
         void anularVenta()
         {
@@ -301,7 +308,7 @@ namespace Presentacion
                 objTicket.TextoCentro("COMPANY BARRY ZEHA");
                 objTicket.TextoIzquierda("EXPEDIDO EN: LOCAL PRINCIPAL");
                 objTicket.TextoIzquierda("DIREC: DIRECCION DE LA EMPRESA");
-                objTicket.TextoIzquierda("TELEF: 4530000");
+                objTicket.TextoIzquierda("TELEF: 00000000");
                 objTicket.TextoIzquierda("R.F.C: XXXXXXXXX-XX");
                 objTicket.TextoIzquierda("EMAIL: vmwaretars@gmail.com");
                 objTicket.TextoIzquierda("");
@@ -312,9 +319,15 @@ namespace Presentacion
                 
                 objTicket.TextoIzquierda("");
                 objTicket.TextoIzquierda("ATENDIÓ: Barry " );
-                objTicket.TextoIzquierda("CLIENTE: PUBLICO EN GENERAL");
-                objTicket.TextoIzquierda("TIPODOC:");
-                objTicket.TextoIzquierda("NUM DOC:");
+                string nomCli = "";
+                if (txtNombreCliente.Text == "") { nomCli = "Público en general"; }
+                else { nomCli = txtNombreCliente.Text; }
+                objTicket.TextoIzquierda("CLIENTE: "+nomCli);
+                objTicket.TextoIzquierda("TIPODOC: " + cboTipDoc.SelectedText);
+                string numDoc = "";
+                if (txtNumDoc.Text == "") { numDoc = ""; }
+                else { numDoc = txtNumDoc.Text; }
+                objTicket.TextoIzquierda("NUM DOC: "+numDoc);
                 objTicket.TextoIzquierda("");
                 objTicket.TextoExtremos("FECHA: " + DateTime.Now.ToShortDateString(), "HORA: " + DateTime.Now.ToShortTimeString());
                 objTicket.DibujarLineas("*");
@@ -332,8 +345,10 @@ namespace Presentacion
 
                         );
                 }
-                objTicket.AgregarTotales("         SUBTOTAL......S/", 100);
-                objTicket.AgregarTotales("         IVA...........S/", 20M);//La M indica que es un decimal en C#
+
+                objTicket.AgregarTotales("         SUBTOTAL......S/" ,Convert.ToDecimal(txtTotal.Text));
+                decimal iva =Convert.ToDecimal(Decimal.Parse(txtTotal.Text) * (decimal)igv);
+                objTicket.AgregarTotales("         IVA...........S/", Convert.ToDecimal(txtTotal.Text) + iva);//La M indica que es un decimal en C#
                 objTicket.AgregarTotales("         TOTAL.........S/", Convert.ToDecimal(txtTotal.Text));
                 objTicket.TextoIzquierda("");
                 if (txtEfectivo.Text == "")
@@ -528,7 +543,7 @@ namespace Presentacion
             tic.AddTotal("SUBTOTAL", String.Format(new CultureInfo("es-PE"), "{0:C}",
            txtTotal.Text));
             tic.AddTotal("IVA", String.Format(new CultureInfo("es-PE"), "{0:C}",
-                iva=Double.Parse(txtTotal.Text) * 0.20));
+                iva=Double.Parse(txtTotal.Text) * igv));
             tic.AddTotal("TOTAL", String.Format(new CultureInfo("es-PE"), "{0:C}",
                 Double.Parse(txtTotal.Text) + iva));
             tic.AddTotal("DESCUENTO", String.Format(new CultureInfo("es-PE"), "{0:C}",

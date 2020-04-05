@@ -29,6 +29,8 @@ namespace Negocio
         {
             try
             {
+                if (b.IdCliente == 0) throw new ApplicationException("Debe de seleccionar un Cliente");
+                if (b.DetalleVenta.Count == 0) throw new ApplicationException("Debe de Agregar un producto como mínimo");
                
                 String Cadxml = "";
                 Cadxml += "<tbboleta ";
@@ -105,9 +107,9 @@ namespace Negocio
             List<VentasE> lista = VentasD.Instancia.MostrarVentasFechaDoble(fechaIni,fechaFin);
             return lista;
         }
-        public List<VentasE> BuscarVentaBoleta(string boleta)
+        public List<VentasE> BuscarVenta(string boleta)
         {
-            List<VentasE> lista = VentasD.Instancia.BuscarVentaBoleta(boleta);
+            List<VentasE> lista = VentasD.Instancia.BuscarVenta(boleta);
             return lista;
         }
         public List<VentasE> ListarVentas()
@@ -129,14 +131,14 @@ namespace Negocio
 
         }
 
-        public List<DetalleVentasE> ListarDetalleBoleta(int idVenta)
+        public VentasE ListarDetalleVenta(int idVenta)
         {
-            List<DetalleVentasE> lista = objV.ListarDetalleBoleta(idVenta);
-            return lista;
+            VentasE v= objV.ListarDetalleVenta(idVenta);
+            return v;
         }
-        public List<DetalleVentasE> ListarDetalleBoletaCambio(int idVenta)
+        public List<DetalleVentasE> ListarDetalleVentaCambio(int idVenta)
         {
-          List<DetalleVentasE> lista = objV.ListarDetalleBoletaCambio(idVenta);
+          List<DetalleVentasE> lista = objV.ListarDetalleVentaCambio(idVenta);
             return lista;
         }
         //INICIO métodos de prueba para el módulo devolucion

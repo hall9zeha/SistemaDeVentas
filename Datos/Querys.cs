@@ -504,6 +504,26 @@ namespace Datos
         {
             string Query = @"
                                 select
+								cli.nroDocumento,
+                                cli.nombreCliente,
+								cli.direccionCliente,
+								mon.IdMoneda,
+								doc.idTipoDoc,
+								pay.IdTipoPago
+								from tbboleta b 
+								inner join tbClientes cli on b.idCliente=cli.idCliente
+								inner join tbMoneda mon on b.tipoMoneda=mon.IdMoneda
+								inner join tbTipoDocumento doc on cli.tipoDocumento=doc.idTipoDoc
+								inner join tbTipoPago pay on b.tipoPago=pay.IdTipoPago 
+                                where 
+                                b.idVenta=@idVenta
+								--------------------------------------------------------------------------
+								--Hacemos dos select uno que obtendra un solo registro del cliente,
+								--y el otro que obtendra varios registros de productos vendidos al cliente
+								--uno lo cargaremos en los contorles text y combobox y los productos vendidos
+								--los cargaremos con un bucle for en el datagrid
+								--------------------------------------------------------------------------
+								select
                                 dtb.Codproducto, 
                                 i.Descripción, 
                                 i.Marca, 
@@ -513,17 +533,17 @@ namespace Datos
                                 dtb.Cantidad,  
                                 dtb.Precio_final,
                                 dtb.CodProducto_detalle
-
+                                
                                 from tbinventario i inner join detalle_tbboleta  dtb 
 
                                 on  i.Codproducto=dtb.Codproducto 
                                 inner join tbstock s on s.Codproducto =i.Codproducto  
-                                inner join tbboleta b on b.idVenta=dtb.idVenta   
-                                
-                                where 
+                                inner join tbboleta b on b.idVenta=dtb.idVenta 
+
+								where 
                                 dtb.idVenta=@idVenta and 
                                 s.CodEstock =dtb.Codproducto_detalle and 
-                                dtb.Coddetalle =dtb.Coddetalle  
+                                dtb.Coddetalle =dtb.Coddetalle   
                             ";
 
             return Query;

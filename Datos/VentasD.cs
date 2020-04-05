@@ -165,7 +165,7 @@ namespace Datos
             return lista;
 
         }
-        public List<VentasE>BuscarVentaBoleta(string boleta)
+        public List<VentasE>BuscarVenta(string boleta)
         {
             SqlCommand cmd = null;
             SqlDataReader dr = null;
@@ -278,40 +278,64 @@ namespace Datos
             finally { cmd.Connection.Close(); }
             return lista;
         }
-        public List<DetalleVentasE> ListarDetalleBoleta(int  idVenta)
+        //Modificando este método de listar detalle venta usando referencias en listas en capa entidades
+        public VentasE ListarDetalleVenta(int  idVenta)
         {
             SqlCommand cmd = null;
-            SqlDataReader dr=null;
+            IDataReader idr=null;
+            VentasE v = null;
             List<DetalleVentasE> lista = null;
             try
             {
                 cmd = new SqlCommand(sql.Query_ListarDetalleVenta(), cn);
                 cmd.Parameters.AddWithValue("@idVenta", idVenta);
                 cn.Open();
-                dr = cmd.ExecuteReader();
+                idr = cmd.ExecuteReader();
                 lista = new List<DetalleVentasE>();
-                while (dr.Read())
+                if (idr.Read())
                 {
-                    DetalleVentasE dt = new DetalleVentasE();
-                    dt.Codproducto = dr["Codproducto"].ToString();
-                    dt.Descripción = dr["Descripción"].ToString();
-                    InventarioE m = new InventarioE();
-                    m.Marca = dr["Marca"].ToString();
-                    dt.Marca = m;
-                    DetalleInventarioE c = new DetalleInventarioE();
-                    c.Color = dr["Color"].ToString();
-                    dt.Color = c;
-                    DetalleInventarioE t = new DetalleInventarioE();
-                    t.Talla_alfanum = dr["Talla_alfanum"].ToString();
-                    dt.Talla_alfanum = t;
-                    DetalleInventarioE tn = new DetalleInventarioE();
-                    tn.Talla_num = Convert.ToInt32(dr["Talla_num"].ToString());
-                    dt.Talla_num = tn;
-                    dt.Cantidad = Convert.ToInt32(dr["Cantidad"]);
-                    dt.Precio_final = Convert.ToDouble(dr["Precio_final"].ToString());
-                    dt.CodProducto_detalle = Convert.ToInt32(dr["CodProducto_detalle"].ToString());
-                    lista.Add(dt);
 
+                    v = new VentasE();
+                    ClienteE c = new ClienteE();
+                    c.NombreCliente = idr["nombreCliente"].ToString();
+                    c.NroDocumento = idr["nroDocumento"].ToString();
+                    c.DireccionCliente = idr["direccionCliente"].ToString();
+                    v.Cliente = c; 
+                    MonedaE m = new MonedaE();
+                    m.IdMoneda = Convert.ToInt32(idr["IdMoneda"].ToString());
+                    v.Moneda = m;
+                    TipoDocumentoE d = new TipoDocumentoE();
+                    d.IdTipoDoc = Convert.ToInt32(idr["idTipoDoc"].ToString());
+                    v.TipoDocumento = d;
+                    TipoPagoE tp = new TipoPagoE();
+                    tp.IdTipoPago = Convert.ToInt32(idr["IdTipoPago"].ToString());
+                    v.TipPago = tp;
+                    if (idr.NextResult())
+                    {
+                        lista = new List<DetalleVentasE>();
+                        while (idr.Read())
+                        {
+                            
+                            DetalleVentasE dt = new DetalleVentasE();
+                            dt.Codproducto = idr["Codproducto"].ToString();
+                            dt.Descripción = idr["Descripción"].ToString();
+                            InventarioE i = new InventarioE();
+                            i.Marca = idr["Marca"].ToString();
+                            dt.Inventario = i;
+                            DetalleInventarioE det = new DetalleInventarioE();
+                            det.Color = idr["Color"].ToString();
+                            dt.DetInventario = det;
+                            det.Talla_alfanum = idr["Talla_alfanum"].ToString();
+                            dt.DetInventario = det;
+                            det.Talla_num = Convert.ToInt32(idr["Talla_num"].ToString());
+                            dt.DetInventario = det;
+                            dt.Cantidad = Convert.ToInt32(idr["Cantidad"]);
+                            dt.Precio_final = Convert.ToDouble(idr["Precio_final"].ToString());
+                            dt.CodProducto_detalle = Convert.ToInt32(idr["CodProducto_detalle"].ToString());
+                            lista.Add(dt);
+                        }
+                        v.DetalleVenta = lista;
+                    }
 
                 }
 
@@ -319,11 +343,11 @@ namespace Datos
             catch (Exception)
             { throw; }
             finally { cmd.Connection.Close(); }
-            return lista;
+            return v;
 
         }
 
-        public List<DetalleVentasE> ListarDetalleBoletaCambio(int idVenta)
+        public List<DetalleVentasE> ListarDetalleVentaCambio(int idVenta)
         {
             SqlCommand cmd = null;
             SqlDataReader dr = null;
@@ -341,18 +365,16 @@ namespace Datos
                     dt.Codproducto = dr["Codproducto"].ToString();
                     dt.CodProducto_detalle = Convert.ToInt32(dr["CodProducto_detalle"].ToString());
                     dt.Descripción = dr["Descripción"].ToString();
-                    InventarioE m = new InventarioE();
-                    m.Marca = dr["Marca"].ToString();
-                    dt.Marca = m;
-                    DetalleInventarioE c = new DetalleInventarioE();
-                    c.Color = dr["Color"].ToString();
-                    dt.Color = c;
-                    DetalleInventarioE t = new DetalleInventarioE();
-                    t.Talla_alfanum = dr["Talla_alfanum"].ToString();
-                    dt.Talla_alfanum = t;
-                    DetalleInventarioE tn = new DetalleInventarioE();
-                    tn.Talla_num = Convert.ToInt32(dr["Talla_num"].ToString());
-                    dt.Talla_num = tn;
+                    InventarioE i = new InventarioE();
+                    i.Marca = dr["Marca"].ToString();
+                    dt.Inventario = i;
+                    DetalleInventarioE det = new DetalleInventarioE();
+                    det.Color = dr["Color"].ToString();
+                    dt.DetInventario = det;
+                    det.Talla_alfanum = dr["Talla_alfanum"].ToString();
+                    dt.DetInventario = det;
+                    det.Talla_num = Convert.ToInt32(dr["Talla_num"].ToString());
+                    dt.DetInventario = det;
                     dt.Cantidad = Convert.ToInt32(dr["Cantidad"]);
                     dt.Precio_final = Convert.ToDouble(dr["Precio_final"].ToString());
                     dt.Coddetalle = Convert.ToInt32(dr["Coddetalle"].ToString());
