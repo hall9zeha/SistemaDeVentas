@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -119,34 +120,91 @@ namespace Datos
 
 
         }
-        public DataTable ListarInventario()
+        public List<InventarioE> ListarInventario()
         {
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            List<InventarioE> lista = null;
             try
             {
-                string Query = @"select i.Codproducto ,
-                            i.Descripción,
-                            i.Marca,sum(s.Cantidad) as cantidad_inicial,
-                            sum(s.Stock) as Stock, 
-                            i.Precio as 'precio/unidad',
-                            i.PrecioVenta
-                            from tbinventario  i inner join tbstock s 
-                            on s.Codproducto=i.Codproducto 
-                            group by 
-                            i.Codproducto ,i.Descripción, i.Marca, i.Precio, i.PrecioVenta order by Codproducto";
-                SqlCommand cmd = new SqlCommand(Query, cn);
-                //Ya que no estamos utilizando procedimientos almacenados la siguiente línea de código no es necesaria
-                //cmd.CommandType = CommandType.StoredProcedure;
-                //*****************************************************************************************************
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                return dt;
+
+
+                cmd = new SqlCommand(sql.Query_ListarInventario(), cn);
+                
+                cn.Open();
+                dr = cmd.ExecuteReader();
+                lista = new List<InventarioE>();
+                while (dr.Read())
+                {
+                    InventarioE i = new InventarioE();
+                    i.Codproducto = dr["CodProducto"].ToString();
+                    i.Descripción = dr["Descripción"].ToString();
+                    i.Marca = dr["Marca"].ToString();
+                    DetalleInventarioE dt = new DetalleInventarioE();
+                    dt.Color = dr["Color"].ToString();
+                    dt.Talla_alfanum = dr["Talla_alfanum"].ToString();
+                    dt.Talla_num = Convert.ToInt32(dr["Talla_num"]);
+                    dt.Stock = Convert.ToInt32(dr["Stock"]);
+
+
+                    i.DtInventario = dt;
+                    i.Precio = Convert.ToDouble(dr["precio/unidad"]);
+                    i.PrecioVenta = Convert.ToDouble(dr["PrecioVenta"]);
+                    dt.CodigoDeBarra = dr["CodigoDeBarra"].ToString();
+                    lista.Add(i);
+                }
+
             }
             catch (Exception)
             { throw; }
+            finally { cmd.Connection.Close(); }
+            return lista;
+        }
+        public List<InventarioE> ListarBusquedaSimpleInventario(string cadenaBusqueda)
+        {
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            List<InventarioE> lista = null;
+            try
+            {
+
+
+                cmd = new SqlCommand(sql.Query_ListarBusquedaInventario(), cn);
+                //Ya que no estamos utilizando procedimientos almacenados la siguiente línea de código no es necesaria
+                //cmd.CommandType = CommandType.StoredProcedure;
+                //*****************************************************************************************************
+                cmd.Parameters.AddWithValue("@cadenaEntrada", cadenaBusqueda);
+                cn.Open();
+                dr = cmd.ExecuteReader();
+                lista = new List<InventarioE>();
+                while (dr.Read())
+                {
+                    InventarioE i = new InventarioE();
+                    i.Codproducto = dr["CodProducto"].ToString();
+                    i.Descripción = dr["Descripción"].ToString();
+                    i.Marca = dr["Marca"].ToString();
+                    DetalleInventarioE dt = new DetalleInventarioE();
+                    dt.Color = dr["Color"].ToString();
+                    dt.Talla_alfanum = dr["Talla_alfanum"].ToString();
+                    dt.Talla_num = Convert.ToInt32(dr["Talla_num"]);
+                    dt.Stock = Convert.ToInt32(dr["Stock"]);
+
+                    
+                    i.DtInventario = dt;
+                    i.Precio = Convert.ToDouble(dr["precio/unidad"]);
+                    i.PrecioVenta = Convert.ToDouble(dr["PrecioVenta"]);
+                    dt.CodigoDeBarra = dr["CodigoDeBarra"].ToString();
+                    lista.Add(i);
+                }
+
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+            return lista;
         }
         //creamos este método de listar el inventario porque es más flexible y nos permite mas dinamismo al filtrar por diferentes parámetros
-        public List<InventarioE> MostrarInventario(int tipoBusqueda, string valorEntrada)
+        public List<InventarioE> BuscarProductoEnInventario(int tipoBusqueda, string valorEntrada)
         {
             SqlCommand cmd = null;
             SqlDataReader dr = null;
@@ -154,7 +212,7 @@ namespace Datos
             try
             {
                
-                cmd = new SqlCommand(sql.Query_MostrarInventario(), cn);
+                cmd = new SqlCommand(sql.Query_BuscarProductoEnInventario(), cn);
                 cmd.Parameters.AddWithValue("@tipoBusqueda", tipoBusqueda);
                 cmd.Parameters.AddWithValue("@valorEntrada", valorEntrada);
                 cn.Open();

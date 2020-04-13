@@ -18,6 +18,7 @@ namespace Presentacion
         ClienteN objCliN = new ClienteN();
         AccionesEnControles objAc = new AccionesEnControles();
         CodesMethods objCodes = new CodesMethods();
+        double igv = 0.18;
         public frmNota_De_Venta()
         {
             InitializeComponent();
@@ -101,6 +102,8 @@ namespace Presentacion
             try
             {
                 double total = 0;
+                double granTotal = 0;
+                double iva = 0;
                 foreach (DataGridViewRow row in dgvDetalleNotaVenta.Rows)
                 {
                     if (row.Cells[4].Value == null) row.Cells[4].Value = 0;
@@ -111,9 +114,11 @@ namespace Presentacion
                     {
                         row.Cells[7].Value = Convert.ToDouble(row.Cells[4].Value) * Convert.ToDouble(row.Cells[5].Value);
                         total += Convert.ToDouble(row.Cells[7].Value);
+                        iva = total * igv;
+                        granTotal = total + iva;
                     }
                     txtSubtotal.Text = total.ToString("0.00");
-                    txtTotal.Text = total.ToString("0.00");
+                    txtTotal.Text = granTotal.ToString("0.00");
 
 
                 }
@@ -194,7 +199,14 @@ namespace Presentacion
                 v.CodVenta = lblCorrelativo.Text;
                 v.Importe_rg = Convert.ToDouble(txtTotal.Text);
                 v.TipoComprobante = tipoComprobante;
-                v.IdCliente = LocalBD.Instancia.ReturnIdClienteNV(0, 0);               
+                //si no se selecciona ningun cliente,se cargar uno de la tabla cliente, como  venta en general
+                if (v.IdCliente == 0)
+                { v.IdCliente = 9; }
+                else
+                {
+                    v.IdCliente = LocalBD.Instancia.ReturnIdClienteNV(0, 0);
+                }
+                //--------------------------------------------------------------------------------------------
                 v.TipoPago = Convert.ToInt32(cboTipoPago.SelectedValue);
                 v.TipoMoneda = Convert.ToInt32(CboMoneda.SelectedValue);
                 List<DetalleVentasE> detalleVenta = new List<DetalleVentasE>();
@@ -211,6 +223,8 @@ namespace Presentacion
                 v.DetalleVenta = detalleVenta;
                 int resultado = objN.GuardarVenta(v);
                 MessageBox.Show("Venta registrada");
+                imprimirTicket();
+                habilitarBotones(true, false, true, true, false, false);
             }
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }
@@ -310,8 +324,8 @@ namespace Presentacion
             if (dr == DialogResult.Yes)
             {
                 guardarNotaVenta();
-                imprimirTicket();
-                habilitarBotones(true, false, true, true, false, false);
+                //imprimirTicket();
+                //habilitarBotones(true, false, true, true, false, false);
             }
             
         }
@@ -366,8 +380,6 @@ namespace Presentacion
 
                 CrearTicket objTicket = new CrearTicket();
                 int art = 0;
-                string nomCli = "", numDoc = "";
-
                 objTicket.AbrirCajon();
 
 
@@ -375,33 +387,26 @@ namespace Presentacion
                 objTicket.TextoCentro("COMPANY BARRY ZEHA");
                 objTicket.TextoIzquierda("EXPEDIDO EN: LOCAL PRINCIPAL");
                 objTicket.TextoIzquierda("DIREC: DIRECCION DE LA EMPRESA");
-                objTicket.TextoIzquierda("TELEF: 4530000");
+                objTicket.TextoIzquierda("TELEF: 00000000");
                 objTicket.TextoIzquierda("R.F.C: XXXXXXXXX-XX");
                 objTicket.TextoIzquierda("EMAIL: vmwaretars@gmail.com");
                 objTicket.TextoIzquierda("");
-                objTicket.TextoCentro("NOTA DE VENTA");
+                objTicket.TextoCentro("BOLETA DE VENTA");
                 objTicket.TextoExtremos("Caja # 1", "N° # " + lblCorrelativo.Text);
                 objTicket.DibujarLineas("*");
 
 
                 objTicket.TextoIzquierda("");
                 objTicket.TextoIzquierda("ATENDIÓ: Barry ");
-
-                if (txtNombreCliente.Text == "")
-                { nomCli = "PUBLICO EN GENERAL"; }
-                else
-                { nomCli = txtNombreCliente.Text; }
-
+                string nomCli = "";
+                if (txtNombreCliente.Text == "") { nomCli = "Público en general"; }
+                else { nomCli = txtNombreCliente.Text; }
                 objTicket.TextoIzquierda("CLIENTE: " + nomCli);
-                objTicket.TextoIzquierda("TIPODOC:");
-
-                if (txtNumDoc.Text == "")
-                { numDoc = ""; }
-                else
-                { numDoc = txtNumDoc.Text; }
-
+                objTicket.TextoIzquierda("TIPODOC: " );
+                string numDoc = "";
+                if (txtNumDoc.Text == "") { numDoc = ""; }
+                else { numDoc = txtNumDoc.Text; }
                 objTicket.TextoIzquierda("NUM DOC: " + numDoc);
-
                 objTicket.TextoIzquierda("");
                 objTicket.TextoExtremos("FECHA: " + DateTime.Now.ToShortDateString(), "HORA: " + DateTime.Now.ToShortTimeString());
                 objTicket.DibujarLineas("*");
@@ -419,8 +424,10 @@ namespace Presentacion
 
                         );
                 }
-                objTicket.AgregarTotales("         SUBTOTAL......S/", 100);
-                objTicket.AgregarTotales("         IVA...........S/", 20M);//La M indica que es un decimal en C#
+
+                objTicket.AgregarTotales("         SUBTOTAL......S/", Convert.ToDecimal(txtTotal.Text));
+                decimal iva = Convert.ToDecimal(Decimal.Parse(txtTotal.Text) * 0.18M);
+                objTicket.AgregarTotales("         IVA...........S/", Convert.ToDecimal(txtTotal.Text) + iva);//La M indica que es un decimal en C#
                 objTicket.AgregarTotales("         TOTAL.........S/", Convert.ToDecimal(txtTotal.Text));
                 objTicket.TextoIzquierda("");
                 if (txtEfectivo.Text == "")
@@ -443,8 +450,6 @@ namespace Presentacion
                 objTicket.TextoIzquierda("");
                 objTicket.TextoIzquierda("ARTÍCULOS VENDIDOS: " + art.ToString());
                 objTicket.TextoIzquierda("");
-                objTicket.TextoIzquierda("");
-                
                 objTicket.TextoCentro("¡GRACIAS POR SU COMPRA!");
                 objTicket.CortarTicket();
                 objTicket.ImprimirTicket("Microsoft XPS Document Writer");
@@ -453,6 +458,7 @@ namespace Presentacion
             {
                 MessageBox.Show(ex.Message);
             }
+
         }
 
         private void TxtEfectivo_KeyPress(object sender, KeyPressEventArgs e)

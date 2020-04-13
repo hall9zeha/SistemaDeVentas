@@ -36,8 +36,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.lblItems = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.lblMonto = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.txtBuscar = new System.Windows.Forms.TextBox();
@@ -124,6 +124,15 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "N° de Ventas";
             // 
+            // lblItems
+            // 
+            this.lblItems.AutoSize = true;
+            this.lblItems.Location = new System.Drawing.Point(18, 20);
+            this.lblItems.Name = "lblItems";
+            this.lblItems.Size = new System.Drawing.Size(42, 13);
+            this.lblItems.TabIndex = 0;
+            this.lblItems.Text = "lblItems";
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.lblMonto);
@@ -133,15 +142,6 @@
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Monto de Ventas";
-            // 
-            // lblItems
-            // 
-            this.lblItems.AutoSize = true;
-            this.lblItems.Location = new System.Drawing.Point(18, 20);
-            this.lblItems.Name = "lblItems";
-            this.lblItems.Size = new System.Drawing.Size(42, 13);
-            this.lblItems.TabIndex = 0;
-            this.lblItems.Text = "lblItems";
             // 
             // lblMonto
             // 
@@ -157,16 +157,16 @@
             this.groupBox5.Controls.Add(this.txtBuscar);
             this.groupBox5.Location = new System.Drawing.Point(51, 12);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(183, 49);
+            this.groupBox5.Size = new System.Drawing.Size(219, 49);
             this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Buscar Boleta";
+            this.groupBox5.Text = "Buscar por número de comprobante";
             // 
             // txtBuscar
             // 
             this.txtBuscar.Location = new System.Drawing.Point(21, 18);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(130, 20);
+            this.txtBuscar.Size = new System.Drawing.Size(171, 20);
             this.txtBuscar.TabIndex = 0;
             this.txtBuscar.TextChanged += new System.EventHandler(this.TxtBuscar_TextChanged);
             // 
@@ -180,7 +180,7 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
-            // Ventas
+            // frmVentas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -194,7 +194,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.pickerFecha);
             this.Controls.Add(this.dgvVentas);
-            this.Name = "Ventas";
+            this.Name = "frmVentas";
             this.Text = "Ventas";
             this.Load += new System.EventHandler(this.Ventas_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvVentas)).EndInit();

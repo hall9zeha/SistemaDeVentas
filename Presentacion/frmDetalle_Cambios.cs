@@ -121,7 +121,7 @@ namespace Presentacion
             try
             {
                 int num = 0;
-                List<DetalleVentasE> lista = objVN.ListarDetalleBoletaCambio(_idVenta);
+                List<DetalleVentasE> lista = objVN.ListarDetalleVentaCambio(_idVenta);
                 dgvDetalleCambio.Rows.Clear();
                 for (int i = 0; i < lista.Count; i++)
                 {
@@ -129,10 +129,10 @@ namespace Presentacion
                     string[] fila = new string[] {
                         lista[i].Codproducto,
                         lista[i].Descripción,
-                        lista[i].Marca.Marca,
-                        lista[i].Color.Color,
-                        lista[i].Talla_alfanum.Talla_alfanum,
-                        lista[i].Talla_num.Talla_num.ToString(),
+                        lista[i].Inventario.Marca,
+                        lista[i].DetInventario.Color,
+                        lista[i].DetInventario.Talla_alfanum,
+                        lista[i].DetInventario.Talla_num.ToString(),
                         lista[i].Cantidad.ToString(),
                         lista[i].Precio_final.ToString("0.00"),
                         lista[i].Coddetalle.ToString(),

@@ -15,6 +15,8 @@ namespace Presentacion
     {
         int idVenta = 0;
         string codBoleta = "";
+        VentasE v = new VentasE();
+        AccionesEnControles objAc = new AccionesEnControles();
         public frmDetalle_Venta(int idVenta,string CodBoleta)
         {
             InitializeComponent();
@@ -26,7 +28,11 @@ namespace Presentacion
         {
             this.CenterToScreen();
             crearGrid();
+            objAc.LlenarCboMoneda(gbCliente);
+            objAc.LlenarCboTipoDoc(cboTipDoc);
+            objAc.LlenarCboTipoPago(cboTipoPago);
             listarDetalleVenta();
+            llenarDatClienteEnControles();
             contarItems();
             montoTotal();
             lblBoleta.Text = codBoleta;
@@ -75,23 +81,43 @@ namespace Presentacion
             dgvDetalleVenta.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvDetalleVenta.MultiSelect = false;
         }
+        void llenarDatClienteEnControles()
+        {
+            try
+            {
+                txtDireccionCliente.Text = v.Cliente.DireccionCliente;
+                txtNumDoc.Text = v.Cliente.NroDocumento;
+                txtNombreCliente.Text = v.Cliente.NombreCliente;
+                CboMoneda.SelectedValue = v.Moneda.IdMoneda;
+                cboTipDoc.SelectedValue = v.TipoDocumento.IdTipoDoc;
+                cboTipoPago.SelectedValue = v.TipPago.IdTipoPago;
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message); }
+        }
         void listarDetalleVenta()
         {
             try
             {
+
                 int num = 0;
-                List<DetalleVentasE> lista = VentasN.Instancia.ListarDetalleBoleta(idVenta);
+                //Primero cargamos los datos del cliente referente a la venta 
+                v = VentasN.Instancia.ListarDetalleVenta(idVenta);
+                
+
+                //Luego recorremos la lista de productos vendidos a ese cliente y lo cargamos al grid
+                List<DetalleVentasE> lista = v.DetalleVenta;
                 dgvDetalleVenta.Rows.Clear();
                 for (int i = 0; i < lista.Count; i++)
                 {
-                    num++;
+                    //num++;
                     string[] fila = new string[] {
                         lista[i].Codproducto,
                         lista[i].Descripción,
-                        lista[i].Marca.Marca,
-                        lista[i].Color.Color,
-                        lista[i].Talla_alfanum.Talla_alfanum,
-                        lista[i].Talla_num.Talla_num.ToString(),
+                        lista[i].Inventario.Marca,
+                        lista[i].DetInventario.Color,
+                        lista[i].DetInventario.Talla_alfanum,
+                        lista[i].DetInventario.Talla_num.ToString(),
                         lista[i].Cantidad.ToString(),
                         lista[i].Precio_final.ToString("0.00"),
                         lista[i].CodProducto_detalle.ToString()

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MonedaE.cs" />
+    <Compile Include="TipoDocumentoE.cs" />
     <Compile Include="TipoPagoE.cs" />
     <Compile Include="VentasE.cs" />
     <Compile Include="ClienteE.cs" />

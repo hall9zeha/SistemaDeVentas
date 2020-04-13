@@ -8,9 +8,9 @@ namespace Entidades
 {
     public class VentasE
     {
-        public  int IdVenta { get; set; }
+        public int IdVenta { get; set; }
         public string CodVenta { get; set; }
-        
+
         public DateTime Fechaboleta { get; set; }
         public double Importe_rg { get; set; }
         public string Descripción { get; set; }
@@ -23,9 +23,19 @@ namespace Entidades
         public int TipoPago { get; set; }
         public int IdCliente { get; set; }
         public int IdUsuario { get; set; }
-        public int TipoMoneda { get; set; }          
+        public int TipoMoneda { get; set; }
         public List<DetalleVentasE> DetalleVenta { get; set; }
-       
-       
+        //relaciones con entidadCliente
+        public ClienteE Cliente { get; set; }
+        //*****************************************
+        //relaciones con entidadMoneda
+        public MonedaE Moneda { get; set; }
+        //******************************************
+        //relaciones con entidadTipoDocumento
+        public TipoDocumentoE TipoDocumento { get; set; }
+        //******************************************
+       //relacion con entidadTipoPago
+        public TipoPagoE TipPago { get; set; }
+        //******************************************
     }
 }

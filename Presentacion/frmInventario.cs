@@ -17,7 +17,7 @@ namespace Presentacion
         InventarioE objE = new InventarioE();
         InventarioN objN = new InventarioN();
         DataTable dt = new DataTable();
-
+        Image img = null;
         int tipoBusqueda = 0;
         public frmInventario()
         {
@@ -30,17 +30,22 @@ namespace Presentacion
             dgvInventario.Columns.Add("Marca", "Marca");
             dgvInventario.Columns.Add("PrecioCompra", "Precio");
             dgvInventario.Columns.Add("PrecioVenta", "PrecioVenta");
-            dgvInventario.Columns.Add("CantidadInicial", "Cantidad");
-            dgvInventario.Columns.Add("Stock", "Stcok");
+           
+            dgvInventario.Columns.Add("Stock", "Stock");
 
+            DataGridViewImageColumn imagen = new DataGridViewImageColumn();
+            imagen.HeaderText = "Estado Stock";
+            imagen.HeaderText = "Estado Stock";
+            dgvInventario.Columns.Add(imagen);
 
             dgvInventario.Columns[0].Visible = true;
             dgvInventario.Columns[1].Width = 170;
             dgvInventario.Columns[2].Width = 150;
             dgvInventario.Columns[3].Width = 70;
             dgvInventario.Columns[4].Width = 100;
+            
             dgvInventario.Columns[5].Width = 60;
-            dgvInventario.Columns[6].Width = 60;
+            dgvInventario.Columns[6].Width = 90;
 
             DataGridViewCellStyle cssCabecera = new DataGridViewCellStyle();
             cssCabecera.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -52,18 +57,19 @@ namespace Presentacion
 
         }
 
-        void listarInventario()
-        {
-            dt = objN.ListarInventario();
-            dgvInventario.DataSource = dt;
+        //void listarInventario()
+        //{
+        //    dt = objN.ListarInventario();
+        //    dgvInventario.DataSource = dt;
 
-        }
+        //}
 
         private void Inventario_Load(object sender, EventArgs e)
         {
             this.CenterToScreen();
             CrearGrid();
             cargarInventario();
+            
 
 
         }
@@ -84,6 +90,12 @@ namespace Presentacion
                     dgvInventario.Rows.Clear();
                     for (int i = 0; i < lista.Count; i++)
                     {
+                        if (lista[i].Stock >= 10)
+                        { img = Properties.Resources.circulo_verde24x24; }
+                        if (lista[i].Stock < 10 && lista[i].Stock >= 1)
+                        { img = Properties.Resources.CirculoNaranja24x24; }
+                        if (lista[i].Stock == 0)
+                        { img = Properties.Resources.circulorojo_24x24; }
                         num++;
                         string[] fila = new string[] {
                             lista[i].Codproducto,
@@ -91,11 +103,12 @@ namespace Presentacion
                             lista[i].Marca,
                             lista[i].Precio.ToString("#.00"),
                             lista[i].PrecioVenta.ToString("#.00"),
-                            lista[i].Cantidad.ToString(),
+                           
                             lista[i].Stock.ToString()
 
                         };
                         dgvInventario.Rows.Add(fila);
+                        dgvInventario.Rows[i].Cells[6].Value = img;
                     }
                 }
                 else if (filtro == string.Empty)
@@ -113,11 +126,18 @@ namespace Presentacion
             {
 
                 {
+                   
                     int num = 0;
                     List<InventarioE> lista = InventarioN.Instancia.ListarInventarioGeneric();
                     dgvInventario.Rows.Clear();
                     for (int i = 0; i < lista.Count; i++)
                     {
+                        if (lista[i].Stock >= 10)
+                        { img = Properties.Resources.circulo_verde24x24; }
+                        if (lista[i].Stock < 10 && lista[i].Stock >= 1)
+                        { img = Properties.Resources.CirculoNaranja24x24; }
+                        if (lista[i].Stock == 0)
+                        { img = Properties.Resources.circulorojo_24x24; }
                         num++;
                         string[] fila = new string[] {
                             lista[i].Codproducto,
@@ -125,10 +145,11 @@ namespace Presentacion
                             lista[i].Marca,
                             lista[i].Precio.ToString("0.00"),
                             lista[i].PrecioVenta.ToString("0.00"),
-                            lista[i].Cantidad.ToString(),
+                            
                             lista[i].Stock.ToString()
                         };
                         dgvInventario.Rows.Add(fila);
+                        dgvInventario.Rows[i].Cells[6].Value = img;
                     }
                 }
             }
@@ -233,6 +254,11 @@ namespace Presentacion
 
             eliminarPrenda();
             cargarInventario();
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
         }
     }
 }

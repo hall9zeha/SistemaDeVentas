@@ -57,7 +57,7 @@ namespace Presentacion
                 if (filtro != string.Empty)
                 {
                     int num = 0;
-                    List<VentasE> lista = VentasN.Instancia.BuscarVentaBoleta(filtro);
+                    List<VentasE> lista = VentasN.Instancia.BuscarVenta(filtro);
                     dgvCambioPrenda.Rows.Clear();
 
                     for (int i = 0; i < lista.Count; i++)

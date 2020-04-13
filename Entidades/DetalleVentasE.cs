@@ -15,10 +15,9 @@ namespace Entidades
         public string Descripción { get; set; }
         public int Cantidad { get; set; }
         public double Precio_final { get; set; } 
-        public InventarioE Marca { get; set; }
-        public DetalleInventarioE Color { get; set; }
-        public DetalleInventarioE Talla_alfanum { get; set; }
-        public DetalleInventarioE Talla_num { get; set; }
+        public InventarioE Inventario { get; set; }
+        public DetalleInventarioE DetInventario { get; set; }
+        
         public VentasE _Importe { get; set; }
         public double importe { get; set; }
         public string EstadoCambio { get; set; }

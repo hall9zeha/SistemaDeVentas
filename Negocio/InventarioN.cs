@@ -18,18 +18,23 @@ namespace Negocio
         {
             get { return InventarioN._instancia; }
         }
-
-        public DataTable ListarInventario()
+        public List<InventarioE> ListarInventario()
         {
-            return InventarioN.Instancia.ListarInventario();
+            return InventarioD.Instancia.ListarInventario();
         }
+
+        public List<InventarioE> ListarBusquedaSimpleInventario(string cadenaBusqueda)
+        {
+            return InventarioD.Instancia.ListarBusquedaSimpleInventario(cadenaBusqueda);
+        }
+        
 
         public List<InventarioE> MostrarInventario(int tipoBusqueda, string valorEntrada)
         {
             try
             {
                 List<InventarioE> lista = null;
-                lista = InventarioD.Instancia.MostrarInventario(tipoBusqueda, valorEntrada);
+                lista = InventarioD.Instancia.BuscarProductoEnInventario(tipoBusqueda, valorEntrada);
                 if (lista == null) throw new ApplicationException("No se encontraton registros");
                 return lista;
 
