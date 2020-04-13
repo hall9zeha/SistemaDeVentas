@@ -219,7 +219,7 @@ namespace Datos
                             ";
             return Query;
         }
-        public string Query_MostrarInventario()
+        public string Query_BuscarProductoEnInventario()
         {
 
             string Query = @"if(@tipoBusqueda=1)
@@ -289,6 +289,53 @@ namespace Datos
                             i.Codproducto ,i.Descripción, i.Marca, i.Precio, i.PrecioVenta order by Codproducto";
 
 
+            return Query;
+        }
+        public string Query_ListarBusquedaInventario()
+        {
+            string Query = @"
+
+                            select 
+							i.Codproducto ,
+                            i.Descripción,
+                            i.Marca,
+                            s.Color,
+                            
+                            s.Talla_alfanum,
+                            s.Talla_num,
+                            s.Stock,
+                            i.Precio as 'precio/unidad',
+                            i.PrecioVenta,
+                            s.CodigoDeBarra
+                            from tbinventario  i inner join tbstock s 
+                            on s.Codproducto=i.Codproducto 
+                           where replace(i.Descripción,' ' ,'') + i.Marca + s.Color LIKE '%'+ replace(@cadenaEntrada,' ','') +'%'
+                             order by Codproducto
+
+                            ";
+            return Query;
+        }
+        public string Query_ListarInventario()
+        {
+            string Query = @"
+
+                            select 
+							i.Codproducto ,
+                            i.Descripción,
+                            i.Marca,
+                            s.Color,
+                            
+                            s.Talla_alfanum,
+                            s.Talla_num,
+                            s.Stock,
+                            i.Precio as 'precio/unidad',
+                            i.PrecioVenta,
+                            s.CodigoDeBarra
+                            from tbinventario  i inner join tbstock s 
+                            on s.Codproducto=i.Codproducto 
+                            order by Codproducto
+
+                            ";
             return Query;
         }
         public string Query_TraerDetallePrenda()

@@ -42,10 +42,15 @@
             this.txtfiltro = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvInventario
@@ -53,7 +58,7 @@
             this.dgvInventario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvInventario.Location = new System.Drawing.Point(12, 95);
             this.dgvInventario.Name = "dgvInventario";
-            this.dgvInventario.Size = new System.Drawing.Size(869, 314);
+            this.dgvInventario.Size = new System.Drawing.Size(801, 314);
             this.dgvInventario.TabIndex = 0;
             this.dgvInventario.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvInventario_CellContentClick);
             this.dgvInventario.SelectionChanged += new System.EventHandler(this.DgvInventario_SelectionChanged);
@@ -86,6 +91,7 @@
             this.button3.TabIndex = 3;
             this.button3.Text = "Salir";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // groupBox1
             // 
@@ -110,7 +116,7 @@
             this.groupBox2.Controls.Add(this.checkBox3);
             this.groupBox2.Controls.Add(this.checkBox2);
             this.groupBox2.Controls.Add(this.checkBox1);
-            this.groupBox2.Location = new System.Drawing.Point(292, 26);
+            this.groupBox2.Location = new System.Drawing.Point(368, 26);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(261, 48);
             this.groupBox2.TabIndex = 4;
@@ -153,7 +159,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.txtfiltro);
-            this.groupBox3.Location = new System.Drawing.Point(572, 26);
+            this.groupBox3.Location = new System.Drawing.Point(648, 26);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(309, 48);
             this.groupBox3.TabIndex = 4;
@@ -169,7 +175,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(682, 431);
+            this.button4.Location = new System.Drawing.Point(806, 431);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 5;
@@ -187,11 +193,60 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.Button5_Click_1);
             // 
-            // Inventario
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label3);
+            this.groupBox4.Controls.Add(this.label2);
+            this.groupBox4.Controls.Add(this.label1);
+            this.groupBox4.Location = new System.Drawing.Point(819, 95);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(136, 162);
+            this.groupBox4.TabIndex = 8;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Indicador de Stock";
+            // 
+            // label3
+            // 
+            this.label3.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.label3.Image = global::Presentacion.Properties.Resources.circulorojo_24x24;
+            this.label3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label3.Location = new System.Drawing.Point(6, 87);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(104, 33);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Stock vacío";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label2.Image = global::Presentacion.Properties.Resources.CirculoNaranja24x24;
+            this.label2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label2.Location = new System.Drawing.Point(6, 54);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(104, 33);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Stock promedio";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label1.Image = global::Presentacion.Properties.Resources.circulo_verde24x24;
+            this.label1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label1.Location = new System.Drawing.Point(6, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(104, 33);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Stock suficiente";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // frmInventario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(929, 492);
+            this.ClientSize = new System.Drawing.Size(972, 492);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.groupBox3);
@@ -201,7 +256,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dgvInventario);
-            this.Name = "Inventario";
+            this.Name = "frmInventario";
             this.Text = "Inventario";
             this.Load += new System.EventHandler(this.Inventario_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).EndInit();
@@ -211,6 +266,7 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -231,5 +287,9 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.TextBox txtfiltro;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }

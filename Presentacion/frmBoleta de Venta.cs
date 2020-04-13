@@ -500,7 +500,12 @@ namespace Presentacion
         {
             ticketEnPdf();
         }
-
+        /** 
+         * 
+         * Comentario de documentacion 
+         * <p></p>
+         * 
+         */
         //Método para crear el ticket en pdf
         private void ticketEnPdf()
         {
@@ -529,8 +534,8 @@ namespace Presentacion
             foreach (DataGridViewRow row in dgvDetalleBoleta.Rows)
             {
                 tic.AddItem(
-                    row.Cells[5].Value.ToString(),
                     row.Cells[2].Value.ToString(),
+                    row.Cells[5].Value.ToString(),
                     String.Format(new CultureInfo("es-PE"), "{0:C}",
                     Convert.ToDouble(row.Cells[5].Value.ToString()) *
                     Convert.ToDouble(row.Cells[7].Value.ToString()))
@@ -560,7 +565,7 @@ namespace Presentacion
                                  //en blanco que sirve de espacio 
             foreach (DataGridViewRow row1 in dgvDetalleBoleta.Rows)
             {
-                tic.CadenaQR = Convert.ToString(row1.Cells[2].Value.ToString()) + Convert.ToString(row1.Cells[7].Value.ToString());
+                tic.CadenaQR = Convert.ToString(row1.Cells[2].Value.ToString()) +"| "+ Convert.ToString(row1.Cells[7].Value.ToString());
             }
             //tic.CadenaQR=Convert.ToString(dgvDetalleBoleta.CurrentRow.Cells[2].Value.ToString()) + txtTotal.Text;
             tic.AddFooterLine("Gracias por su compra, cualquier reclamo");

@@ -27,10 +27,10 @@ namespace Presentacion
         void crearGrid()
         {
             dgvVentas.Columns.Add("IdVenta", "IdVenta");
-            dgvVentas.Columns.Add("CodBoleta/Factura", "CodBoleta/Factura");
+            dgvVentas.Columns.Add("CodComprobante", "CodComprobante");
             dgvVentas.Columns.Add("Prendas", "Prendas");
             dgvVentas.Columns.Add("Total", "Total");
-            dgvVentas.Columns.Add("FechaBoleta", "FechaBoleta");
+            dgvVentas.Columns.Add("FechaVenta", "FechaVenta");
             dgvVentas.Columns.Add("Hora", "Hora");
             dgvVentas.Columns[0].Width = 70;
             dgvVentas.Columns[1].Width = 180;
