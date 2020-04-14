@@ -20,6 +20,7 @@ namespace Presentacion
         InventarioN objN = new InventarioN();
         InventarioE objE = new InventarioE();
         DetalleInventarioE objS = new DetalleInventarioE();
+        AccionesEnControles objAc = new AccionesEnControles();
         string Id_Prod = "";
         int idStock = 0;
         int tipoAccion = 0;
@@ -458,9 +459,14 @@ namespace Presentacion
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            tipoAccion = 3;
-            eliminarDetallePrenda();
-            listarDetallePrenda();
+            DialogResult dr = MessageBox.Show("Realmente quiere eliminar esta prenda?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dr == DialogResult.Yes)
+            {
+                tipoAccion = 3;
+                eliminarDetallePrenda();
+                listarDetallePrenda();
+            }
+            
         }
         void limpiarControles()
         {
@@ -478,7 +484,10 @@ namespace Presentacion
 
         private void BtnBarCode_Click(object sender, EventArgs e)
         {
-            generarCodigoDeBarra(1);
+            DialogResult dr = MessageBox.Show("Se generarán códigos de barra para todas las \n prendas de la lista con un stock mayor a 0 \n\n ¿Desea proceder? ","Importante", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dr == DialogResult.Yes)
+            { generarCodigoDeBarra(1); }
+
         }
 
         private void Dgvprenda_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -486,12 +495,61 @@ namespace Presentacion
             try
             {
                 if (dgvprenda.Rows[e.RowIndex].Cells["CrearBarCode"].Selected)
-                {
+                {//El número 2 que se pasa como parámetro es la opción del método que genera barcodes  de una prenda determinada 
+                 //y no de toda la lista 
                     generarCodigoDeBarra(2);
                 }
             }
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }
+        }
+
+        private void Txtprecio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                e.Handled = objAc.SoloDecimales(e);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Txtprecioventa_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                e.Handled = objAc.SoloDecimales(e);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Txttallanum_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                e.Handled = objAc.SoloNumeros(e);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Txtcantidad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                e.Handled = objAc.SoloNumeros(e);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

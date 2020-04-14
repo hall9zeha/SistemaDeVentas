@@ -284,6 +284,7 @@ namespace Presentacion
                     montoTotal();
                     montoEnLetras();
                     habilitarBotones(true, true, false, false, true, true);
+                    if (lista.Count == 0) habilitarBotones(true, false, false, false, true, false);
                 }
             }
             catch (Exception ex)
@@ -427,8 +428,8 @@ namespace Presentacion
 
                 objTicket.AgregarTotales("         SUBTOTAL......S/", Convert.ToDecimal(txtTotal.Text));
                 decimal iva = Convert.ToDecimal(Decimal.Parse(txtTotal.Text) * 0.18M);
-                objTicket.AgregarTotales("         IVA...........S/", Convert.ToDecimal(txtTotal.Text) + iva);//La M indica que es un decimal en C#
-                objTicket.AgregarTotales("         TOTAL.........S/", Convert.ToDecimal(txtTotal.Text));
+                objTicket.AgregarTotales("         IVA...........S/", iva);//La M indica que es un decimal en C#
+                objTicket.AgregarTotales("         TOTAL.........S/", Convert.ToDecimal(txtTotal.Text)+iva);
                 objTicket.TextoIzquierda("");
                 if (txtEfectivo.Text == "")
                 { txtEfectivo.Text = "0"; }
@@ -464,6 +465,11 @@ namespace Presentacion
         private void TxtEfectivo_KeyPress(object sender, KeyPressEventArgs e)
         {
             calcularCambio();
+        }
+
+        private void TxtEfectivo_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

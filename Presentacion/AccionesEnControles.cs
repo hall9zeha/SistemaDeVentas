@@ -183,5 +183,51 @@ namespace Presentacion
             catch
             { throw; }
         }
+        //Método para validar campos y solo permitir números
+        public Boolean SoloNumeros(KeyPressEventArgs e)
+        {
+            try
+            {
+               Boolean result;
+                string cadena = "1234567890" + (char)5;
+                if (cadena.Contains(e.KeyChar) || e.KeyChar == 8)
+                {
+                    result = false;
+                }
+                else
+                {
+                    MessageBox.Show("Solo se permiten números", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    result = true;
+                }
+                return result;
+            }
+            catch (Exception )
+            {
+                throw;
+            }
+           
+        }
+        public Boolean SoloDecimales(KeyPressEventArgs e)
+        {
+            try
+            {
+                Boolean result;
+                string cadena = "1234567890." + (char)5;
+                if (cadena.Contains(e.KeyChar) || e.KeyChar == 8)
+                {
+                    result= false;
+                }
+                else
+                {
+                    MessageBox.Show("Solo se permiten numeros enteros o decimales", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    result = true;
+                }
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

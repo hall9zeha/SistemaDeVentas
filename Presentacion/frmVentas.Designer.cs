@@ -42,12 +42,14 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVentas)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvVentas
@@ -62,7 +64,7 @@
             // pickerFecha
             // 
             this.pickerFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.pickerFecha.Location = new System.Drawing.Point(707, 99);
+            this.pickerFecha.Location = new System.Drawing.Point(34, 19);
             this.pickerFecha.Name = "pickerFecha";
             this.pickerFecha.Size = new System.Drawing.Size(129, 20);
             this.pickerFecha.TabIndex = 1;
@@ -176,15 +178,26 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(116, 32);
             this.button2.TabIndex = 6;
-            this.button2.Text = "Detalle boleta";
+            this.button2.Text = "Detalle de Venta";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.Button2_Click);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.pickerFecha);
+            this.groupBox6.Location = new System.Drawing.Point(671, 75);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(200, 51);
+            this.groupBox6.TabIndex = 7;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Fecha única";
             // 
             // frmVentas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(900, 450);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -192,7 +205,6 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.pickerFecha);
             this.Controls.Add(this.dgvVentas);
             this.Name = "frmVentas";
             this.Text = "Ventas";
@@ -206,6 +218,7 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -226,5 +239,6 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.GroupBox groupBox6;
     }
 }

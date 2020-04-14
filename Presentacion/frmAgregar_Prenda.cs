@@ -23,6 +23,7 @@ namespace Presentacion
         DetalleInventarioE objS = new DetalleInventarioE();
         InventarioN objN = new InventarioN();
         SqlConnection cn =  Conexion.Instancia.Conectar();
+        AccionesEnControles objAc = new AccionesEnControles();
 
         public frmAgregar_Prenda()
         {
@@ -55,6 +56,7 @@ namespace Presentacion
             this.CenterToScreen();
             generarCodigoPrenda();
             habilitarBotones(false, false, false);
+            habilitarControles(false);
         }
         void limpiarControles()
         {
@@ -67,6 +69,18 @@ namespace Presentacion
             cmbtallaalfa.Text = "";
             txttallanum.Clear();
             txtcantidad.Clear();
+        }
+        void habilitarControles(bool estado)
+        {
+            lblcode.Enabled=estado;
+            txtdescripcion.Enabled=estado;
+            txtmarca.Enabled=estado;
+            txtcolor.Enabled=estado;
+            txtprecio.Enabled=estado;
+            txtprecioventa.Enabled=estado;
+            cmbtallaalfa.Enabled=estado;
+            txttallanum.Enabled=estado;
+            txtcantidad.Enabled=estado;
         }
         void generarCodigoPrenda()
         {
@@ -101,8 +115,8 @@ namespace Presentacion
                 }
                 objE.detalleInventario = Detalle;
                 int resultado = InventarioN.Instancia.GuardarPrendaInventario(objE);
-                MessageBox.Show("Prendas Resitradas");
-                dgvprenda.Rows.Clear();
+                MessageBox.Show("Prendas Registradas");
+                
             }
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }
@@ -123,7 +137,7 @@ namespace Presentacion
             if (txttallanum.Text == "") txttallanum.Text = "0"; else txttallanum.Text = txttallanum.Text;
             if (txtcantidad.Text == "") txtcantidad.Text = "0"; else txtcantidad.Text = txtcantidad.Text;
            
-            //método para agregar codigo numérico que se convertira en codigo de barras al grid
+            //lógica para agregar codigo numérico que se convertira en codigo de barras al grid
            //este código será el mismo código del producto + 1 al final
             foreach (DataGridViewRow row in dgvprenda.Rows)
             {
@@ -134,7 +148,7 @@ namespace Presentacion
                 }
             }
             dgvprenda.Rows.Add(lblcode.Text, txtcolor.Text, cmbtallaalfa.Text, txttallanum.Text, txtcantidad.Text, lblcode.Text + val);
-            //fin del método
+            //fin de la lógica
 
         }
 
@@ -158,6 +172,8 @@ namespace Presentacion
             limpiarControles();
             habilitarBotones(true, false, false);
             generarCodigoPrenda();
+            habilitarControles(true);
+            dgvprenda.Rows.Clear();
         }
 
         private void Button4_Click(object sender, EventArgs e)
@@ -168,8 +184,8 @@ namespace Presentacion
                 if (dr == DialogResult.Yes)
                 {
                     guardarInventario();
-                    limpiarControles();
-                    generarCodigoPrenda();
+                    habilitarControles(false);
+                    habilitarBotones(false, false, false);
                 }
                 else
                 {
@@ -300,10 +316,10 @@ namespace Presentacion
                     bc.CodeType = iTextSharp.text.pdf.Barcode128.EAN13;
                     bc.Extended = true;
                    //mostrando la imagen de codeBar  del producto en un picturebox
-                    System.Drawing.Image bimg = bc.CreateDrawingImage(System.Drawing.Color.Black, System.Drawing.Color.White);
-                    img1 = bimg;
-                    //fin de la propiedad
-                    pictureBox1.Image = img1;
+                   //System.Drawing.Image bimg = bc.CreateDrawingImage(System.Drawing.Color.Black, System.Drawing.Color.White);
+                   //img1 = bimg;
+                   //fin de la propiedad
+                   //pictureBox1.Image = img1;
 
                     iTextSharp.text.Image img = bc.CreateImageWithBarcode(cb, iTextSharp.text.BaseColor.BLACK, iTextSharp.text.BaseColor.BLACK);
 
@@ -336,7 +352,70 @@ namespace Presentacion
 
         private void Button2_Click_1(object sender, EventArgs e)
         {
-            genCodigoDeBarra();
+            int numPrendas = 0;
+            foreach (DataGridViewRow rows in dgvprenda.Rows)
+            {
+                numPrendas++;
+            }
+            if (numPrendas > 0)
+            {
+                DialogResult dr = MessageBox.Show("Se generarán códigos de barra de  Los productos de la lista \n \n ¿Desea Proceder?", "Importante", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.Yes)
+                { genCodigoDeBarra(); }
+            }
+            else
+                { MessageBox.Show("No hay prendas en la lista", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+
+        }
+
+        private void Txtdescripcion_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            
+        }
+
+        private void Txttallanum_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                e.Handled = objAc.SoloNumeros(e);
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private void Txtcantidad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                e.Handled = objAc.SoloNumeros(e);
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private void Txtprecio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                e.Handled = objAc.SoloDecimales(e);
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        private void Txtprecioventa_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Txtprecioventa_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            try
+            {
+                e.Handled = objAc.SoloDecimales(e);
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
     }
 }

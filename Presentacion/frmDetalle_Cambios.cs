@@ -39,10 +39,10 @@ namespace Presentacion
             listarDetalleBoletaCambio();
             montoTotal();
             lblBoleta.Text = _codBoleta;
-            
+            habilitarBotones(true, false, false, false, true,false);
 
         }
-        
+
         void guardarCambioDePrenda()
         {
             try
@@ -50,37 +50,37 @@ namespace Presentacion
                 VentasE b = new VentasE();
                 List<DetalleVentasE> Detalle = new List<DetalleVentasE>();
                 foreach (DataGridViewRow row in dgvDetalleCambio.Rows)
-                            {
-                                DetalleVentasE dt = new DetalleVentasE();
-                                dt.IdVenta = _idVenta;
+                {
+                    DetalleVentasE dt = new DetalleVentasE();
+                    dt.IdVenta = _idVenta;
 
-                                dt.Codproducto = row.Cells[0].Value.ToString();
-                                dt.CodProducto_detalle = Convert.ToInt32(row.Cells[9].Value.ToString());
-                                dt.Descripción = row.Cells[1].Value.ToString();
-                                dt.Cantidad = Convert.ToInt32(row.Cells[6].Value.ToString());
-                   dt.Coddetalle = Convert.ToInt32(row.Cells[8].Value.ToString());
-                   dt.Precio_final = Convert.ToDouble(row.Cells[7].Value.ToString());
-                   dt.EstadoCambio= row.Cells[10].Value.ToString();
+                    dt.Codproducto = row.Cells[0].Value.ToString();
+                    dt.CodProducto_detalle = Convert.ToInt32(row.Cells[9].Value.ToString());
+                    dt.Descripción = row.Cells[1].Value.ToString();
+                    dt.Cantidad = Convert.ToInt32(row.Cells[6].Value.ToString());
+                    dt.Coddetalle = Convert.ToInt32(row.Cells[8].Value.ToString());
+                    dt.Precio_final = Convert.ToDouble(row.Cells[7].Value.ToString());
+                    dt.EstadoCambio = row.Cells[10].Value.ToString();
 
-                   Detalle.Add(dt);
-                            }
+                    Detalle.Add(dt);
+                }
 
                 b.DetalleVenta = Detalle;
                 b.Importe_rg = Convert.ToDouble(nuevoTotal.Text);
                 b.IdVenta = _idVenta;
 
                 int resultado = VentasN.Instancia.GuardarCambioDePrenda(b);
-                
+
                 MessageBox.Show("Cambio registrado ");
 
-        }
+            }
             catch (Exception ex)
-            { MessageBox.Show(ex.Message,"Algo paso revisa"); }
+            { MessageBox.Show(ex.Message, "Algo paso revisa"); }
 
 
         }
 
-        
+
         void crearGrid(DataGridView dgv)
         {
             dgv.Columns.Add("Codproducto", "Codproducto");
@@ -95,7 +95,7 @@ namespace Presentacion
             dgv.Columns.Add("CodProD", "CodProD");
             dgv.Columns.Add("E/C", "E/C");//significa Estado/Cambio.
             dgv.Columns.Add("P/C", "P/C");//significa Precio/Cambio.
-           
+
 
             dgv.Columns[0].Width = 100;
             dgv.Columns[1].Width = 100;
@@ -114,6 +114,16 @@ namespace Presentacion
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgv.MultiSelect = false;
 
+
+        }
+        void habilitarBotones(bool nuevo, bool guardar, bool anular, bool imprimir, bool agregar, bool quitar)
+        {
+            btnNuevo.Enabled = nuevo;
+            btnGuardar.Enabled = guardar;
+            btnAnular.Enabled = anular;
+            btnImprimir.Enabled = imprimir;
+            btnAgregarItem.Enabled = agregar;
+            btnQuitarItem.Enabled = quitar;
 
         }
         void listarDetalleBoletaCambio()
@@ -152,7 +162,7 @@ namespace Presentacion
             try
             {
                 int num = 0;
-                
+
                 dgvPrendaCambio.Rows.Clear();
                 for (int i = 0; i < lista.Count; i++)
                 {
@@ -172,7 +182,7 @@ namespace Presentacion
 
                     };
                     dgvPrendaCambio.Rows.Add(fila);
-                    
+
                 }
             }
             catch (Exception ex)
@@ -187,7 +197,7 @@ namespace Presentacion
                 foreach (DataGridViewRow row in dgvDetalleCambio.Rows)
                 {
                     monto += Convert.ToDouble(row.Cells[7].Value.ToString());
-                    
+
                 }
                 txtTotal.Text = monto.ToString("0.00");
             }
@@ -204,7 +214,7 @@ namespace Presentacion
                     monto += Convert.ToDouble(row.Cells[7].Value.ToString());
 
                 }
-                txtTotalCambio.Text =monto.ToString("0.00");
+                txtTotalCambio.Text = monto.ToString("0.00");
             }
             catch (Exception ex)
             {
@@ -224,7 +234,7 @@ namespace Presentacion
                 diferencia = total - Convert.ToDouble(txtTotal.Text);
                 if (diferencia > 0)
                 { txtDiferencia.BackColor = Color.GreenYellow; }
-                txtDiferencia.Text =diferencia.ToString("0.00");
+                txtDiferencia.Text = diferencia.ToString("0.00");
                 montActualizado = Convert.ToDouble(txtDiferencia.Text) + Convert.ToDouble(txtTotal.Text);
                 nuevoTotal.Text = montActualizado.ToString("0.00");
             }
@@ -245,7 +255,7 @@ namespace Presentacion
                 }
 
                 total = montoDif - precioUnid;
-                
+
 
                 if (total < 0)
                 {
@@ -271,20 +281,21 @@ namespace Presentacion
             marcarPrendaACambiar();
             frmBuscar_Cambio objBuscarCambio = new frmBuscar_Cambio(precioUnid);
             objBuscarCambio.ShowDialog();
-            List<DetalleInventarioE> lista = LocalBD.Instancia.ReturnListaCambio(0, 0, 0,0);
+            List<DetalleInventarioE> lista = LocalBD.Instancia.ReturnListaCambio(0, 0, 0, 0);
             listarProductoCambio(lista);
             montoTotalCambio();
             montoCambioPagar();
-           
+            habilitarBotones(true, true, true, false, true, true);
+
         }
 
         private void BtnQuitarItem_Click(object sender, EventArgs e)
         {
-           
+
             dgvDetalleCambio.CurrentRow.Cells[10].Value = null;
             marcarPrendaACambiar();
 
-           
+
         }
         void marcarPrendaACambiar()
         {
@@ -294,16 +305,16 @@ namespace Presentacion
                 {
                     row.DefaultCellStyle.BackColor = Color.Orange;
                 }
-                else if (row.Cells[10].Value==null)
+                else if (row.Cells[10].Value == null)
                 {
                     row.DefaultCellStyle.BackColor = Color.White;
                     row.Cells[10].Value = "N";
                 }
-                if(row.Cells[11].Value == "E")
+                if (row.Cells[11].Value == "E")
                 {
                     row.DefaultCellStyle.BackColor = Color.LightGreen;
                 }
-               
+
             }
         }
 
@@ -311,7 +322,7 @@ namespace Presentacion
         {
             this.Dispose();
             LocalBD.Instancia.LimpiarListaCambio();
-            
+
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -326,7 +337,7 @@ namespace Presentacion
                     {
                         MessageBox.Show("El monto es inferior que la prenda a cambiar  ", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-                    else 
+                    else
                     {
                         agregarPrendaACambiar();
 
@@ -338,8 +349,8 @@ namespace Presentacion
 
                 }
             }
-           
-            
+
+
 
         }
 
@@ -380,10 +391,15 @@ namespace Presentacion
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-            guardarCambioDePrenda();
+            DialogResult dr = MessageBox.Show("Quiere realizar el cambio de Prenda?", "Aviso", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dr == DialogResult.Yes)
+            {
+                guardarCambioDePrenda();
+                habilitarBotones(true, false, false, false, true, false);
+            }
         }
 
-             
+
         private void BtnAnular_Click(object sender, EventArgs e)
         {
             listarDetalleBoletaCambio();
@@ -393,12 +409,36 @@ namespace Presentacion
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            int codProd = Convert.ToInt32(dgvPrendaCambio.CurrentRow.Cells[8].Value);
-            LocalBD.Instancia.RemovePrendaListaCambio(codProd);
-            List<DetalleInventarioE> lista = LocalBD.Instancia.ReturnListaCambio(0, 0, 0, 0);
-            listarProductoCambio(lista);
-            montoTotalCambio();
-            montoCambioPagar();
+            int numPrenda = 0;
+            foreach (DataGridViewRow row in dgvPrendaCambio.Rows)
+            {
+                numPrenda++;
+            }
+                if (numPrenda > 0)
+                {
+                    int codProd = Convert.ToInt32(dgvPrendaCambio.CurrentRow.Cells[8].Value);
+                    LocalBD.Instancia.RemovePrendaListaCambio(codProd);
+                    List<DetalleInventarioE> lista = LocalBD.Instancia.ReturnListaCambio(0, 0, 0, 0);
+                    listarProductoCambio(lista);
+                    montoTotalCambio();
+                    montoCambioPagar();
+                }
+
+                else
+                {
+                    MessageBox.Show("No hay prendas en la lista", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            
+        }
+
+        private void BtnNuevo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnImprimir_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

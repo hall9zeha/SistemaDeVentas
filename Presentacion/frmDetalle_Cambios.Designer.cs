@@ -48,7 +48,6 @@
             this.gbCliente = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cboTipoPago = new System.Windows.Forms.ComboBox();
-            this.btnBuscarXid = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.txtDireccionCliente = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
@@ -62,7 +61,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.txtNombreCliente = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.btnBuscarCliente = new System.Windows.Forms.Button();
             this.txtCodUsuario = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -182,6 +180,7 @@
             this.btnImprimir.Size = new System.Drawing.Size(50, 40);
             this.btnImprimir.TabIndex = 18;
             this.btnImprimir.UseVisualStyleBackColor = true;
+            this.btnImprimir.Click += new System.EventHandler(this.BtnImprimir_Click);
             // 
             // btnGuardar
             // 
@@ -282,6 +281,7 @@
             this.btnNuevo.Size = new System.Drawing.Size(51, 40);
             this.btnNuevo.TabIndex = 3;
             this.btnNuevo.UseVisualStyleBackColor = false;
+            this.btnNuevo.Click += new System.EventHandler(this.BtnNuevo_Click);
             // 
             // dgvDetalleCambio
             // 
@@ -297,7 +297,6 @@
             this.gbCliente.BackColor = System.Drawing.SystemColors.ControlLight;
             this.gbCliente.Controls.Add(this.label7);
             this.gbCliente.Controls.Add(this.cboTipoPago);
-            this.gbCliente.Controls.Add(this.btnBuscarXid);
             this.gbCliente.Controls.Add(this.label19);
             this.gbCliente.Controls.Add(this.txtDireccionCliente);
             this.gbCliente.Controls.Add(this.label17);
@@ -311,7 +310,6 @@
             this.gbCliente.Controls.Add(this.label13);
             this.gbCliente.Controls.Add(this.txtNombreCliente);
             this.gbCliente.Controls.Add(this.label12);
-            this.gbCliente.Controls.Add(this.btnBuscarCliente);
             this.gbCliente.Controls.Add(this.txtCodUsuario);
             this.gbCliente.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.gbCliente.ForeColor = System.Drawing.Color.Black;
@@ -341,16 +339,6 @@
             this.cboTipoPago.Name = "cboTipoPago";
             this.cboTipoPago.Size = new System.Drawing.Size(145, 23);
             this.cboTipoPago.TabIndex = 20;
-            // 
-            // btnBuscarXid
-            // 
-            this.btnBuscarXid.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuscarXid.Location = new System.Drawing.Point(516, 64);
-            this.btnBuscarXid.Name = "btnBuscarXid";
-            this.btnBuscarXid.Size = new System.Drawing.Size(37, 30);
-            this.btnBuscarXid.TabIndex = 19;
-            this.btnBuscarXid.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnBuscarXid.UseVisualStyleBackColor = true;
             // 
             // label19
             // 
@@ -481,15 +469,6 @@
             this.label12.Size = new System.Drawing.Size(59, 15);
             this.label12.TabIndex = 6;
             this.label12.Text = "Operativo";
-            // 
-            // btnBuscarCliente
-            // 
-            this.btnBuscarCliente.BackColor = System.Drawing.Color.LightCyan;
-            this.btnBuscarCliente.Location = new System.Drawing.Point(481, 64);
-            this.btnBuscarCliente.Name = "btnBuscarCliente";
-            this.btnBuscarCliente.Size = new System.Drawing.Size(35, 30);
-            this.btnBuscarCliente.TabIndex = 5;
-            this.btnBuscarCliente.UseVisualStyleBackColor = false;
             // 
             // txtCodUsuario
             // 
@@ -670,7 +649,7 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
-            // Detalle_Cambios
+            // frmDetalle_Cambios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -682,7 +661,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox1);
-            this.Name = "Detalle_Cambios";
+            this.Name = "frmDetalle_Cambios";
             this.Text = "Detalle_Cambios";
             this.Load += new System.EventHandler(this.Detalle_Cambios_Load);
             this.panel1.ResumeLayout(false);
@@ -718,7 +697,6 @@
         private System.Windows.Forms.GroupBox gbCliente;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cboTipoPago;
-        private System.Windows.Forms.Button btnBuscarXid;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox txtDireccionCliente;
         private System.Windows.Forms.Label label17;
@@ -732,7 +710,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtNombreCliente;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button btnBuscarCliente;
         private System.Windows.Forms.TextBox txtCodUsuario;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;

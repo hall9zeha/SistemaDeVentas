@@ -59,6 +59,7 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -67,6 +68,7 @@
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // button4
@@ -183,6 +185,7 @@
             this.txttallanum.Name = "txttallanum";
             this.txttallanum.Size = new System.Drawing.Size(100, 20);
             this.txttallanum.TabIndex = 0;
+            this.txttallanum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Txttallanum_KeyPress);
             // 
             // txtcantidad
             // 
@@ -190,6 +193,7 @@
             this.txtcantidad.Name = "txtcantidad";
             this.txtcantidad.Size = new System.Drawing.Size(100, 20);
             this.txtcantidad.TabIndex = 0;
+            this.txtcantidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Txtcantidad_KeyPress);
             // 
             // label5
             // 
@@ -223,7 +227,7 @@
             this.groupBox2.Controls.Add(this.dgvprenda);
             this.groupBox2.Location = new System.Drawing.Point(438, 100);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(508, 233);
+            this.groupBox2.Size = new System.Drawing.Size(616, 233);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Prendas";
@@ -235,7 +239,7 @@
             this.dgvprenda.Location = new System.Drawing.Point(19, 20);
             this.dgvprenda.Name = "dgvprenda";
             this.dgvprenda.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvprenda.Size = new System.Drawing.Size(471, 199);
+            this.dgvprenda.Size = new System.Drawing.Size(582, 199);
             this.dgvprenda.TabIndex = 0;
             this.dgvprenda.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgvprenda_CellContentClick);
             this.dgvprenda.SelectionChanged += new System.EventHandler(this.Dgvprenda_SelectionChanged);
@@ -277,6 +281,7 @@
             this.txtprecio.Name = "txtprecio";
             this.txtprecio.Size = new System.Drawing.Size(100, 20);
             this.txtprecio.TabIndex = 0;
+            this.txtprecio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Txtprecio_KeyPress);
             // 
             // txtprecioventa
             // 
@@ -284,6 +289,7 @@
             this.txtprecioventa.Name = "txtprecioventa";
             this.txtprecioventa.Size = new System.Drawing.Size(100, 20);
             this.txtprecioventa.TabIndex = 0;
+            this.txtprecioventa.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Txtprecioventa_KeyPress);
             // 
             // label1
             // 
@@ -333,7 +339,7 @@
             // 
             // btnBarCode
             // 
-            this.btnBarCode.Location = new System.Drawing.Point(830, 430);
+            this.btnBarCode.Location = new System.Drawing.Point(956, 356);
             this.btnBarCode.Name = "btnBarCode";
             this.btnBarCode.Size = new System.Drawing.Size(98, 56);
             this.btnBarCode.TabIndex = 15;
@@ -344,7 +350,7 @@
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.pictureBox1);
-            this.groupBox5.Location = new System.Drawing.Point(952, 100);
+            this.groupBox5.Location = new System.Drawing.Point(1070, 100);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(172, 100);
             this.groupBox5.TabIndex = 17;
@@ -363,18 +369,28 @@
             // pictureBox2
             // 
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(1002, 257);
+            this.pictureBox2.Location = new System.Drawing.Point(36, 20);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(100, 112);
             this.pictureBox2.TabIndex = 18;
             this.pictureBox2.TabStop = false;
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.pictureBox2);
+            this.groupBox6.Location = new System.Drawing.Point(1070, 220);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(165, 138);
+            this.groupBox6.TabIndex = 19;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Código QR";
+            // 
             // frmEditar_Prenda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1143, 521);
-            this.Controls.Add(this.pictureBox2);
+            this.ClientSize = new System.Drawing.Size(1254, 521);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.btnBarCode);
             this.Controls.Add(this.button5);
@@ -400,6 +416,7 @@
             this.groupBox5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.groupBox6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -436,5 +453,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.GroupBox groupBox6;
     }
 }
