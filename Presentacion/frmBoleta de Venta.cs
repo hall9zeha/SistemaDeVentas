@@ -26,6 +26,7 @@ namespace Presentacion
         DataTable dt = new DataTable();
         int tipoListaUsar = 0;
         double igv = 0.18;
+        int numPrenda = 0;
         public Boleta_de_Venta()
         {
             InitializeComponent();
@@ -128,7 +129,7 @@ namespace Presentacion
             llenarGridBoleta(lista);
             montoTotal();
             contarItems();
-            habilitarBotones(true, true, true,true,true);
+            habilitarBotones(true, true, false,true,true);
             montoEnLetras();
         }
 
@@ -178,32 +179,59 @@ namespace Presentacion
         }
         void contarItems()
         {
-            int num = 0;
+            
             foreach (DataGridViewRow filas in dgvDetalleBoleta.Rows)
             {
-                num++;
+                numPrenda++;
             }
-            lblNumItems.Text = "N° Items" + " " + num;
+            lblNumItems.Text = "N° Items" + " " + numPrenda;
+           
         }
-
-        private void BtnQuitarItem_Click(object sender, EventArgs e)
+        void calcularCambio()
         {
             try
             {
-                DialogResult dr = MessageBox.Show("Quieres quitar esta prenda de la lista?", "Mensaje", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dr == DialogResult.Yes)
+                double total = 0;
+                if (txtEfectivo.Text != "")
                 {
-                    int idStock = Convert.ToInt32(dgvDetalleBoleta.CurrentRow.Cells[0].Value);
-                    LocalBD.Instancia.RemoverPrendaListaBoleta(idStock);
-
-                    List<DetalleInventarioE> lista = LocalBD.Instancia.ReturnListaBoleta(0, 0, 0, 0);
-                    llenarGridBoleta(lista);
-                    montoTotal();
-                    contarItems();
-                    montoEnLetras();
-
+                    total = Convert.ToDouble(txtEfectivo.Text) - Convert.ToDouble(txtTotal.Text);
+                    txtCambio.Text = total.ToString("0.00");
+                }
+                else
+                {
+                    txtCambio.Text = "0";
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void BtnQuitarItem_Click(object sender, EventArgs e)
+        {
+            
+           
+            try
+            {
+                
+               
+                    DialogResult dr = MessageBox.Show("Quieres quitar esta prenda de la lista?", "Mensaje", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == DialogResult.Yes)
+                    {
+                        int idStock = Convert.ToInt32(dgvDetalleBoleta.CurrentRow.Cells[0].Value);
+                        LocalBD.Instancia.RemoverPrendaListaBoleta(idStock);
+
+                        List<DetalleInventarioE> lista = LocalBD.Instancia.ReturnListaBoleta(0, 0, 0, 0);
+                        llenarGridBoleta(lista);
+                        montoTotal();
+                        contarItems();
+                        montoEnLetras();
+                        if(lista.Count==0)habilitarBotones(true, false, false, true, false);
+
+                    }
+                }
+               
+            
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -218,20 +246,23 @@ namespace Presentacion
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-
+            
             try
             {
-                DialogResult dr = MessageBox.Show("Realizar Venta?", "Mensaje", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dr == DialogResult.Yes)
-                {
-                    
-                    guardarVenta();
-                    //imprimirTicket();
-                    //habilitarBotones(true, false, true, false, false);
-                   
-                }
-                else
-                { MessageBox.Show("Tarea Cancelada"); }
+               
+                
+                    DialogResult dr = MessageBox.Show("Realizar Venta?", "Mensaje", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == DialogResult.Yes)
+                    {
+
+                        guardarVenta();
+                        //imprimirTicket();
+                        //habilitarBotones(true, false, true, false, false);
+                    }
+                    else
+                    { MessageBox.Show("Tarea Cancelada"); }
+
+
             }
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }
@@ -348,8 +379,8 @@ namespace Presentacion
 
                 objTicket.AgregarTotales("         SUBTOTAL......S/" ,Convert.ToDecimal(txtTotal.Text));
                 decimal iva =Convert.ToDecimal(Decimal.Parse(txtTotal.Text) * (decimal)igv);
-                objTicket.AgregarTotales("         IVA...........S/", Convert.ToDecimal(txtTotal.Text) + iva);//La M indica que es un decimal en C#
-                objTicket.AgregarTotales("         TOTAL.........S/", Convert.ToDecimal(txtTotal.Text));
+                objTicket.AgregarTotales("         IVA...........S/",  iva);//La M indica que es un decimal en C#
+                objTicket.AgregarTotales("         TOTAL.........S/", Convert.ToDecimal(txtTotal.Text) + iva);
                 objTicket.TextoIzquierda("");
                 if (txtEfectivo.Text == "")
                 { txtEfectivo.Text = "0"; }
@@ -575,6 +606,11 @@ namespace Presentacion
             tic.Path = $"E:\\PDFS\\";
             tic.FileName = "Ticket.pdf";
             tic.Print();
+        }
+
+        private void TxtEfectivo_KeyPress_1(object sender, KeyPressEventArgs e)
+        {
+            calcularCambio();
         }
         //Fin del método
     }

@@ -251,9 +251,12 @@ namespace Presentacion
 
         private void Button5_Click_1(object sender, EventArgs e)
         {
-
-            eliminarPrenda();
-            cargarInventario();
+            DialogResult dr = MessageBox.Show("Si este producto no tiene ventas asociadas se eliminará\n\n ¿Quiere Proceder?", "Importante", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dr == DialogResult.Yes)
+            {
+                eliminarPrenda();
+                cargarInventario();
+            }
         }
 
         private void Button3_Click(object sender, EventArgs e)

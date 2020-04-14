@@ -327,10 +327,21 @@ namespace Presentacion
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            DialogResult dr = MessageBox.Show( "Se generarán códigos de barra para \n todos los productos de la lista \n \n Quiere proceder? ","Importante", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dr == DialogResult.Yes)
-            { generarBarCodes(); }
-            
+            int numPrendas = 0;
+            foreach (DataGridViewRow row in dgvInventario.Rows)
+            {
+                numPrendas++;
+            }
+            if (numPrendas > 0)
+            {
+                DialogResult dr = MessageBox.Show("Se generarán códigos de barra para todos los productos \n de la lista con un stock mayor a 0 \n \n ¿Quiere proceder? ", "Importante", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.Yes)
+                { generarBarCodes(); }
+            }
+            else
+            {
+                MessageBox.Show("No hay prendas en la lista", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             
         }
     }

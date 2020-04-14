@@ -54,15 +54,12 @@
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnQuitar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvprenda)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtdescripcion
@@ -71,31 +68,35 @@
             this.txtdescripcion.Name = "txtdescripcion";
             this.txtdescripcion.Size = new System.Drawing.Size(181, 20);
             this.txtdescripcion.TabIndex = 0;
+            this.txtdescripcion.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Txtdescripcion_KeyPress);
             // 
             // txtmarca
             // 
             this.txtmarca.Location = new System.Drawing.Point(170, 51);
             this.txtmarca.Name = "txtmarca";
             this.txtmarca.Size = new System.Drawing.Size(154, 20);
-            this.txtmarca.TabIndex = 0;
+            this.txtmarca.TabIndex = 1;
             // 
             // txtprecio
             // 
-            this.txtprecio.Location = new System.Drawing.Point(170, 111);
+            this.txtprecio.Location = new System.Drawing.Point(170, 86);
             this.txtprecio.Name = "txtprecio";
             this.txtprecio.Size = new System.Drawing.Size(100, 20);
-            this.txtprecio.TabIndex = 0;
+            this.txtprecio.TabIndex = 2;
+            this.txtprecio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Txtprecio_KeyPress);
             // 
             // txtprecioventa
             // 
-            this.txtprecioventa.Location = new System.Drawing.Point(170, 144);
+            this.txtprecioventa.Location = new System.Drawing.Point(170, 118);
             this.txtprecioventa.Name = "txtprecioventa";
             this.txtprecioventa.Size = new System.Drawing.Size(100, 20);
-            this.txtprecioventa.TabIndex = 0;
+            this.txtprecioventa.TabIndex = 3;
+            this.txtprecioventa.TextChanged += new System.EventHandler(this.Txtprecioventa_TextChanged);
+            this.txtprecioventa.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Txtprecioventa_KeyPress);
             // 
             // txtcolor
             // 
-            this.txtcolor.Location = new System.Drawing.Point(170, 82);
+            this.txtcolor.Location = new System.Drawing.Point(175, 17);
             this.txtcolor.Name = "txtcolor";
             this.txtcolor.Size = new System.Drawing.Size(100, 20);
             this.txtcolor.TabIndex = 0;
@@ -105,19 +106,21 @@
             this.txttallanum.Location = new System.Drawing.Point(175, 82);
             this.txttallanum.Name = "txttallanum";
             this.txttallanum.Size = new System.Drawing.Size(100, 20);
-            this.txttallanum.TabIndex = 0;
+            this.txttallanum.TabIndex = 2;
+            this.txttallanum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Txttallanum_KeyPress);
             // 
             // txtcantidad
             // 
             this.txtcantidad.Location = new System.Drawing.Point(175, 120);
             this.txtcantidad.Name = "txtcantidad";
             this.txtcantidad.Size = new System.Drawing.Size(100, 20);
-            this.txtcantidad.TabIndex = 0;
+            this.txtcantidad.TabIndex = 3;
+            this.txtcantidad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Txtcantidad_KeyPress);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(80, 23);
+            this.label1.Location = new System.Drawing.Point(95, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 1;
@@ -126,7 +129,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(106, 54);
+            this.label2.Location = new System.Drawing.Point(121, 54);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(37, 13);
             this.label2.TabIndex = 1;
@@ -135,7 +138,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(112, 89);
+            this.label3.Location = new System.Drawing.Point(127, 24);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(31, 13);
             this.label3.TabIndex = 1;
@@ -144,11 +147,11 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(106, 118);
+            this.label4.Location = new System.Drawing.Point(80, 89);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 13);
+            this.label4.Size = new System.Drawing.Size(76, 13);
             this.label4.TabIndex = 1;
-            this.label4.Text = "Precio";
+            this.label4.Text = "Precio Compra";
             this.label4.Click += new System.EventHandler(this.Label4_Click);
             // 
             // label5
@@ -194,10 +197,8 @@
             this.groupBox1.Controls.Add(this.txtmarca);
             this.groupBox1.Controls.Add(this.txtprecio);
             this.groupBox1.Controls.Add(this.txtprecioventa);
-            this.groupBox1.Controls.Add(this.txtcolor);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Location = new System.Drawing.Point(27, 94);
@@ -210,7 +211,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(75, 151);
+            this.label10.Location = new System.Drawing.Point(88, 125);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(68, 13);
             this.label10.TabIndex = 1;
@@ -222,7 +223,7 @@
             this.groupBox2.Controls.Add(this.dgvprenda);
             this.groupBox2.Location = new System.Drawing.Point(425, 94);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(400, 229);
+            this.groupBox2.Size = new System.Drawing.Size(546, 229);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Prendas";
@@ -233,7 +234,7 @@
             this.dgvprenda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvprenda.Location = new System.Drawing.Point(19, 20);
             this.dgvprenda.Name = "dgvprenda";
-            this.dgvprenda.Size = new System.Drawing.Size(365, 191);
+            this.dgvprenda.Size = new System.Drawing.Size(511, 191);
             this.dgvprenda.TabIndex = 0;
             // 
             // groupBox3
@@ -242,7 +243,9 @@
             this.groupBox3.Controls.Add(this.txttallanum);
             this.groupBox3.Controls.Add(this.txtcantidad);
             this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.txtcolor);
             this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Location = new System.Drawing.Point(27, 314);
             this.groupBox3.Name = "groupBox3";
@@ -262,10 +265,10 @@
             "M",
             "S",
             "SM"});
-            this.cmbtallaalfa.Location = new System.Drawing.Point(175, 43);
+            this.cmbtallaalfa.Location = new System.Drawing.Point(175, 47);
             this.cmbtallaalfa.Name = "cmbtallaalfa";
             this.cmbtallaalfa.Size = new System.Drawing.Size(121, 21);
-            this.cmbtallaalfa.TabIndex = 3;
+            this.cmbtallaalfa.TabIndex = 1;
             // 
             // groupBox4
             // 
@@ -317,19 +320,9 @@
             this.btnGuardar.UseVisualStyleBackColor = true;
             this.btnGuardar.Click += new System.EventHandler(this.Button4_Click);
             // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(425, 396);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 5;
-            this.button5.Text = "prueba";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.Button5_Click);
-            // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(789, 354);
+            this.button2.Location = new System.Drawing.Point(869, 354);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(102, 62);
             this.button2.TabIndex = 6;
@@ -337,23 +330,12 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.Button2_Click_1);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(836, 108);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(153, 117);
-            this.pictureBox1.TabIndex = 7;
-            this.pictureBox1.TabStop = false;
-            // 
             // frmAgregar_Prenda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1001, 511);
-            this.Controls.Add(this.pictureBox1);
+            this.ClientSize = new System.Drawing.Size(1052, 511);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button5);
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.btnQuitar);
             this.Controls.Add(this.btnAgregar);
@@ -363,7 +345,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "frmAgregar_Prenda";
-            this.Text = "Agregar_Prenda";
+            this.Text = "Agregar Prenda";
             this.Load += new System.EventHandler(this.Agregar_Prenda_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -373,7 +355,6 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -406,8 +387,6 @@
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnQuitar;
         private System.Windows.Forms.Button btnGuardar;
-        private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

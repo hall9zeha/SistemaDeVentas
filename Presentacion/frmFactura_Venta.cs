@@ -215,7 +215,7 @@ namespace Presentacion
             montoTotal();
             contarItems();
             montoEnLetras();
-            habilitarBotones(true, true, true, true, true);
+            habilitarBotones(true, true, false, true, true);
 
         }
 
@@ -231,6 +231,7 @@ namespace Presentacion
                 montoTotal();
                 montoEnLetras();
                 contarItems();
+                if (lista.Count == 0) habilitarBotones(true, false, false, true, false);
             }
         }
         void habilitarBotones(bool nuevo, bool guardar, bool anular, bool agregar, bool quitar)
@@ -316,8 +317,8 @@ namespace Presentacion
 
                 objTicket.AgregarTotales("         SUBTOTAL......S/", Convert.ToDecimal(txtTotal.Text));
                 decimal iva = Convert.ToDecimal(Decimal.Parse(txtTotal.Text) * 0.18M);
-                objTicket.AgregarTotales("         IVA...........S/", Convert.ToDecimal(txtTotal.Text) + iva);//La M indica que es un decimal en C#
-                objTicket.AgregarTotales("         TOTAL.........S/", Convert.ToDecimal(txtTotal.Text));
+                objTicket.AgregarTotales("         IVA...........S/",iva);//La M indica que es un decimal en C#
+                objTicket.AgregarTotales("         TOTAL.........S/", Convert.ToDecimal(txtTotal.Text) + iva);
                 objTicket.TextoIzquierda("");
                 if (txtEfectivo.Text == "")
                 { txtEfectivo.Text = "0"; }
@@ -420,7 +421,13 @@ namespace Presentacion
 
         private void BtnAnular_Click(object sender, EventArgs e)
         {
-            anularVenta();
+            DialogResult dr = MessageBox.Show("Realmente Quiere anular esta venta?", "Advertencia", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dr == DialogResult.Yes)
+            {
+                anularVenta();
+                habilitarBotones(true, false, false, false, false);
+            }
+           
         }
 
         private void BtnBuscarXid_Click(object sender, EventArgs e)
