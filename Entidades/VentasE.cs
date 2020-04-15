@@ -24,7 +24,12 @@ namespace Entidades
         public int IdCliente { get; set; }
         public int IdUsuario { get; set; }
         public int TipoMoneda { get; set; }
+        //campo utilidad solo para calcular 
+        public double Utilidad { get; set; }
+        //propiedade de tipo lista con contenido de elementos de la entidad DetalleVenta
         public List<DetalleVentasE> DetalleVenta { get; set; }
+        //relaciones con DetalleVentase
+        public DetalleVentasE DetalleVentas { get; set; }
         //relaciones con entidadCliente
         public ClienteE Cliente { get; set; }
         //*****************************************

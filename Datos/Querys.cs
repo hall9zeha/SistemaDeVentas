@@ -452,51 +452,8 @@ namespace Datos
                             ";
             return Query;
         }
-        public string Query_MostrarVentasFecha()
-        {
-            string Query = @"
-                            select 
-                            dt.idVenta,
-                            b.CodVenta,
-                            sum(dt.Cantidad)as Prendas,
-                            sum(dt.Precio_final)as Total,
-                            b.Fechaboleta
-                            from detalle_tbboleta dt inner join tbboleta b
-                            
-                            on b.idVenta=dt.IdVenta
-                            where convert(date,b.Fechaboleta)=@Fechaboleta
-                            group by 
-                            dt.idVenta,
-                            b.CodVenta,
-                            dt.Cantidad,
-                            b.Fechaboleta
-                            order by Fechaboleta
-                            ";
-
-            return Query;
-        }
-        public string Query_MostrarVentasFechaDoble()
-        {
-            string Query = @"
-                            select 
-                            b.idVenta,
-                            b.CodVenta,
-                            sum(dt.Cantidad)as Prendas,
-                            sum(dt.Precio_final)as Total,
-                            b.Fechaboleta
-                            from detalle_tbboleta dt inner join tbboleta b
-                            
-                            on b.idVenta=dt.IdVenta
-                            where convert(date,b.Fechaboleta) between @FechaBoletaIni and @FechaBoletaFin
-                            group by 
-                            b.idVenta,
-                            b.CodVenta,
-                            dt.Cantidad,
-                            b.Fechaboleta
-                            order by Fechaboleta
-                            ";
-            return Query;
-        }
+    
+       
         public string Query_BuscarBoletaVenta()
         {
             string Query = @"
@@ -521,6 +478,82 @@ namespace Datos
                             order by Fechaboleta
                             ";
             return Query;
+        }
+
+        public string Query_ListarVentasYUtilidades()
+        {
+            string Query = @"
+                            if(@busqueda=1)
+                            begin
+                            select 
+                            b.idVenta ,
+
+                            b.CodVenta,
+                            --sum(dtb.Precio_final) as Total,
+                            b.Fechaboleta,
+                            b.Importe_rg as Total,
+                            sum(dtb.Cantidad) as Prendas,
+                            b.tipoComprobante,
+                            b.tipoPago,
+                            b.tipoMoneda,
+                            sum(i.Precio) as Pcompra,
+                            sum(i.PrecioVenta)as Pventa,
+                            (sum(i.PrecioVenta)-sum(i.Precio) ) as Utilidad 
+                            from tbboleta b inner join detalle_tbboleta dtb on b.idVenta=dtb.idVenta inner join tbinventario i on dtb.Codproducto=i.Codproducto
+                            where Convert(date,b.Fechaboleta)=@fechaSimple 
+                            group by
+                            b.idVenta, b.CodVenta, b.tipoComprobante,b.tipoPago,b.tipoMoneda, b.Importe_rg,b.Fechaboleta
+                            end
+                            else if (@busqueda=2)
+                            begin 
+                            select 
+                            b.idVenta ,
+
+                            b.CodVenta,
+                            --sum(dtb.Precio_final) as Total,
+                            b.Fechaboleta,
+                            b.Importe_rg as Total,
+                            sum(dtb.Cantidad) as Prendas,
+                            b.tipoComprobante,
+                            b.tipoPago,
+                            b.tipoMoneda,
+                            sum(i.Precio) as Pcompra,
+                            sum(i.PrecioVenta)as Pventa,
+                            (sum(i.PrecioVenta)-sum(i.Precio) ) as Utilidad 
+                            from tbboleta b inner join detalle_tbboleta dtb on b.idVenta=dtb.idVenta inner join tbinventario i on dtb.Codproducto=i.Codproducto
+                            where Convert(date,b.Fechaboleta) between  @fechaIni and @fechaFin  
+                            group by
+                            b.idVenta, b.CodVenta, b.tipoComprobante,b.tipoPago,b.tipoMoneda, b.Importe_rg,b.Fechaboleta
+
+                            end
+                            else if(@busqueda=3)
+                            begin
+                            select 
+                            b.idVenta ,
+
+                            b.CodVenta,
+                            --sum(dtb.Precio_final) as Total,
+                            b.Fechaboleta,
+                            b.Importe_rg as Total,
+                            sum(dtb.Cantidad) as Prendas,
+                            b.tipoComprobante,
+                            b.tipoPago,
+                            b.tipoMoneda,
+                            sum(i.Precio) as Pcompra,
+                            sum(i.PrecioVenta)as Pventa,
+                            (sum(i.PrecioVenta)-sum(i.Precio) ) as Utilidad 
+                            from tbboleta b inner join detalle_tbboleta dtb on b.idVenta=dtb.idVenta inner join tbinventario i on dtb.Codproducto=i.Codproducto
+                            where b.CodVenta like '%'+ @filtro +'%'
+                            group by
+                            b.idVenta, b.CodVenta, b.tipoComprobante,b.tipoPago,b.tipoMoneda,b.Importe_rg,b.FechaBoleta
+
+                            end
+
+
+
+                            ";
+            return Query;
+
         }
         public string Query_ListarVentas()
         {

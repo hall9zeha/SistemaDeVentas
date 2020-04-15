@@ -96,17 +96,9 @@ namespace Negocio
             { throw; }
 
         }
-        public List<VentasE> MostrarVentasSimple(String fecha)
-        {
-            List<VentasE> lista = VentasD.Instancia.MostrarVentasSimple(fecha);
-            return lista;
-        }
+        
 
-        public List<VentasE> MostrarVentasFechaDoble(string fechaIni, string fechaFin)
-        {
-            List<VentasE> lista = VentasD.Instancia.MostrarVentasFechaDoble(fechaIni,fechaFin);
-            return lista;
-        }
+        
         public List<VentasE> BuscarVenta(string boleta)
         {
             List<VentasE> lista = VentasD.Instancia.BuscarVenta(boleta);
@@ -116,6 +108,17 @@ namespace Negocio
         {
             List<VentasE> lista = VentasD.Instancia.ListarVentas();
             return lista;
+        }
+        public List<VentasE> ListarVentasYUtilidades(int tipBusqueda, string fechaSimple, string fechaDoble,string numComprobante)
+        {
+            try
+            {
+                List<VentasE> lista = VentasD.Instancia.ListarVentasYUtilidades(tipBusqueda, fechaSimple, fechaDoble,numComprobante);
+               // if (lista.Count <= 0) throw new ApplicationException("No se encontraron registros para el reporte");
+                return lista;
+            }
+            catch (Exception)
+            { throw; }
         }
         public List<TipoPagoE> ListarTipoPago()
         {

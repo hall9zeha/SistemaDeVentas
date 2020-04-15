@@ -60,103 +60,59 @@ namespace Presentacion
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            cargarVentasFechaDoble(pickerFecha1.Text,pickerFecha2.Text);
+            
+            cargarVentasYUtilidades(2, pickerFecha1.Text, pickerFecha2.Text,0.ToString());
         }
-        void cargarVentasFechaSimple(String fecha)
+        void cargarVentasYUtilidades(int tipBusqueda, string fechaSimple, string fechaDoble,string numComprobante)
         {
-
+            double descuento = 0.0, total = 0, boleta = 0.0, factura = 0.0, notaventa = 0.0,
+                   efectivo = 0.0, tarjetacred = 0.0, contrareembolso = 0.0, deposito = 0.0, dolares = 0.0, inversion = 0.0, totalUtilidades = 0.0;
             try
             {
-               
-               
-                    int num = 0;
-                    List<VentasE> lista = VentasN.Instancia.MostrarVentasSimple(fecha);
-                    dgvVentas.Rows.Clear();
-
-                    for (int i = 0; i < lista.Count; i++)
-                    {
-                        num++;
-                        string[] fila = new string[] {
-                        lista[i].IdVenta.ToString(),
-                        lista[i].CodVenta,
-                        lista[i].Cantidad.ToString(),
-                        lista[i].Precio_final.ToString("0.00"),
-                        lista[i].Fechaboleta.ToString("dd-MM-yy"),
-                        lista[i].Fechaboleta.ToString("HH:mm:ss")};
-                        dgvVentas.Rows.Add(fila);
-
-                    }
-
-                contarItems();
-                montoVentas();
-            }
-            catch (Exception ex)
-            { MessageBox.Show(ex.Message); }
-        }
-        void cargarVentasFechaDoble(string fechaIni, string fechaFin)
-        {
-
-            try
-            {
-               
-                int num = 0;
-                List<VentasE> lista = VentasN.Instancia.MostrarVentasFechaDoble(fechaIni, fechaFin);
+               List<VentasE>lista = VentasN.Instancia.ListarVentasYUtilidades(tipBusqueda, fechaSimple, fechaDoble,numComprobante);
                 dgvVentas.Rows.Clear();
-
                 for (int i = 0; i < lista.Count; i++)
                 {
-                    num++;
+                    //Parte que ira al grid
                     string[] fila = new string[] {
                         lista[i].IdVenta.ToString(),
                         lista[i].CodVenta,
-                        lista[i].Cantidad.ToString(),
+                        lista[i].DetalleVentas.Cantidad.ToString(),
                         lista[i].Precio_final.ToString("0.00"),
                         lista[i].Fechaboleta.ToString("dd-MM-yy"),
                         lista[i].Fechaboleta.ToString("HH:mm:ss")};
                     dgvVentas.Rows.Add(fila);
+
+                    //Esta parte irá al reporte
+                    total += lista[i].Precio_final;
+                    inversion += lista[i].DetalleVentas.Inventario.Precio;
+                    totalUtilidades += lista[i].Utilidad;
+                    if (lista[i].TipoComprobante == 1) boleta += lista[i].Precio_final;
+                    else if (lista[i].TipoComprobante == 2) factura += lista[i].Precio_final;
+                    else if (lista[i].TipoComprobante == 3) notaventa += lista[i].Precio_final;
+
+                    if (lista[i].TipoPago == 1) efectivo += lista[i].Precio_final;
+                    else if (lista[i].TipoPago == 2) tarjetacred += lista[i].Precio_final;
+                    else if (lista[i].TipoPago == 3) contrareembolso += lista[i].Precio_final;
+                    else if (lista[i].TipoPago == 4) deposito += lista[i].Precio_final;
+
                 }
                 contarItems();
                 montoVentas();
+
+                lblTotal.Text = string.Format("S/ ") + total.ToString("0.00"); lblBoleta.Text = boleta.ToString("0.00"); lblFactura.Text = factura.ToString("0.00");
+                lblNotaventa.Text = notaventa.ToString("0.00"); lblEfectivo.Text = efectivo.ToString("0.00"); lblTarjetacredito.Text = tarjetacred.ToString("0.00");
+                lblContrarembolso.Text = contrareembolso.ToString("0.00"); lbldeposito.Text = deposito.ToString("0.00"); lblsoles.Text = "S/ " + total.ToString("0.00"); lbldolares.Text = "$ " + dolares.ToString("0.00");
+                lbldescuento.Text = descuento.ToString("0.00");
+
+                /*CÁLCULO DE UTILIDADES*/
+                lblImporteInversion.Text = "S/ " + inversion.ToString("0.00");
+                lblTotalUtilidades.Text = "S/ " + totalUtilidades.ToString("0.00");
             }
             catch (Exception ex)
             { MessageBox.Show(ex.Message); }
         }
-        void buscarVentaBoleta(string filtro)
-        {
-            
-            try
-            {
-                if (filtro != string.Empty)
-                {
-                    int num = 0;
-                    List<VentasE> lista = VentasN.Instancia.BuscarVenta(filtro);
-                    dgvVentas.Rows.Clear();
-
-                    for (int i = 0; i < lista.Count; i++)
-                    {
-                        num++;
-                        string[] fila = new string[] {
-                        lista[i].IdVenta.ToString(),
-                        lista[i].CodVenta,
-                        lista[i].Cantidad.ToString(),
-                        lista[i].Precio_final.ToString("0.00"),
-                        lista[i].Fechaboleta.ToString("dd-MM-yy"),
-                        lista[i].Fechaboleta.ToString("HH:mm:ss")};
-                        dgvVentas.Rows.Add(fila);
-
-                    }
-                    contarItems();
-                    montoVentas();
-                }
-                else
-                { dgvVentas.Rows.Clear();
-                    contarItems();
-                    montoVentas();
-                }
-            }
-            catch (Exception ex)
-            { MessageBox.Show(ex.Message); }
-        }
+        
         void contarItems()
         {
             int num = 0;
@@ -184,13 +140,15 @@ namespace Presentacion
 
         private void PickerFecha_ValueChanged(object sender, EventArgs e)
         {
-            cargarVentasFechaSimple(pickerFecha.Value.ToString("yyyy/MM/dd"));
+            
+            cargarVentasYUtilidades(1, pickerFecha.Value.ToString("yyyy/MM/dd"), 0.ToString(),0.ToString());
         }
 
         private void TxtBuscar_TextChanged(object sender, EventArgs e)
         {
            
-            buscarVentaBoleta(txtBuscar.Text);
+            
+            cargarVentasYUtilidades(3, 0.ToString(), 0.ToString(), txtBuscar.Text);
         }
 
         private void Button2_Click(object sender, EventArgs e)

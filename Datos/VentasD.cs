@@ -101,70 +101,8 @@ namespace Datos
             { throw; }
             finally { cmd.Connection.Close(); }
         }
-        public List<VentasE> MostrarVentasSimple(String fecha)
-        {
-            SqlCommand cmd = null;
-            SqlDataReader dr = null;
-            List<VentasE> lista = null;
-            try
-            {
-               
-                cmd = new SqlCommand(sql.Query_MostrarVentasFecha(), cn);
-                cmd.Parameters.AddWithValue("@Fechaboleta", fecha);
-                cn.Open();
-                dr = cmd.ExecuteReader();
-                lista = new List<VentasE>();
-                while (dr.Read())
-                {
-                    VentasE b = new VentasE();
-
-                    b.IdVenta = Convert.ToInt32(dr["idVenta"].ToString());
-                    b.CodVenta = dr["CodVenta"].ToString();
-                    b.Cantidad = Convert.ToInt32(dr["Prendas"].ToString());
-                    b.Precio_final = Convert.ToDouble(dr["Total"].ToString());
-                    b.Fechaboleta = Convert.ToDateTime(dr["Fechaboleta"].ToString());
-                    lista.Add(b);
-                }
-            }
-            catch (Exception)
-            { throw; }
-            finally { cmd.Connection.Close(); }
-            return lista;
-
-        }
-        public List<VentasE> MostrarVentasFechaDoble(string fechaIni, string fechaFin)
-        {
-            SqlCommand cmd = null;
-            SqlDataReader dr = null;
-            List<VentasE> lista = null;
-            try
-            {
-
-                cmd = new SqlCommand(sql.Query_MostrarVentasFechaDoble(), cn);
-                cmd.Parameters.AddWithValue("@FechaBoletaIni", fechaIni);
-                cmd.Parameters.AddWithValue("@FechaBoletaFin", fechaFin);
-                cn.Open();
-                dr = cmd.ExecuteReader();
-                lista = new List<VentasE>();
-                while (dr.Read())
-                {
-                    VentasE b = new VentasE();
-
-                    b.IdVenta = Convert.ToInt32(dr["idVenta"].ToString());
-                    b.CodVenta = dr["CodVenta"].ToString();
-                    b.Cantidad = Convert.ToInt32(dr["Prendas"].ToString());
-                    b.Precio_final = Convert.ToDouble(dr["Total"].ToString());
-                    b.Fechaboleta = Convert.ToDateTime(dr["Fechaboleta"].ToString());
-                    lista.Add(b);
-                }
-
-            }
-            catch (Exception)
-            { throw; }
-            finally { cmd.Connection.Close(); }
-            return lista;
-
-        }
+       
+       
         public List<VentasE>BuscarVenta(string boleta)
         {
             SqlCommand cmd = null;
@@ -217,6 +155,50 @@ namespace Datos
                     b.Fechaboleta = Convert.ToDateTime(dr["Fechaboleta"].ToString());
                     lista.Add(b);
                 }
+            }
+            catch (Exception)
+            { throw; }
+            finally { cmd.Connection.Close(); }
+            return lista;
+        }
+        public List<VentasE> ListarVentasYUtilidades(int tipBusqueda, string fechaSimple, string fechaDoble, string numComprobante)
+        {
+            SqlCommand cmd = null;
+            SqlDataReader dr = null;
+            List<VentasE> lista = null;
+            try
+            {
+                cmd = new SqlCommand(sql.Query_ListarVentasYUtilidades(), cn);
+                cmd.Parameters.AddWithValue("@busqueda", tipBusqueda);
+                cmd.Parameters.AddWithValue("@fechaSimple", fechaSimple);
+                cmd.Parameters.AddWithValue("@fechaIni", fechaSimple);
+                cmd.Parameters.AddWithValue("@fechaFin", fechaDoble);
+                cmd.Parameters.AddWithValue("@filtro", numComprobante);
+                cn.Open();
+                dr = cmd.ExecuteReader();
+                lista = new List<VentasE>();
+                while (dr.Read())
+                {
+                    VentasE v = new VentasE();
+                    v.IdVenta = Convert.ToInt32(dr["IdVenta"]);
+                    v.Fechaboleta = Convert.ToDateTime(dr["Fechaboleta"]);
+                    v.CodVenta = dr["CodVenta"].ToString();
+                    v.Precio_final = Convert.ToDouble(dr["Total"]);
+                    DetalleVentasE dt = new DetalleVentasE();
+                    dt.Cantidad = Convert.ToInt32(dr["Prendas"].ToString());
+
+                    v.TipoComprobante = Convert.ToInt32(dr["tipoComprobante"]);
+                    v.TipoPago = Convert.ToInt32(dr["tipoPago"]);
+                    v.TipoMoneda = Convert.ToInt32(dr["tipoMoneda"]);
+                    InventarioE i = new InventarioE();
+                    i.Precio = Convert.ToDouble(dr["Pcompra"]);
+                    i.PrecioVenta = Convert.ToDouble(dr["Pventa"]);
+                    dt.Inventario = i;
+                    v.DetalleVentas = dt;
+                    v.Utilidad = Convert.ToDouble(dr["Utilidad"]);
+                    lista.Add(v);
+                }
+
             }
             catch (Exception)
             { throw; }
